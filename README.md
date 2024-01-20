@@ -1,70 +1,64 @@
-# Getting Started with Create React App
+![header](https://capsule-render.vercel.app/api?type=Venom&color=FCFBF7&height=300&section=header&text=DDUDU-DDUDU&fontSize=90&fontColor=0D1B46)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# 뚜두뚜두 - Todomate 클론 코딩
+친구와 함께하는 일정 관리, 뚜두뚜두
 
-## Available Scripts
+💡 **뚜두뚜두**는 **할 일이 많은 MZ 갓생러들**에게
+친구들과 **공유할 수 있는 todo 서비스**를 제공하여 
+**성취감**과 **일정 관리의 재미**를 느낄 수 있도록 한다!
 
-In the project directory, you can run:
+</br>
 
-### `yarn start`
+## 목적
+- 스크럼 마스터의 주도 하에 Jira, Notion등의 협업 툴을 최대한 활용한 애자일 방식을 실현하여 협업 능력을 향상시킵니다.
+- 분석과 재해석을 통해 Todomate를 개선하여 뚜두뚜두 팀만의 새로운 애플리케이션을 구현합니다.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+</br>
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+# 📌 팀원 소개
+<table align="center">
+  <tr align="center">
+        <td>
+            <img src="https://github.com/IjjS.png">
+        </td>
+        <td>
+            <img src="https://github.com/yenzip.png">
+        </td>
+        <td>
+            <img src="https://github.com/uijin-j.png">
+        </td>
+    </tr>
+    <tr align="center">
+        <td><a href="https://github.com/IjjS">송인재</a></td>
+        <td><a href="https://github.com/yenzip">엄예림</a></td>
+        <td><a href="https://github.com/uijin-j">정의진</a></td>
+    </tr>
+    <tr align="center">
+        <td><B>Frontend / Backend </B></td>
+        <td><B>Frontend / Backend </B></td>
+        <td><B>Frontend / Backend </B></td>
+    </tr>
+</table>
 
-### `yarn test`
+</br>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# 🛠 기술 스택
 
-### `yarn build`
+</br>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+# Getting Started
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### install dependencies
+```bash
+yarn install
+```
 
-### `yarn eject`
+### `yarn start:windows` / `yarn start:mac`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+OS 별 로컬 환경 React app 실행
+API 서버 소스코드: https://github.com/DDu-Du-DDu-Du/back-end
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### `yarn lint`
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+소스코드 포매팅
