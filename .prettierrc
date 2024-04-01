@@ -12,7 +12,6 @@
   "endOfLine": "lf",
 
   "plugins": ["@trivago/prettier-plugin-sort-imports"],
-
   "importOrder": [
     ".css$",
     ".styles",
@@ -23,8 +22,6 @@
     "^[./]",
     "<THIRD_PARTY_MODULES>"
   ],
-
   "importOrderSeparation": true,
-
   "importOrderSortSpecifiers": true
 }
