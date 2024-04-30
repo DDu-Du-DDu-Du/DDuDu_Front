@@ -1,3 +1,7 @@
+import "../src/app/_styles/globals.css";
+
+import React from "react";
+
 import type { Preview } from "@storybook/react";
 
 const preview: Preview = {
@@ -9,6 +13,16 @@ const preview: Preview = {
       },
     },
   },
+
+  decorators: [
+    (Story, { args }) => {
+      return (
+        <main id="app">
+          <Story args={args} />
+        </main>
+      );
+    },
+  ],
 };
 
 export default preview;

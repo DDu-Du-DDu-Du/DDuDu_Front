@@ -14,7 +14,9 @@ const RootLayout = ({
 }>) => {
   return (
     <html lang="ko">
-      <body>{children}</body>
+      <body>
+        <main id="app">{children}</main>
+      </body>
     </html>
   );
 };

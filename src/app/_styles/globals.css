@@ -13,14 +13,29 @@
 }
 
 @layer base {
-  body {
-    width: 100dvw;
+  html {
+    font-size: 62.5%;
+
+    with: 100dvw;
     height: 100dvh;
   }
-}
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  body {
+    width: 100%;
+    height: 100%;
+  }
+
+  #app {
+    width: 100%;
+    height: 100%;
+
+    position: relative;
+    overflow: scroll;
+
+    ::-webkit-scrollbar {
+      display: none;
+    }
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
 }
