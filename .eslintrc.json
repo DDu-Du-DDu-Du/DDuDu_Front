@@ -8,5 +8,7 @@
   ],
   "parserOptions": {
     "parser": "@typescript-eslint/parser"
-  }
+  },
+
+  "ignorePatterns": ["postcss.config.js", "!/.storybook"]
 }
