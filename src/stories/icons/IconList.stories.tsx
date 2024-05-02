@@ -17,7 +17,7 @@ import { IconViewer } from "./components";
  *
  * */
 const meta = {
-  title: "example/아이콘 목록",
+  title: "아이콘 목록",
   component: IconViewer,
   parameters: {
     layout: "centered",
