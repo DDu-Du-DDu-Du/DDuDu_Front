@@ -38,7 +38,7 @@ const ToastItem = ({ message, deleteTime }: ToastProps) => {
           }}
           exit={initialStyle}
           // TODO - 추후 shadow 변수 적용하기
-          className="w-[20rem] h-[6rem] shadow-[0_0_2rem_0_rgba(0,0,0,0.2)] rounded-radius5 relative overflow-hidden"
+          className="w-[20rem] h-[6.5rem] shadow-[0_0_2rem_0_rgba(0,0,0,0.2)] rounded-radius5 relative overflow-hidden"
         >
           <button
             type="button"
@@ -47,7 +47,9 @@ const ToastItem = ({ message, deleteTime }: ToastProps) => {
             <CloseIcon size={16} />
           </button>
 
-          <p className="w-full h-[5.5rem] px-[1rem] py-[0.6rem]">{message}</p>
+          <p className="w-[20rem] h-[6rem] px-[1rem] pb-[1rem] pt-[1.4rem] line-clamp-2">
+            {message}
+          </p>
 
           <div className="w-full h-[0.5rem] flex justify-end bg-example_gray_900">
             <motion.div
