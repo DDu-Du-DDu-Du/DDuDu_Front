@@ -47,9 +47,10 @@ const ToastItem = ({ message, deleteTime, type, onRemove }: ToastProps) => {
             <CloseIcon size={16} />
           </button>
 
-          <p className="w-[20rem] h-[6rem] px-[1rem] pb-[1rem] pt-[1.4rem] line-clamp-2">
-            {message}
-          </p>
+          <p
+            className="w-[20rem] h-[6rem] px-[1rem] pb-[1rem] pt-[1.4rem] line-clamp-2"
+            dangerouslySetInnerHTML={{ __html: message }}
+          />
 
           <div className="w-full h-[0.5rem] flex justify-end bg-example_gray_500">
             <motion.div
