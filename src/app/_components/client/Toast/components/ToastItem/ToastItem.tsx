@@ -2,17 +2,21 @@
 
 import { CloseIcon } from "@/app/_components/server";
 
-import { useToggleTimer } from "./hooks";
+import { ToastType } from "../../ToastProvider.type";
+import { useToastTypeColor, useToggleTimer } from "./hooks";
 
 import { AnimatePresence, motion } from "framer-motion";
+import { twJoin } from "tailwind-merge";
 
 interface ToastProps {
   message: string;
   deleteTime: number;
+  type: ToastType;
 }
 
-const ToastItem = ({ message, deleteTime }: ToastProps) => {
+const ToastItem = ({ message, deleteTime, type }: ToastProps) => {
   const isShow = useToggleTimer({ time: deleteTime });
+  const typeStyle = useToastTypeColor({ type });
 
   const initialStyle = {
     translateX: "100%",
@@ -47,7 +51,7 @@ const ToastItem = ({ message, deleteTime }: ToastProps) => {
 
           <div className="w-full h-[0.5rem] flex justify-end bg-example_gray_900">
             <motion.div
-              className="h-full bg-emerald-700"
+              className={twJoin("h-full", typeStyle)}
               initial={{ width: "100%" }}
               animate={{
                 width: "0%",
