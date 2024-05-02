@@ -1,5 +1,7 @@
 import "../_styles/globals.css";
 
+import { TanstackProvider } from "./_components";
+
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -15,7 +17,9 @@ const RootLayout = ({
   return (
     <html lang="ko">
       <body>
-        <main id="app">{children}</main>
+        <TanstackProvider>
+          <main id="app">{children}</main>
+        </TanstackProvider>
       </body>
     </html>
   );
