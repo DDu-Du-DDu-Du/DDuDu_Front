@@ -29,7 +29,7 @@ const useToastList = () => {
 
       setTimeout(() => {
         removeToast(id.toString());
-      }, deleteTime + 1000);
+      }, deleteTime + 500);
     },
     [removeToast],
   );
