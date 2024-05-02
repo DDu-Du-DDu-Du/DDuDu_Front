@@ -19,7 +19,7 @@ export const ToastContext = createContext<ToastContextValues>({
 });
 
 const ToastProvider = ({ children }: ToastProviderProps) => {
-  const { toastList, createToast } = useToastList();
+  const { toastList, createToast, removeToast } = useToastList();
 
   return (
     <ToastContext.Provider value={{ createToast }}>
@@ -31,6 +31,7 @@ const ToastProvider = ({ children }: ToastProviderProps) => {
             message={message}
             deleteTime={deleteTime}
             type={type}
+            removeToast={() => removeToast(id)}
           />
         ))}
       </ul>

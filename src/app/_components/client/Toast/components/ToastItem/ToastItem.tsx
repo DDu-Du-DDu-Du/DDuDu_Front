@@ -12,9 +12,10 @@ interface ToastProps {
   message: string;
   deleteTime: number;
   type: ToastType;
+  onRemove: () => void;
 }
 
-const ToastItem = ({ message, deleteTime, type }: ToastProps) => {
+const ToastItem = ({ message, deleteTime, type, onRemove }: ToastProps) => {
   const isShow = useToggleTimer({ time: deleteTime });
   const typeStyle = useToastTypeColor({ type });
 
@@ -41,6 +42,7 @@ const ToastItem = ({ message, deleteTime, type }: ToastProps) => {
           <button
             type="button"
             className="absolute top-[0.2rem] right-[0.2rem] hover:opacity-30 transition-opacity"
+            onClick={onRemove}
           >
             <CloseIcon size={16} />
           </button>
@@ -49,13 +51,13 @@ const ToastItem = ({ message, deleteTime, type }: ToastProps) => {
             {message}
           </p>
 
-          <div className="w-full h-[0.5rem] flex justify-end bg-example_gray_900">
+          <div className="w-full h-[0.5rem] flex justify-end bg-example_gray_500">
             <motion.div
               className={twJoin("h-full", typeStyle)}
               initial={{ width: "100%" }}
               animate={{
                 width: "0%",
-                transition: { duration: deleteTime / 1000 },
+                transition: { duration: deleteTime / 1000 + 0.05, ease: "linear" },
               }}
             />
           </div>
