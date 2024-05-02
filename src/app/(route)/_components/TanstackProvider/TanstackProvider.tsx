@@ -12,7 +12,13 @@ interface TanstackProviderProps {
 const TanstackProvider = ({ children }: TanstackProviderProps) => {
   const [client] = useState(
     new QueryClient({
-      defaultOptions: {},
+      defaultOptions: {
+        queries: {
+          staleTime: 1000 * 60,
+          refetchOnWindowFocus: false,
+          retry: false,
+        },
+      },
     }),
   );
 
