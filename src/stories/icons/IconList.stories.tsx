@@ -1,7 +1,7 @@
 import { CloseIcon } from "@/app/_components/server";
 import type { Meta, StoryObj } from "@storybook/react";
 
-import IconViewer from "./IconViewer";
+import { IconViewer } from "./components";
 
 /**
  * ## Icon List
