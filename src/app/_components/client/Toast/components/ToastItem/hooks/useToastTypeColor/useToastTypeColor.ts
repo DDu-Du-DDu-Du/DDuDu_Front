@@ -1,3 +1,5 @@
+"use client";
+
 import { ToastType } from "../../../../ToastProvider.type";
 
 interface UseToastTypeColor {
