@@ -24,7 +24,7 @@ const ToastProvider = ({ children }: ToastProviderProps) => {
   return (
     <ToastContext.Provider value={{ createToast }}>
       {children}
-      <ul className="absolute right-0 top-0 flex flex-col gap-[0.6rem]">
+      <ul className="absolute right-[1rem] top-[1rem] flex flex-col gap-[0.6rem] text-size14">
         {toastList.map(({ id, message, deleteTime }) => (
           <ToastItem
             key={id}
