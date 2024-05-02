@@ -31,7 +31,7 @@ const ToastProvider = ({ children }: ToastProviderProps) => {
             message={message}
             deleteTime={deleteTime}
             type={type}
-            removeToast={() => removeToast(id)}
+            onRemove={() => removeToast(id)}
           />
         ))}
       </ul>
