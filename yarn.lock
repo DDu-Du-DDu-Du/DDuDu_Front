@@ -5918,6 +5918,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:^7.4.0"
     "@typescript-eslint/parser": "npm:^7.4.0"
     autoprefixer: "npm:^10.0.1"
+    chromatic: "npm:^11.3.0"
     eslint: "npm:^8"
     eslint-config-next: "npm:14.1.4"
     eslint-config-prettier: "npm:^9.1.0"
