@@ -29,6 +29,12 @@ const config: Config = {
 
         text_primary: "",
         text_secondary: "",
+
+        // 임시 컬러
+        example_green_100: "#00C73C",
+        example_yellow_500: "#FFD400",
+        example_red_500: "#ED4044",
+        example_orange_500: "#FFA500",
       },
 
       borderRadius: {
