@@ -2,11 +2,12 @@
 
 import React, { createContext } from "react";
 
+import { CreateToastFunc } from "./ToastProvider.type";
 import { ToastItem } from "./components";
 import { useToastList } from "./hooks";
 
 interface ToastContextValues {
-  createToast: (message: string) => void;
+  createToast: CreateToastFunc;
 }
 
 interface ToastProviderProps {
