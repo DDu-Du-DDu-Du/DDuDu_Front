@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
 import { CloseIcon } from "@/app/_components/server";
+
+import { useToggleTimer } from "./hooks";
 
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -12,13 +12,7 @@ interface ToastProps {
 }
 
 const ToastItem = ({ message, deleteTime }: ToastProps) => {
-  const [isShow, setIsShow] = useState(true);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setIsShow(false);
-    }, deleteTime);
-  }, [deleteTime]);
+  const isShow = useToggleTimer({ time: deleteTime });
 
   const initialStyle = {
     translateX: "100%",
