@@ -1,12 +1,6 @@
-import { SVGProps } from "react";
+import { IconProps } from "../Icons.Type";
 
-interface CloseIconProps extends SVGProps<SVGSVGElement> {
-  size?: number | string;
-  fill?: string;
-  className?: string;
-}
-
-const CloseIcon = ({ size = 32, fill = "black", className = "", ...rest }: CloseIconProps) => {
+const CloseIcon = ({ size = 32, fill = "black", className = "", ...rest }: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
