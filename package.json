@@ -11,7 +11,8 @@
     "prepare": "husky install",
     "postinstall": "husky install",
     "format": "prettier --cache --write .",
-    "lint": "eslint --cache ."
+    "lint": "eslint --cache .",
+    "chromatic": "npx chromatic --project-token=chpt_da1b3d7125ecdbf"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.32.0",
