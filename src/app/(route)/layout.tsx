@@ -22,6 +22,7 @@ const RootLayout = ({
           <main id="app">
             <ToastProvider>{children}</ToastProvider>
           </main>
+          <section id="bottom" />
         </TanstackProvider>
       </body>
     </html>

@@ -26,6 +26,8 @@
 
     display: flex;
     justify-content: center;
+
+    overflow: hidden;
   }
 
   #app {
@@ -43,5 +45,13 @@
     }
     scrollbar-width: none;
     -ms-overflow-style: none;
+  }
+
+  #bottom {
+    width: 100%;
+    max-width: 60rem;
+
+    position: absolute;
+    bottom: 0;
   }
 }
