@@ -2,6 +2,8 @@
 
 import { ReactNode, useEffect, useState } from "react";
 
+import ArrowLeftIcon from "../../staticIcons/ArrowLeftIcon/ArrowLeftIcon";
+
 import { useRouter } from "next/navigation";
 
 interface useSegmentConverProps {
@@ -11,8 +13,8 @@ interface useSegmentConverProps {
 const useSegmentConvert = ({ segments }: useSegmentConverProps) => {
   const router = useRouter();
   const [visible, setVisible] = useState<boolean>(true);
-  const [headerLabel, setHeaderLabel] = useState<string>("Header");
-  const [leftButtonIcon, setLeftButtonIcon] = useState<ReactNode>();
+  const [headerLabel, setHeaderLabel] = useState<string>("");
+  const [leftButtonIcon, setLeftButtonIcon] = useState<ReactNode>(ArrowLeftIcon);
   const [leftButtonFn, setLeftButtonFn] = useState<() => void>(() => router.back);
   const [rightButtonIcon, setRightButtonIcon] = useState<ReactNode>();
   const [rightButtonFn, setRightButtonFn] = useState<() => void>();
