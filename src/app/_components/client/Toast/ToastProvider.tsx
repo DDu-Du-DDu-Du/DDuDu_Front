@@ -1,28 +1,19 @@
 "use client";
 
-import React, { createContext } from "react";
+import React from "react";
 
-import { CreateToastFunc } from "./ToastProvider.type";
 import { ToastItem } from "./components";
-import { useToastList } from "./hooks";
-
-interface ToastContextValues {
-  createToast: CreateToastFunc;
-}
+import { useToastStore } from "./store";
 
 interface ToastProviderProps {
   children: React.ReactNode;
 }
 
-export const ToastContext = createContext<ToastContextValues>({
-  createToast: () => {},
-});
-
 const ToastProvider = ({ children }: ToastProviderProps) => {
-  const { toastList, createToast, removeToast } = useToastList();
+  const { toastList, removeToast } = useToastStore();
 
   return (
-    <ToastContext.Provider value={{ createToast }}>
+    <>
       {children}
       <ul className="absolute right-[1rem] top-[1rem] flex flex-col gap-[0.6rem] text-size14 z-toast">
         {toastList.map(({ id, message, deleteTime, type }) => (
@@ -35,7 +26,7 @@ const ToastProvider = ({ children }: ToastProviderProps) => {
           />
         ))}
       </ul>
-    </ToastContext.Provider>
+    </>
   );
 };
 
