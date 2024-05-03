@@ -1,5 +1,6 @@
 "use client";
 
+import tailwindConfig from "@/../tailwind.config";
 import { CloseIcon } from "@/app/_components/server";
 
 import { ToastType } from "../../ToastProvider.type";
@@ -7,6 +8,7 @@ import { useToastTypeColor, useToggleTimer } from "./hooks";
 
 import { AnimatePresence, motion } from "framer-motion";
 import { twJoin } from "tailwind-merge";
+import resolveConfig from "tailwindcss/resolveConfig";
 
 interface ToastProps {
   message: string;
@@ -18,6 +20,7 @@ interface ToastProps {
 const ToastItem = ({ message, deleteTime, type, onRemove }: ToastProps) => {
   const isShow = useToggleTimer({ time: deleteTime });
   const typeStyle = useToastTypeColor({ type });
+  const { theme } = resolveConfig(tailwindConfig);
 
   const initialStyle = {
     translateX: "100%",
@@ -44,7 +47,10 @@ const ToastItem = ({ message, deleteTime, type, onRemove }: ToastProps) => {
             className="absolute top-[0.2rem] right-[0.2rem] hover:opacity-30 transition-opacity"
             onClick={onRemove}
           >
-            <CloseIcon size={16} />
+            <CloseIcon
+              size={16}
+              fill={theme.colors["example_gray_900"]}
+            />
           </button>
 
           <p
