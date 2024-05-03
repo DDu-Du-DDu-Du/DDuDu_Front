@@ -2,11 +2,11 @@
 
 import { useEffect, useState } from "react";
 
-interface UseToggleTimer {
+interface UseToggleTimerProps {
   time: number;
 }
 
-const useToggleTimer = ({ time }: UseToggleTimer) => {
+const useToggleTimer = ({ time }: UseToggleTimerProps) => {
   const [isShow, setIsShow] = useState(true);
 
   useEffect(() => {

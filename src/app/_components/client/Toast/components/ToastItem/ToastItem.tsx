@@ -10,14 +10,14 @@ import { AnimatePresence, motion } from "framer-motion";
 import { twJoin } from "tailwind-merge";
 import resolveConfig from "tailwindcss/resolveConfig";
 
-interface ToastProps {
+interface ToastItemProps {
   message: string;
   deleteTime: number;
   type: ToastType;
   onRemove: () => void;
 }
 
-const ToastItem = ({ message, deleteTime, type, onRemove }: ToastProps) => {
+const ToastItem = ({ message, deleteTime, type, onRemove }: ToastItemProps) => {
   const isShow = useToggleTimer({ time: deleteTime });
   const typeStyle = useToastTypeColor({ type });
   const { theme } = resolveConfig(tailwindConfig);

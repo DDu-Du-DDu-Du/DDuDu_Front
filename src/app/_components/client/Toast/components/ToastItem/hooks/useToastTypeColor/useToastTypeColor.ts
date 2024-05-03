@@ -2,11 +2,11 @@
 
 import { ToastType } from "../../../../ToastProvider.type";
 
-interface UseToastTypeColor {
+interface UseToastTypeColorProps {
   type: ToastType;
 }
 
-const useToastTypeColor = ({ type }: UseToastTypeColor) => {
+const useToastTypeColor = ({ type }: UseToastTypeColorProps) => {
   /*
     TODO
     추후 정해지는 Color에 맞도록 변수 적용하기
