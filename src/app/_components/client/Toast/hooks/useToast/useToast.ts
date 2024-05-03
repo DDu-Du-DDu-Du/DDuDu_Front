@@ -1,11 +1,9 @@
-"use client";
-
-import { useContext } from "react";
-
-import { ToastContext } from "../../ToastProvider";
+import useToastStore from "../../store/useToastStore/useToastStore";
 
 const useToast = () => {
-  return useContext(ToastContext);
+  const { createToast } = useToastStore();
+
+  return { createToast };
 };
 
 export default useToast;
