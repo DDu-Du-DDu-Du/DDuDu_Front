@@ -1,4 +1,4 @@
-import { BottomPortal } from "./components";
+import { BottomPortal, BottomProvider } from "./components";
 
 const BottomSheet = () => {
   return (
@@ -7,5 +7,7 @@ const BottomSheet = () => {
     </BottomPortal>
   );
 };
+
+BottomSheet.Provider = BottomProvider;
 
 export default BottomSheet;
