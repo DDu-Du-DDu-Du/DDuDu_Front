@@ -25,10 +25,10 @@ const useToastList = () => {
       const { deleteTime = 3000, type = "alert" } = options;
       const id = uuidV4();
 
-      setToastList((prevToast) => [...prevToast, { id: id.toString(), message, deleteTime, type }]);
+      setToastList((prevToast) => [...prevToast, { id: id, message, deleteTime, type }]);
 
       setTimeout(() => {
-        removeToast(id.toString());
+        removeToast(id);
       }, deleteTime + 500);
     },
     [removeToast],
