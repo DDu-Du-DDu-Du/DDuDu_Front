@@ -10,7 +10,7 @@ const ArrowLeftIcon = () => {
       <path
         d="M12 1L2 9L12 17"
         stroke="black"
-        stroke-width="1.5"
+        strokeWidth="1.5"
       />
     </svg>
   );
