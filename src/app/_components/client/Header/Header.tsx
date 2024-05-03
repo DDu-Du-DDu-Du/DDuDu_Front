@@ -2,6 +2,8 @@
 
 import { ReactNode } from "react";
 
+import { scrollToTop } from "@/app/_utils";
+
 import useSegmentConvert from "./hooks/useSegmentConvert/useSegmentConvert";
 
 import { useSelectedLayoutSegments } from "next/navigation";
@@ -25,7 +27,12 @@ const Header = () => {
           {leftButtonIcon as ReactNode}
         </button>
       )}
-      <p className="text-size15">{headerLabel as string}</p>
+      <p
+        className="select-none text-size15"
+        onClick={scrollToTop}
+      >
+        {headerLabel as string}
+      </p>
       {rightButtonFn && (
         <button
           className="absolute right-[2.4rem] top-[1.9rem] h-[1.6rem] w-[1.6rem]"
