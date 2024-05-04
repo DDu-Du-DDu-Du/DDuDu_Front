@@ -1,6 +1,8 @@
 import "../_styles/globals.css";
 
-import { BottomSheet, ToastProvider } from "../_components/client";
+import { ToastProvider } from "@/app/_components/client";
+
+import { BottomProvider } from "../_components/client/BottomSheet";
 import { TanstackProvider } from "./_components";
 
 import type { Metadata } from "next";
@@ -21,7 +23,7 @@ const RootLayout = ({
         <TanstackProvider>
           <main id="app">
             <ToastProvider>{children}</ToastProvider>
-            <BottomSheet.Provider />
+            <BottomProvider />
           </main>
         </TanstackProvider>
       </body>
