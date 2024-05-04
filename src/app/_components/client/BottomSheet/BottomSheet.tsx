@@ -1,6 +1,6 @@
 "use client";
 
-import { BottomPortal } from "./components";
+import { BottomHeader, BottomPortal } from "./components";
 import { useSheetAnimationState } from "./hooks";
 
 import { AnimatePresence, motion } from "framer-motion";
@@ -24,8 +24,9 @@ const BottomSheet = ({ isShow, children }: BottomSheetProps) => {
               duration: 0.3,
               ease: "easeInOut",
             }}
-            className="w-full bg-slate-500 fixed, inset-x-0, bottom-0"
+            className="w-full rounded-tl-[2.4rem] rounded-tr-[2.4rem] bg-slate-500 overflow-hidden"
           >
+            <BottomHeader />
             {children}
           </motion.article>
         )}
