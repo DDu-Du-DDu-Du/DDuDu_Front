@@ -33,10 +33,9 @@ const useSheetDrag = () => {
       event.preventDefault();
 
       const currentHeight = window.innerHeight - startHeaderPosition;
-      const { clientY } = event;
-      const movementY = startPosition - clientY;
+      const movementY = startPosition - event.clientY;
+      const nextSheetHeight = Math.max(currentHeight + movementY, 0);
 
-      const nextSheetHeight = Math.max(currentHeight + movementY);
       setMovementHeight(nextSheetHeight);
     },
     [startHeaderPosition, startPosition],
@@ -47,14 +46,8 @@ const useSheetDrag = () => {
       event.preventDefault();
       setIsDrag(false);
 
-      if (!window) {
-        return;
-      }
-
-      const endPosition = event.clientY;
-      const movementY = endPosition - startPosition;
+      const movementY = event.clientY - startPosition;
       const movementPercentage = -Math.floor((movementY / window.innerHeight) * 100);
-
       setMovementHeight(0);
 
       if (movementPercentage >= 3) {
@@ -85,7 +78,11 @@ const useSheetDrag = () => {
     };
   }, [handleDragEnd, handleDragging, isDrag, startPosition]);
 
-  return { sheetState, targetRef, handleDragStart, movementHeight };
+  const initState = () => {
+    setSheetState("default");
+  };
+
+  return { sheetState, targetRef, handleDragStart, movementHeight, initState };
 };
 
 export default useSheetDrag;
