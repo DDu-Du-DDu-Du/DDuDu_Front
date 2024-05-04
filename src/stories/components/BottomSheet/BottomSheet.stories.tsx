@@ -1,5 +1,5 @@
 import { BottomSheet } from "@/app/_components/client";
-import { BottomProvider, useBottomSheet } from "@/app/_components/client/BottomSheet";
+// import { BottomProvider, useBottomSheet } from "@/app/_components/client/BottomSheet";
 import type { Meta, StoryObj } from "@storybook/react";
 
 /**
@@ -13,7 +13,7 @@ import type { Meta, StoryObj } from "@storybook/react";
  * - **defaultHeight ? : **Bottom Sheet가 나타나는 가장 중간 위치의 값을 전달받습니다. ("50rem" , px 등으로 전달 가능 ) - `default : "35dvh"`
  * - **maxHeight : **Bottom Sheet가 펼쳐질수 있는 최대 값을 전달받습니다. ("60%" , px 등으로 전달 가능 ) - `default : "80dvh"`
  *
- * ### 🔥 Storybook에서는 `viewport`값을 제대로 사용할 수 없어 BottomSheet동작이 원활하지 않습니다.
+ * ### 🔥 Storybook에서는 `viewport`값을 제대로 사용할 수 없어 BottomSheet동작이 원활하지 임시로 제외하였습니다.
  *
  * BottomSheet를 2가지 방법으로 사용할 수 있습니다.
  * - 버튼 클릭 혹은 특정 조건을 통해 BottomSheet가 오픈되는 경우를 고려하여 `useBottomSheet` hook을 통해 제어할 수 있도록 구현하였습니다.<br>
@@ -75,44 +75,44 @@ export const Default: Story = {
     maxHeight: "55rem",
     defaultHeight: "30rem",
   },
-  decorators: [
-    (BottomSheetComponent, { args }) => {
-      const { isShow, handleOpenSheet, handleCloseSheet } = useBottomSheet();
+  // decorators: [
+  //   (BottomSheetComponent, { args }) => {
+  //     const { isShow, handleOpenSheet, handleCloseSheet } = useBottomSheet();
 
-      return (
-        <div
-          style={{
-            width: "30rem",
-            height: "60rem",
-            position: "relative",
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
-          <button
-            onClick={handleOpenSheet}
-            style={{
-              padding: "1rem 2rem",
-              fontSize: "1.4rem",
-              fontWeight: "800",
-              color: "white",
-              borderRadius: "10px",
-              backgroundColor: "gray",
-            }}
-          >
-            오픈
-          </button>
-          <BottomProvider />
+  //     return (
+  //       <div
+  //         style={{
+  //           width: "30rem",
+  //           height: "60rem",
+  //           position: "relative",
+  //           display: "flex",
+  //           flexDirection: "column",
+  //         }}
+  //       >
+  //         <button
+  //           onClick={handleOpenSheet}
+  //           style={{
+  //             padding: "1rem 2rem",
+  //             fontSize: "1.4rem",
+  //             fontWeight: "800",
+  //             color: "white",
+  //             borderRadius: "10px",
+  //             backgroundColor: "gray",
+  //           }}
+  //         >
+  //           오픈
+  //         </button>
+  //         <BottomProvider />
 
-          <BottomSheetComponent
-            args={{
-              ...args,
-              onClose: handleCloseSheet,
-              isShow: isShow,
-            }}
-          />
-        </div>
-      );
-    },
-  ],
+  //         <BottomSheetComponent
+  //           args={{
+  //             ...args,
+  //             onClose: handleCloseSheet,
+  //             isShow: isShow,
+  //           }}
+  //         />
+  //       </div>
+  //     );
+  //   },
+  // ],
 };
