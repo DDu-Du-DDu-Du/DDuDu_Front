@@ -6,14 +6,12 @@ interface UseChangeSheetHeightProps {
   sheetState: BottomSheetStateType;
   defaultHeight: string | number;
   maxHeight: string | number;
-  handelCloseSheet: () => void;
 }
 
 const useChangeSheetHeight = ({
   sheetState,
   defaultHeight,
   maxHeight,
-  handelCloseSheet,
 }: UseChangeSheetHeightProps) => {
   const [height, setHeight] = useState<string | number>(0);
 
@@ -28,7 +26,6 @@ const useChangeSheetHeight = ({
         break;
 
       case "close":
-        handelCloseSheet();
         setHeight(0);
         break;
 
@@ -36,7 +33,7 @@ const useChangeSheetHeight = ({
         setHeight(defaultHeight);
         break;
     }
-  }, [defaultHeight, handelCloseSheet, maxHeight, sheetState]);
+  }, [defaultHeight, maxHeight, sheetState]);
 
   return height;
 };

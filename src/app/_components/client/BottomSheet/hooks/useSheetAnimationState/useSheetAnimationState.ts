@@ -22,15 +22,10 @@ const useSheetAnimationState = ({ isShow }: UseSheetAnimationStateProps) => {
     setActivePortal(false);
   }, []);
 
-  const handelCloseSheet = useCallback(() => {
-    setIsOpenSheet(false);
-  }, []);
-
   return {
     activePortal,
     isOpenSheet,
     handleUnActivePortal,
-    handelCloseSheet,
   };
 };
 
