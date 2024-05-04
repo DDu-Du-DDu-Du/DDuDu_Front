@@ -2,7 +2,7 @@ const BottomProvider = () => {
   return (
     <section
       id="bottom"
-      className="w-full sticky bottom-0"
+      className="w-full absolute bottom-0"
     />
   );
 };
