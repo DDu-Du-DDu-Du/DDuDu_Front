@@ -1,6 +1,6 @@
 import { MouseEvent as ReactMouseEvent, useCallback, useEffect, useRef, useState } from "react";
 
-import { BottomSheetStateType } from "../../BottomSheet.type";
+import { BottomDraggingStateType, BottomSheetStateType } from "../../BottomSheet.type";
 
 interface UseSheetDrag {
   onClose?: () => void;
@@ -8,6 +8,7 @@ interface UseSheetDrag {
 
 const useSheetDrag = ({ onClose }: UseSheetDrag) => {
   const [isDrag, setIsDrag] = useState(false);
+  const [draggingState, setDraggingState] = useState<BottomDraggingStateType>("center");
   const [startPosition, setStartPosition] = useState(0);
   const [startHeaderPosition, setStartHeaderPosition] = useState(0);
   const [movementHeight, setMovementHeight] = useState(0);
@@ -36,11 +37,23 @@ const useSheetDrag = ({ onClose }: UseSheetDrag) => {
     (event: MouseEvent) => {
       event.preventDefault();
 
-      const currentHeight = window.innerHeight - startHeaderPosition;
+      const startingHeight = window.innerHeight - startHeaderPosition;
       const movementY = startPosition - event.clientY;
-      const nextSheetHeight = Math.max(currentHeight + movementY, 0);
+      const nextSheetHeight = Math.max(startingHeight + movementY, 0);
 
       setMovementHeight(nextSheetHeight);
+
+      if (nextSheetHeight > startingHeight + 10) {
+        setDraggingState("up");
+        return;
+      }
+
+      if (nextSheetHeight < startingHeight - 10) {
+        setDraggingState("down");
+        return;
+      }
+
+      setDraggingState("center");
     },
     [startHeaderPosition, startPosition],
   );
@@ -53,6 +66,7 @@ const useSheetDrag = ({ onClose }: UseSheetDrag) => {
       const movementY = event.clientY - startPosition;
       const movementPercentage = -Math.floor((movementY / window.innerHeight) * 100);
       setMovementHeight(0);
+      setDraggingState("center");
 
       if (movementPercentage >= 3) {
         setSheetState("full");
@@ -96,7 +110,7 @@ const useSheetDrag = ({ onClose }: UseSheetDrag) => {
     setSheetState("default");
   };
 
-  return { sheetState, targetRef, handleDragStart, movementHeight, initState };
+  return { sheetState, targetRef, handleDragStart, movementHeight, initState, draggingState };
 };
 
 export default useSheetDrag;

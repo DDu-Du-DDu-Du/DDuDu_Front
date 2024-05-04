@@ -4,7 +4,7 @@ const BarHandleIcon = ({ size = 32, className, fill = "black", ...rest }: IconPr
   return (
     <svg
       width={size}
-      height="4"
+      height="6"
       viewBox="0 0 100 4"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -13,7 +13,7 @@ const BarHandleIcon = ({ size = 32, className, fill = "black", ...rest }: IconPr
     >
       <rect
         width={size}
-        height="4"
+        height="6"
         rx="2"
         fill={fill}
       />
