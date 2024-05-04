@@ -1,7 +1,6 @@
 "use client";
 
-import { useBottomSheet } from "../_components/client/BottomSheet";
-import BottomSheet from "../_components/client/BottomSheet/BottomSheet";
+import { BottomSheet, useBottomSheet } from "../_components/client/BottomSheet";
 
 const Home = () => {
   // 특정 액션 혹은 조건의 상황에서 Bottom Sheet를 사용해야하는 경우 해당 hook을 사용
