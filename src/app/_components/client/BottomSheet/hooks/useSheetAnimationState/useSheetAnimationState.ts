@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 interface UseSheetAnimationStateProps {
   isShow: boolean;
@@ -18,14 +18,19 @@ const useSheetAnimationState = ({ isShow }: UseSheetAnimationStateProps) => {
     setIsOpenSheet(false);
   }, [isShow]);
 
-  const handleCloseSheet = () => {
+  const handleUnActivePortal = useCallback(() => {
     setActivePortal(false);
-  };
+  }, []);
+
+  const handelCloseSheet = useCallback(() => {
+    setIsOpenSheet(false);
+  }, []);
 
   return {
     activePortal,
     isOpenSheet,
-    handleCloseSheet,
+    handleUnActivePortal,
+    handelCloseSheet,
   };
 };
 
