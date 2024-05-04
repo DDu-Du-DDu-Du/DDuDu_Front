@@ -1,29 +1,44 @@
+import { useEffect, useState } from "react";
+
 import { BottomSheetStateType } from "../../BottomSheet.type";
 
 interface UseChangeSheetHeightProps {
   sheetState: BottomSheetStateType;
   defaultHeight: string | number;
   maxHeight: string | number;
+  handelCloseSheet: () => void;
 }
 
 const useChangeSheetHeight = ({
   sheetState,
   defaultHeight,
   maxHeight,
+  handelCloseSheet,
 }: UseChangeSheetHeightProps) => {
-  switch (sheetState) {
-    case "default":
-      return defaultHeight;
+  const [height, setHeight] = useState<string | number>(0);
 
-    case "full":
-      return maxHeight;
+  useEffect(() => {
+    switch (sheetState) {
+      case "default":
+        setHeight(defaultHeight);
+        break;
 
-    case "close":
-      return 0;
+      case "full":
+        setHeight(maxHeight);
+        break;
 
-    default:
-      return defaultHeight;
-  }
+      case "close":
+        handelCloseSheet();
+        setHeight(0);
+        break;
+
+      default:
+        setHeight(defaultHeight);
+        break;
+    }
+  }, [defaultHeight, handelCloseSheet, maxHeight, sheetState]);
+
+  return height;
 };
 
 export default useChangeSheetHeight;
