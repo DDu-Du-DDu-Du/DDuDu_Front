@@ -2,7 +2,11 @@ import { MouseEvent as ReactMouseEvent, useCallback, useEffect, useRef, useState
 
 import { BottomSheetStateType } from "../../BottomSheet.type";
 
-const useSheetDrag = () => {
+interface UseSheetDrag {
+  onClose?: () => void;
+}
+
+const useSheetDrag = ({ onClose }: UseSheetDrag) => {
   const [isDrag, setIsDrag] = useState(false);
   const [startPosition, setStartPosition] = useState(0);
   const [startHeaderPosition, setStartHeaderPosition] = useState(0);
@@ -55,10 +59,20 @@ const useSheetDrag = () => {
       }
 
       if (movementPercentage <= -3) {
-        setSheetState(sheetState === "full" ? "default" : "close");
+        if (sheetState === "full") {
+          setSheetState("default");
+          return;
+        }
+
+        if (sheetState === "default" && onClose) {
+          onClose();
+          return;
+        }
+
+        setSheetState("close");
       }
     },
-    [sheetState, startPosition],
+    [onClose, sheetState, startPosition],
   );
 
   useEffect(() => {

@@ -8,7 +8,7 @@ import { AnimatePresence, motion } from "framer-motion";
 interface BottomSheetProps {
   children: React.ReactNode;
   isShow: boolean;
-  onClose: () => void;
+  onClose?: () => void;
 
   defaultHeight?: string | number;
   maxHeight?: string | number;
@@ -22,25 +22,28 @@ const BottomSheet = ({
   defaultHeight = "35dvh",
   maxHeight = "80dvh",
 }: BottomSheetProps) => {
-  const { isOpenSheet, activePortal, handleUnActivePortal, handelCloseSheet } =
-    useSheetAnimationState({
-      isShow,
-    });
+  const { isOpenSheet, activePortal, handleUnActivePortal } = useSheetAnimationState({
+    isShow,
+  });
 
-  const { targetRef, handleDragStart, movementHeight, sheetState, initState } = useSheetDrag();
+  const { targetRef, handleDragStart, movementHeight, sheetState, initState } = useSheetDrag({
+    onClose,
+  });
 
   const sheetHeight = useChangeSheetHeight({
     sheetState,
     defaultHeight,
     maxHeight,
-    handelCloseSheet,
   });
 
   return (
     <BottomPortal isShow={activePortal}>
       <AnimatePresence
         onExitComplete={() => {
-          onClose();
+          if (onClose) {
+            onClose();
+          }
+
           handleUnActivePortal();
           initState();
         }}
@@ -58,7 +61,7 @@ const BottomSheet = ({
               height: movementHeight ? `${movementHeight}px` : sheetHeight,
               transition: { duration: 0 },
             }}
-            className="w-full rounded-tl-[2.4rem] rounded-tr-[2.4rem] bg-slate-500 overflow-hidden"
+            className="w-full flex flex-col rounded-tl-[2.4rem] rounded-tr-[2.4rem] bg-slate-500 overflow-hidden"
             style={{
               maxHeight: maxHeight,
               minHeight: "3.2rem",
@@ -69,7 +72,7 @@ const BottomSheet = ({
               onMouseDown={handleDragStart}
               ref={targetRef}
             />
-            {children}
+            <div className="w-full flex-1 border overflow-scroll scrollbar-hide">{children}</div>
           </motion.article>
         )}
       </AnimatePresence>
