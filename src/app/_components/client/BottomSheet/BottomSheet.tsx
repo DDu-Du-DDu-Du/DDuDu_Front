@@ -74,7 +74,7 @@ const BottomSheet = ({
               draggingState={draggingState}
               ref={targetRef}
             />
-            <div className="w-full flex-1 border overflow-scroll scrollbar-hide">{children}</div>
+            <div className="w-full flex-1 overflow-scroll scrollbar-hide">{children}</div>
           </motion.article>
         )}
       </AnimatePresence>
