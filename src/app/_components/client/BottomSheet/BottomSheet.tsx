@@ -1,13 +1,37 @@
-import { BottomPortal, BottomProvider } from "./components";
+"use client";
 
-const BottomSheet = () => {
+import { BottomPortal } from "./components";
+import { useSheetAnimationState } from "./hooks";
+
+import { AnimatePresence, motion } from "framer-motion";
+
+interface BottomSheetProps {
+  children: React.ReactNode;
+  isShow: boolean;
+}
+
+const BottomSheet = ({ isShow, children }: BottomSheetProps) => {
+  const { isOpenSheet, activePortal, handleCloseSheet } = useSheetAnimationState({ isShow });
   return (
-    <BottomPortal isShow>
-      <div className="w-full h-[20rem] bg-slate-500 translate-y-10">BottomSheet</div>
+    <BottomPortal isShow={activePortal}>
+      <AnimatePresence onExitComplete={handleCloseSheet}>
+        {isOpenSheet && (
+          <motion.article
+            initial={{ y: "100%" }}
+            animate={{ y: `0%` }}
+            exit={{ y: "100%" }}
+            transition={{
+              duration: 0.3,
+              ease: "easeInOut",
+            }}
+            className="w-full bg-slate-500 fixed, inset-x-0, bottom-0"
+          >
+            {children}
+          </motion.article>
+        )}
+      </AnimatePresence>
     </BottomPortal>
   );
 };
-
-BottomSheet.Provider = BottomProvider;
 
 export default BottomSheet;
