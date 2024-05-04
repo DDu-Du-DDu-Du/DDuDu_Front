@@ -26,9 +26,10 @@ const BottomSheet = ({
     isShow,
   });
 
-  const { targetRef, handleDragStart, movementHeight, sheetState, initState } = useSheetDrag({
-    onClose,
-  });
+  const { targetRef, handleDragStart, movementHeight, sheetState, initState, draggingState } =
+    useSheetDrag({
+      onClose,
+    });
 
   const sheetHeight = useChangeSheetHeight({
     sheetState,
@@ -70,6 +71,7 @@ const BottomSheet = ({
           >
             <BottomHeader
               onMouseDown={handleDragStart}
+              draggingState={draggingState}
               ref={targetRef}
             />
             <div className="w-full flex-1 border overflow-scroll scrollbar-hide">{children}</div>
