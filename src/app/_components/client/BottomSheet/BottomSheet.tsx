@@ -55,7 +55,7 @@ const BottomSheet = ({
             animate={{ y: `0%`, height: sheetHeight }}
             exit={{ y: "100%" }}
             transition={{
-              duration: 0.1,
+              duration: 0.2,
               ease: "easeOut",
             }}
             whileTap={{
