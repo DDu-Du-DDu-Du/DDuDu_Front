@@ -21,6 +21,7 @@ const useSheetDrag = ({ onClose }: UseSheetDrag) => {
   const [movementHeight, setMovementHeight] = useState(0);
 
   const [sheetState, setSheetState] = useState<BottomSheetStateType>("default");
+  // const [device, setDevice] = useState("");
   const targetRef = useRef<HTMLElement | null>(null);
 
   const handleStartAction = useCallback(
@@ -96,7 +97,8 @@ const useSheetDrag = ({ onClose }: UseSheetDrag) => {
         movementY = event.changedTouches[0].clientY - startPosition;
       }
 
-      if (event.type === "mousemove" && "clientY" in event) {
+      console.log(event);
+      if (event.type === "mouseup" && "clientY" in event) {
         movementY = event.clientY - startPosition;
       }
 
