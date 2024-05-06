@@ -1,7 +1,7 @@
 "use client";
 
 import { BottomHeader, BottomPortal } from "./components";
-import { useChangeSheetHeight, useSheetAnimationState, useSheetDrag } from "./hooks";
+import { useChangeSheetHeight, useSheetAction, useSheetAnimationState } from "./hooks";
 
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -26,8 +26,8 @@ const BottomSheet = ({
     isShow,
   });
 
-  const { targetRef, movementHeight, sheetState, handleStartAction, initState, draggingState } =
-    useSheetDrag({
+  const { targetRef, movementHeight, sheetState, draggingState, handleStartAction, initState } =
+    useSheetAction({
       onClose,
     });
 
