@@ -13,6 +13,8 @@ interface UseSheetDrag {
   onClose?: () => void;
 }
 
+type Device = "mobile" | "browser";
+
 const useSheetDrag = ({ onClose }: UseSheetDrag) => {
   const [isDrag, setIsDrag] = useState(false);
   const [draggingState, setDraggingState] = useState<BottomDraggingStateType>("center");
@@ -21,7 +23,7 @@ const useSheetDrag = ({ onClose }: UseSheetDrag) => {
   const [movementHeight, setMovementHeight] = useState(0);
 
   const [sheetState, setSheetState] = useState<BottomSheetStateType>("default");
-  // const [device, setDevice] = useState("");
+  const [device, setDevice] = useState<Device>("browser");
   const targetRef = useRef<HTMLElement | null>(null);
 
   const handleStartAction = useCallback(
@@ -42,15 +44,19 @@ const useSheetDrag = ({ onClose }: UseSheetDrag) => {
 
       if (event.type === "touchstart" && "touches" in event) {
         setStartPosition(event.touches[0].clientY);
+        setDevice("mobile");
         return;
       }
 
       if (event.type === "mousedown" && "clientY" in event) {
         setStartPosition(event.clientY);
+        setDevice("browser");
       }
     },
     [],
   );
+
+  console.log(device);
 
   const handleMoveAction = useCallback(
     (event: MouseEvent | TouchEvent) => {
@@ -130,29 +136,41 @@ const useSheetDrag = ({ onClose }: UseSheetDrag) => {
 
   useEffect(() => {
     if (isDrag) {
-      window.addEventListener("mouseup", handleEndAction);
-      window.addEventListener("mousemove", handleMoveAction);
+      if (device === "browser") {
+        window.addEventListener("mouseup", handleEndAction);
+        window.addEventListener("mousemove", handleMoveAction);
+      }
 
-      window.addEventListener("touchend", handleEndAction);
-      window.addEventListener("touchmove", handleMoveAction);
+      if (device === "mobile") {
+        window.addEventListener("touchend", handleEndAction);
+        window.addEventListener("touchmove", handleMoveAction);
+      }
     }
 
     if (!isDrag) {
-      window.removeEventListener("mouseup", handleEndAction);
-      window.removeEventListener("mousemove", handleMoveAction);
+      if (device === "browser") {
+        window.removeEventListener("mouseup", handleEndAction);
+        window.removeEventListener("mousemove", handleMoveAction);
+      }
 
-      window.removeEventListener("touchend", handleEndAction);
-      window.removeEventListener("touchmove", handleMoveAction);
+      if (device === "mobile") {
+        window.removeEventListener("touchend", handleEndAction);
+        window.removeEventListener("touchmove", handleMoveAction);
+      }
     }
 
     return () => {
-      window.removeEventListener("mouseup", handleEndAction);
-      window.removeEventListener("mousemove", handleMoveAction);
+      if (device === "browser") {
+        window.removeEventListener("mouseup", handleEndAction);
+        window.removeEventListener("mousemove", handleMoveAction);
+      }
 
-      window.removeEventListener("touchend", handleEndAction);
-      window.removeEventListener("touchmove", handleMoveAction);
+      if (device === "mobile") {
+        window.removeEventListener("touchend", handleEndAction);
+        window.removeEventListener("touchmove", handleMoveAction);
+      }
     };
-  }, [handleEndAction, handleMoveAction, isDrag, startPosition]);
+  }, [device, handleEndAction, handleMoveAction, isDrag, startPosition]);
 
   const initState = () => {
     setSheetState("default");
