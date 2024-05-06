@@ -40,7 +40,7 @@ const useSegmentConvert = ({ segments }: useSegmentConverProps) => {
     }
   }, [segments]);
 
-  return [visible, headerLabel, leftButtonIcon, leftButtonFn, rightButtonIcon, rightButtonFn];
+  return { visible, headerLabel, leftButtonIcon, leftButtonFn, rightButtonIcon, rightButtonFn };
 };
 
 export default useSegmentConvert;
