@@ -26,7 +26,7 @@ const BottomSheet = ({
     isShow,
   });
 
-  const { targetRef, handleDragStart, movementHeight, sheetState, initState, draggingState } =
+  const { targetRef, movementHeight, sheetState, handleStartAction, initState, draggingState } =
     useSheetDrag({
       onClose,
     });
@@ -55,7 +55,7 @@ const BottomSheet = ({
             animate={{ y: `0%`, height: sheetHeight }}
             exit={{ y: "100%" }}
             transition={{
-              duration: 0.2,
+              duration: 0.1,
               ease: "easeOut",
             }}
             whileTap={{
@@ -70,7 +70,7 @@ const BottomSheet = ({
             }}
           >
             <BottomHeader
-              onMouseDown={handleDragStart}
+              onActionStart={handleStartAction}
               draggingState={draggingState}
               ref={targetRef}
             />

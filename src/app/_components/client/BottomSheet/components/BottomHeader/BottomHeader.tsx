@@ -1,22 +1,23 @@
 "use client";
 
-import { MouseEvent, forwardRef } from "react";
+import { MouseEvent, TouchEvent, forwardRef } from "react";
 
 import { BottomDraggingStateType } from "../../BottomSheet.type";
 
 import { motion } from "framer-motion";
 
 interface BottomHeaderProps {
-  onMouseDown: (event: MouseEvent<HTMLElement>) => void;
+  onActionStart: (event: MouseEvent<HTMLElement> | TouchEvent<HTMLElement>) => void;
   draggingState: BottomDraggingStateType;
 }
 
 const BottomHeader = forwardRef<HTMLElement, BottomHeaderProps>(
-  ({ onMouseDown, draggingState }, ref) => {
+  ({ onActionStart, draggingState }, ref) => {
     return (
       <header
-        className="w-full h-[3.2rem] flex items-center justify-center"
-        onMouseDown={onMouseDown}
+        className="w-full h-[3.2rem] flex items-center justify-center touch-none"
+        onMouseDown={onActionStart}
+        onTouchStart={onActionStart}
         ref={ref}
       >
         <motion.div

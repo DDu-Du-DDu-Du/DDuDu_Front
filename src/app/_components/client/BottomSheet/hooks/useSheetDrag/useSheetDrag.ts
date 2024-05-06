@@ -1,4 +1,11 @@
-import { MouseEvent as ReactMouseEvent, useCallback, useEffect, useRef, useState } from "react";
+import {
+  MouseEvent as ReactMouseEvent,
+  TouchEvent as ReactTouchEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 import { BottomDraggingStateType, BottomSheetStateType } from "../../BottomSheet.type";
 
@@ -16,29 +23,49 @@ const useSheetDrag = ({ onClose }: UseSheetDrag) => {
   const [sheetState, setSheetState] = useState<BottomSheetStateType>("default");
   const targetRef = useRef<HTMLElement | null>(null);
 
-  const handleDragStart = useCallback((event: ReactMouseEvent<HTMLElement>) => {
-    event.preventDefault();
-    const { current } = targetRef;
+  const handleStartAction = useCallback(
+    (event: ReactMouseEvent<HTMLElement> | ReactTouchEvent<HTMLElement>) => {
+      event.preventDefault();
+      const { current } = targetRef;
 
-    if (!current) {
-      return;
-    }
+      if (!current) {
+        return;
+      }
 
-    const { top } = current.getBoundingClientRect();
-    const currentHeight = window.innerHeight - top;
+      const { top } = current.getBoundingClientRect();
+      const currentHeight = window.innerHeight - top;
 
-    setStartHeaderPosition(top);
-    setMovementHeight(currentHeight);
-    setStartPosition(event.clientY);
-    setIsDrag(true);
-  }, []);
+      setStartHeaderPosition(top);
+      setMovementHeight(currentHeight);
+      setIsDrag(true);
 
-  const handleDragging = useCallback(
-    (event: MouseEvent) => {
+      if (event.type === "touchstart" && "touches" in event) {
+        setStartPosition(event.touches[0].clientY);
+        return;
+      }
+
+      if (event.type === "mousedown" && "clientY" in event) {
+        setStartPosition(event.clientY);
+      }
+    },
+    [],
+  );
+
+  const handleMoveAction = useCallback(
+    (event: MouseEvent | TouchEvent) => {
       event.preventDefault();
 
+      let movementY = 0;
+
+      if (event.type === "touchmove" && "touches" in event) {
+        movementY = startPosition - event.touches[0].clientY;
+      }
+
+      if (event.type === "mousemove" && "clientY" in event) {
+        movementY = startPosition - event.clientY;
+      }
+
       const startingHeight = window.innerHeight - startHeaderPosition;
-      const movementY = startPosition - event.clientY;
       const nextSheetHeight = Math.max(startingHeight + movementY, 0);
 
       setMovementHeight(nextSheetHeight);
@@ -58,13 +85,23 @@ const useSheetDrag = ({ onClose }: UseSheetDrag) => {
     [startHeaderPosition, startPosition],
   );
 
-  const handleDragEnd = useCallback(
-    (event: MouseEvent) => {
+  const handleEndAction = useCallback(
+    (event: MouseEvent | TouchEvent) => {
       event.preventDefault();
       setIsDrag(false);
 
-      const movementY = event.clientY - startPosition;
+      let movementY = 0;
+
+      if (event.type === "touchend" && "changedTouches" in event) {
+        movementY = event.changedTouches[0].clientY - startPosition;
+      }
+
+      if (event.type === "mousemove" && "clientY" in event) {
+        movementY = event.clientY - startPosition;
+      }
+
       const movementPercentage = -Math.floor((movementY / window.innerHeight) * 100);
+
       setMovementHeight(0);
       setDraggingState("center");
 
@@ -91,26 +128,42 @@ const useSheetDrag = ({ onClose }: UseSheetDrag) => {
 
   useEffect(() => {
     if (isDrag) {
-      window.addEventListener("mouseup", handleDragEnd);
-      window.addEventListener("mousemove", handleDragging);
+      window.addEventListener("mouseup", handleEndAction);
+      window.addEventListener("mousemove", handleMoveAction);
+
+      window.addEventListener("touchend", handleEndAction);
+      window.addEventListener("touchmove", handleMoveAction);
     }
 
     if (!isDrag) {
-      window.removeEventListener("mouseup", handleDragEnd);
-      window.removeEventListener("mousemove", handleDragging);
+      window.removeEventListener("mouseup", handleEndAction);
+      window.removeEventListener("mousemove", handleMoveAction);
+
+      window.removeEventListener("touchend", handleEndAction);
+      window.removeEventListener("touchmove", handleMoveAction);
     }
 
     return () => {
-      window.removeEventListener("mouseup", handleDragEnd);
-      window.removeEventListener("mousemove", handleDragging);
+      window.removeEventListener("mouseup", handleEndAction);
+      window.removeEventListener("mousemove", handleMoveAction);
+
+      window.removeEventListener("touchend", handleEndAction);
+      window.removeEventListener("touchmove", handleMoveAction);
     };
-  }, [handleDragEnd, handleDragging, isDrag, startPosition]);
+  }, [handleEndAction, handleMoveAction, isDrag, startPosition]);
 
   const initState = () => {
     setSheetState("default");
   };
 
-  return { sheetState, targetRef, handleDragStart, movementHeight, initState, draggingState };
+  return {
+    targetRef,
+    sheetState,
+    draggingState,
+    movementHeight,
+    handleStartAction,
+    initState,
+  };
 };
 
 export default useSheetDrag;
