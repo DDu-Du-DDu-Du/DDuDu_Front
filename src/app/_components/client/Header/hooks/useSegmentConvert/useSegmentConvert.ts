@@ -2,7 +2,7 @@
 
 import { ReactNode, useEffect, useState } from "react";
 
-import ArrowLeftIcon from "../../staticIcons/ArrowLeftIcon/ArrowLeftIcon";
+import ArrowLeftIcon from "@/app/_components/server/Icons/staticIcons/ArrowLeftIcon/ArrowLeftIcon";
 
 import { useRouter } from "next/navigation";
 
