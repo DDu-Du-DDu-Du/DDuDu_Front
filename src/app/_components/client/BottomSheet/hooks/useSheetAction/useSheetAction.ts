@@ -9,11 +9,11 @@ import {
 
 import { BottomDraggingStateType, BottomSheetStateType } from "../../BottomSheet.type";
 
-interface UseSheetDrag {
+interface UseSheetAction {
   onClose?: () => void;
 }
 
-const useSheetDrag = ({ onClose }: UseSheetDrag) => {
+const useSheetAction = ({ onClose }: UseSheetAction) => {
   const [isDrag, setIsDrag] = useState(false);
   const [draggingState, setDraggingState] = useState<BottomDraggingStateType>("center");
   const [startPosition, setStartPosition] = useState(0);
@@ -161,4 +161,4 @@ const useSheetDrag = ({ onClose }: UseSheetDrag) => {
   };
 };
 
-export default useSheetDrag;
+export default useSheetAction;
