@@ -56,8 +56,6 @@ const useSheetDrag = ({ onClose }: UseSheetDrag) => {
     [],
   );
 
-  console.log(device);
-
   const handleMoveAction = useCallback(
     (event: MouseEvent | TouchEvent) => {
       event.preventDefault();
@@ -103,7 +101,6 @@ const useSheetDrag = ({ onClose }: UseSheetDrag) => {
         movementY = event.changedTouches[0].clientY - startPosition;
       }
 
-      console.log(event);
       if (event.type === "mouseup" && "clientY" in event) {
         movementY = event.clientY - startPosition;
       }
