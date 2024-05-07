@@ -30,7 +30,7 @@ const useToastStore = create<UseToastStore>((set) => ({
     set(({ toastList, removeToast }) => {
       setTimeout(() => {
         removeToast(id);
-      }, deleteTime + 500);
+      }, deleteTime + 250);
 
       return { toastList: [...toastList, { id, message, deleteTime, type }] };
     });
