@@ -5,7 +5,7 @@ const DDuDuSheet = () => {
   return (
     <BottomSheet
       isShow
-      defaultHeight={""}
+      defaultHeight={"fit-content"}
     >
       <DDuDuMenu />
     </BottomSheet>
