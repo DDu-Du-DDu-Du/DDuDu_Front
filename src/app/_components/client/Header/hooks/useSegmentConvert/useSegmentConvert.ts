@@ -11,7 +11,7 @@ import { useSelectedLayoutSegments } from "next/navigation";
 const useSegmentConvert = () => {
   const segments = useSelectedLayoutSegments();
 
-  const { headerLabel, rightButtonIcon, rightButtonFn } = useMemo(() => {
+  const headerState = useMemo(() => {
     let headerLabel = "";
     let rightButtonIcon: JSX.Element | null = null;
     let rightButtonFn: (() => void) | undefined = undefined;
@@ -30,7 +30,7 @@ const useSegmentConvert = () => {
     return { headerLabel, rightButtonIcon, rightButtonFn };
   }, [segments]);
 
-  return { headerLabel, rightButtonIcon, rightButtonFn };
+  return headerState;
 };
 
 export default useSegmentConvert;
