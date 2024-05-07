@@ -25,7 +25,6 @@ const useSheetAction = ({ onClose }: UseSheetAction) => {
 
   const handleStartAction = useCallback(
     (event: ReactMouseEvent<HTMLElement> | ReactTouchEvent<HTMLElement>) => {
-      event.preventDefault();
       const { current } = targetRef;
 
       if (!current) {
@@ -53,7 +52,6 @@ const useSheetAction = ({ onClose }: UseSheetAction) => {
 
   const handleMoveAction = useCallback(
     (event: MouseEvent | TouchEvent) => {
-      event.preventDefault();
       if (!isDrag) {
         return;
       }
@@ -90,7 +88,6 @@ const useSheetAction = ({ onClose }: UseSheetAction) => {
 
   const handleEndAction = useCallback(
     (event: MouseEvent | TouchEvent) => {
-      event.preventDefault();
       if (!isDrag) {
         return;
       }
