@@ -1,7 +1,7 @@
 "use client";
 
-import HeaderButton from "./Components/HeaderButton/HeaderButton";
-import HeaderLabel from "./Components/HeaderLabel/HeaderLabel";
+import HeaderButton from "./components/HeaderButton/HeaderButton";
+import HeaderLabel from "./components/HeaderLabel/HeaderLabel";
 import useSegmentConvert from "./hooks/useSegmentConvert/useSegmentConvert";
 
 import { useSelectedLayoutSegments } from "next/navigation";
