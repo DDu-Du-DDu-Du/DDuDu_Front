@@ -1,10 +1,10 @@
 interface HeaderButtonProps {
   buttonFn?: () => void;
-  buttonIcon?: React.ReactNode;
+  children?: React.ReactNode;
   buttonPosition: "LEFT" | "RIGHT";
 }
 
-const HeaderButton = ({ buttonFn, buttonIcon, buttonPosition }: HeaderButtonProps) => {
+const HeaderButton = ({ buttonFn, buttonPosition, children }: HeaderButtonProps) => {
   if (!buttonFn) {
     return <></>;
   }
@@ -19,7 +19,7 @@ const HeaderButton = ({ buttonFn, buttonIcon, buttonPosition }: HeaderButtonProp
       className={`absolute flex h-[1.6rem] w-[1.6rem] items-center justify-center ${buttonPositionVariants[buttonPosition]}`}
       onClick={buttonFn}
     >
-      {buttonIcon}
+      {children}
     </button>
   );
 };

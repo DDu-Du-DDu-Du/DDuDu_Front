@@ -1,47 +1,36 @@
 "use client";
 
-import { ReactNode, useEffect, useState } from "react";
+import { useMemo } from "react";
 
-import ArrowLeftIcon from "@/app/_components/server/Icons/staticIcons/ArrowLeftIcon/ArrowLeftIcon";
+import { useSelectedLayoutSegments } from "next/navigation";
 
-import { useRouter } from "next/navigation";
+/**
+ * @brief 현재 접속한 URL(Segments)을 기반으로 헤더의 텍스트, 우측 버튼을 커스텀할 수 있습니다. 커스텀을 원하는 경로를 case에 추가한 후, 변수를 수정하시면 됩니다.
+ * @returns headerLabel: 헤더의 텍스트, rightButtonIcon: 우측 버튼 아이콘, rightButtonFn: 우측 버튼 콜백 함수 (존재하지 않을 경우 렌더링하지 않음)
+ */
+const useSegmentConvert = () => {
+  const segments = useSelectedLayoutSegments();
 
-interface useSegmentConverProps {
-  segments: string[];
-}
+  const { headerLabel, rightButtonIcon, rightButtonFn } = useMemo(() => {
+    let headerLabel = "";
+    let rightButtonIcon: JSX.Element | null = null;
+    let rightButtonFn: (() => void) | undefined = undefined;
 
-const useSegmentConvert = ({ segments }: useSegmentConverProps) => {
-  const router = useRouter();
-  const [visible, setVisible] = useState<boolean>(true);
-  const [headerLabel, setHeaderLabel] = useState<string>("");
-  const [leftButtonIcon, setLeftButtonIcon] = useState<ReactNode>(ArrowLeftIcon);
-  const [leftButtonFn, setLeftButtonFn] = useState<() => void>(() => router.back);
-  const [rightButtonIcon, setRightButtonIcon] = useState<ReactNode>();
-  const [rightButtonFn, setRightButtonFn] = useState<() => void>();
-
-  // TODO: 페이지 라우트 구조 생성 후, 와이어프레임에 맞게 setter 조정
-  useEffect(() => {
     switch (segments[0]) {
-      case "test":
-        setVisible(true);
-        setHeaderLabel("test");
-        break;
-
       case "example":
-        setVisible(true);
-        setHeaderLabel("test");
-        setLeftButtonFn(() => {});
-        setRightButtonFn(() => {});
-        setLeftButtonIcon(null);
-        setRightButtonIcon(null);
+        headerLabel = "example";
+        rightButtonFn = () => {};
+        rightButtonIcon = null;
         break;
 
       default:
         break;
     }
+
+    return { headerLabel, rightButtonIcon, rightButtonFn };
   }, [segments]);
 
-  return { visible, headerLabel, leftButtonIcon, leftButtonFn, rightButtonIcon, rightButtonFn };
+  return { headerLabel, rightButtonIcon, rightButtonFn };
 };
 
 export default useSegmentConvert;
