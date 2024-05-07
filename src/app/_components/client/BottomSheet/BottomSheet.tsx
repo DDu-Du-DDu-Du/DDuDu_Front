@@ -62,7 +62,7 @@ const BottomSheet = ({
               height: movementHeight ? `${movementHeight}px` : sheetHeight,
               transition: { duration: 0 },
             }}
-            className="w-full flex flex-col rounded-tl-[2.4rem] rounded-tr-[2.4rem] bg-slate-500 overflow-hidden"
+            className="w-full flex flex-col rounded-tl-[2.4rem] rounded-tr-[2.4rem] bg-example_gray_300 overflow-hidden shadow-[0_0_2rem_0.4rem_rgba(0,0,0,0.1)]"
             style={{
               maxHeight: maxHeight,
               minHeight: "3.2rem",

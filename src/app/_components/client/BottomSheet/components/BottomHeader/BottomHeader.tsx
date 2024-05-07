@@ -15,7 +15,7 @@ const BottomHeader = forwardRef<HTMLElement, BottomHeaderProps>(
   ({ onActionStart, draggingState }, ref) => {
     return (
       <header
-        className="w-full h-[3.2rem] flex items-center justify-center touch-none"
+        className="w-full h-[3.2rem] flex items-center justify-center touch-none select-none cursor-pointer"
         onMouseDown={onActionStart}
         onTouchStart={onActionStart}
         ref={ref}
