@@ -22,13 +22,14 @@ const useSegmentConvert = ({ segments }: useSegmentConverProps) => {
   // TODO: 페이지 라우트 구조 생성 후, 와이어프레임에 맞게 setter 조정
   useEffect(() => {
     switch (segments[0]) {
-      case undefined: // 메인페이지
-        // setVisible(false);
-        setHeaderLabel("메인");
+      case "test":
+        setVisible(true);
+        setHeaderLabel("test");
         break;
 
-      case "example": // URL이 /example일 때
-        setVisible(false);
+      case "example":
+        setVisible(true);
+        setHeaderLabel("test");
         setLeftButtonFn(() => {});
         setRightButtonFn(() => {});
         setLeftButtonIcon(null);
