@@ -11,6 +11,7 @@ interface SheetButtonProps extends HTMLMotionProps<"button"> {
   Icon: React.ReactNode;
 
   rightPlace?: React.ReactNode;
+  disabled?: boolean;
   className?: string;
 }
 
@@ -19,6 +20,7 @@ const SheetButton = ({
   title,
   Icon,
   rightPlace,
+  disabled = false,
   className,
   ...rest
 }: SheetButtonProps) => {
@@ -28,9 +30,10 @@ const SheetButton = ({
     <motion.button
       type="button"
       className={twMerge(buttonStyle, className)}
-      whileTap={{
-        scale: 0.9,
-      }}
+      whileTap={disabled ? {} : { scale: 0.9 }}
+      whileHover={disabled ? {} : { filter: "brightness(97%)" }}
+      style={{ opacity: disabled ? 0.6 : 1 }}
+      disabled={disabled}
       {...rest}
     >
       {Icon}
