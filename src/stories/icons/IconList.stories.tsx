@@ -1,4 +1,4 @@
-import { CloseIcon } from "@/app/_components/server";
+import { CloseIcon, QuestionIcon } from "@/app/_components/server";
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { IconViewer } from "./components";
@@ -45,4 +45,8 @@ export const Default: Story = {};
 
 export const Close: Story = {
   args: { children: <CloseIcon /> },
+};
+
+export const Question: Story = {
+  args: { children: <QuestionIcon /> },
 };
