@@ -30,7 +30,7 @@ const SheetButton = ({
     <motion.button
       type="button"
       className={twMerge(buttonStyle, className)}
-      whileTap={disabled ? {} : { scale: 0.9 }}
+      whileTap={disabled ? {} : { scale: 0.95 }}
       whileHover={disabled ? {} : { filter: "brightness(97%)" }}
       style={{ opacity: disabled ? 0.6 : 1 }}
       disabled={disabled}
