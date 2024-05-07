@@ -1,6 +1,7 @@
 "use client";
 
 import ExampleIcon from "../../server/ExampleIcon/ExampleIcon";
+import { useSheetButtonStyle } from "./hooks";
 
 import { HTMLMotionProps, motion } from "framer-motion";
 import { twJoin, twMerge } from "tailwind-merge";
@@ -14,16 +15,18 @@ interface SheetButtonProps extends HTMLMotionProps<"button"> {
 }
 
 const SheetButton = ({
-  buttonType = "small",
+  buttonType = "large",
   title,
   rightPlace,
   className,
   ...rest
 }: SheetButtonProps) => {
+  const buttonStyle = useSheetButtonStyle({ buttonType });
+
   return (
     <motion.button
       type="button"
-      className={twMerge("w-full flex items-center gap-[1.6rem] text-size13", className)}
+      className={twMerge(buttonStyle, className)}
       whileTap={{
         scale: 0.9,
       }}
@@ -39,7 +42,3 @@ const SheetButton = ({
 };
 
 export default SheetButton;
-
-// "w-full flex items-center gap-[1.6rem] text-size13"
-
-//  "h-[8rem] flex-grow-[2] bg-example_gray_100 text-size13 flex flex-col items-center justify-center gap-[0.6rem] rounded-radius10",
