@@ -13,7 +13,7 @@ const useSheetButtonStyle = ({ buttonType }: UseSheetButtonStyleProps) => {
     buttonType === "large" &&
       "h-[8rem] flex-grow-[2] bg-example_gray_100 flex-col justify-center gap-[0.6rem] rounded-radius10",
 
-    buttonType === "small" && "w-full gap-[1.6rem]",
+    buttonType === "small" && "w-full h-[3.2rem] gap-[1.6rem]",
   );
 };
 

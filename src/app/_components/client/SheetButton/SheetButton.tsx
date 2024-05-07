@@ -1,6 +1,5 @@
 "use client";
 
-import ExampleIcon from "../../server/ExampleIcon/ExampleIcon";
 import { useSheetButtonStyle } from "./hooks";
 
 import { HTMLMotionProps, motion } from "framer-motion";
@@ -9,6 +8,7 @@ import { twJoin, twMerge } from "tailwind-merge";
 interface SheetButtonProps extends HTMLMotionProps<"button"> {
   buttonType?: "large" | "small";
   title: string;
+  Icon: React.ReactNode;
 
   rightPlace?: React.ReactNode;
   className?: string;
@@ -17,6 +17,7 @@ interface SheetButtonProps extends HTMLMotionProps<"button"> {
 const SheetButton = ({
   buttonType = "large",
   title,
+  Icon,
   rightPlace,
   className,
   ...rest
@@ -32,7 +33,7 @@ const SheetButton = ({
       }}
       {...rest}
     >
-      <ExampleIcon />
+      {Icon}
 
       <p className={twJoin(buttonType === "small" && "flex-grow text-start")}>{title}</p>
 
