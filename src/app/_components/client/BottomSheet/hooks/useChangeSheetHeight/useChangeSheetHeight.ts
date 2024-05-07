@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 
 import { BottomSheetStateType } from "../../BottomSheet.type";
 
@@ -13,25 +13,19 @@ const useChangeSheetHeight = ({
   defaultHeight,
   maxHeight,
 }: UseChangeSheetHeightProps) => {
-  const [height, setHeight] = useState<string | number>(0);
-
-  useEffect(() => {
+  const height = useMemo(() => {
     switch (sheetState) {
       case "default":
-        setHeight(defaultHeight);
-        break;
+        return defaultHeight;
 
       case "full":
-        setHeight(maxHeight);
-        break;
+        return maxHeight;
 
       case "close":
-        setHeight(0);
-        break;
+        return 0;
 
       default:
-        setHeight(defaultHeight);
-        break;
+        return defaultHeight;
     }
   }, [defaultHeight, maxHeight, sheetState]);
 
