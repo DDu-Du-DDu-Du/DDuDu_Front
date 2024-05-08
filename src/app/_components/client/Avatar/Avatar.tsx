@@ -33,7 +33,7 @@ const Avatar = ({
     >
       <div className="size-[100%] bg-gray-300 rounded-circle  overflow-hidden">
         <Image
-          className="object-cover"
+          className="object-cover rounded-circle"
           src={preview || profileImage}
           alt="프로필 이미지 사진"
           sizes="100%"
