@@ -28,11 +28,12 @@ const Avatar = ({
 
   return (
     <div
-      className={`relative ${avatarImageSize} ${(userId || type === "edit") && "cursor-pointer"}`}
+      className={`relative ${avatarImageSize} ${(userId || type === "edit") && "cursor-pointer"} rounded-circle  overflow-hidden`}
       onClick={handleClickAvatar}
     >
       <div className="size-[100%] bg-gray-300 rounded-circle  overflow-hidden">
         <Image
+          className="object-cover"
           src={preview || profileImage}
           alt="프로필 이미지 사진"
           sizes="100%"
