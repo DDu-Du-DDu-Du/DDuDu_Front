@@ -1,8 +1,7 @@
 "use client";
 
-import ArrowLeftIcon from "../../server/Icons/staticIcons/ArrowLeftIcon/ArrowLeftIcon";
-import HeaderButton from "./components/HeaderButton/HeaderButton";
-import HeaderLabel from "./components/HeaderLabel/HeaderLabel";
+import ArrowLeftIcon from "../../server/icons/ArrowLeftIcon/ArrowLeftIcon";
+import { HeaderButton, HeaderLabel } from "./components";
 import useSegmentConvert from "./hooks/useSegmentConvert/useSegmentConvert";
 
 import { useRouter } from "next/navigation";
@@ -17,7 +16,10 @@ const Header = () => {
         buttonPosition="LEFT"
         buttonFn={() => router.back()}
       >
-        <ArrowLeftIcon />
+        <ArrowLeftIcon
+          size={16}
+          fill="none"
+        />
       </HeaderButton>
 
       <HeaderLabel label={headerLabel} />
