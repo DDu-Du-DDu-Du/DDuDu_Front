@@ -14,6 +14,7 @@ import { AvatarView } from "./components";
  *- **userId : **userId를 전달하면 user에 대한 페이지로 이동할 수 있는 버튼이 활성화됩니다.
  *- **onChangeAvatar : **onChangeAvatar 함수는 edit에서 사용되는 함수입니다. 변경된 이미지를 File 형태로 전달받는 이벤트 핸들러입니다.
  *
+ * ### 사용법
  * **type view**를 사용 할 때는 size, userId, avatarImage를 전달하여 사용할 수 있습니다.
  * ```
  * <Avatar size="small" avatarImage={defaultImage} userId="userId" />
