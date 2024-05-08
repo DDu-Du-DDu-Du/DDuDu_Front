@@ -62,6 +62,8 @@ const meta = {
   },
 
   args: {
+    type: "view",
+    size: "small",
     avatarImage: null,
     userId: "테스트",
   },
