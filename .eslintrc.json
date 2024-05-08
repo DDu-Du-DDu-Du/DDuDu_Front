@@ -10,5 +10,13 @@
     "parser": "@typescript-eslint/parser"
   },
 
-  "ignorePatterns": ["postcss.config.js", "!/.storybook"]
+  "ignorePatterns": ["postcss.config.js", "!/.storybook"],
+  "rules": {
+    "prettier/prettier": [
+        "error",
+        {
+            "endOfLine": "auto"
+        }
+    ]
+  }
 }
