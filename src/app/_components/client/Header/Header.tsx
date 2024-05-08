@@ -1,14 +1,16 @@
 "use client";
 
-import ArrowLeftIcon from "../../server/icons/ArrowLeftIcon/ArrowLeftIcon";
+import { ArrowLeftIcon } from "../../server";
 import { HeaderButton, HeaderLabel } from "./components";
-import useSegmentConvert from "./hooks/useSegmentConvert/useSegmentConvert";
+import { useHeaderLabel, useHeaderRightButton } from "./hooks";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSelectedLayoutSegments } from "next/navigation";
 
 const Header = () => {
   const router = useRouter();
-  const { headerLabel, rightButtonIcon, rightButtonFn } = useSegmentConvert();
+  const segments = useSelectedLayoutSegments();
+  const { headerLabel } = useHeaderLabel({ segments });
+  const { rightButtonIcon, rightButtonFn } = useHeaderRightButton({ segments });
 
   return (
     <nav className="fixed top-0 flex h-[5.2rem] w-full max-w-[60rem] items-center justify-center">
