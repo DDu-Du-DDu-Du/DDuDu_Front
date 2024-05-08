@@ -25,6 +25,20 @@ const AvatarList = ({ avatars }: AvatarListProps) => {
     closed: { opacity: 0, x: "-100%" },
   };
 
+  if (avatars.length === 1) {
+    const { id, avatarImage } = avatars[0];
+    return (
+      <Avatar
+        userId={id}
+        avatarImage={avatarImage}
+      />
+    );
+  }
+
+  if (avatars.length === 0) {
+    return;
+  }
+
   return (
     <>
       <div className="relative">
