@@ -1,4 +1,6 @@
-import { HTMLAttributes } from "react";
+import React from "react";
+
+import { HTMLMotionProps } from "framer-motion";
 
 export type ButtonRadiusType = "0.94rem" | "0.625rem";
 export type ButtonBorderType = "green" | "none";
@@ -7,8 +9,8 @@ export type ButtonFontWeightType = "regular" | "bold";
 export type ButtonFontColorType = "white" | "black";
 export type ButtonBackgroundColorType = "yellow" | "pink" | "blue";
 
-export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
-  children: React.ReactNode;
+export interface ButtonProps extends HTMLMotionProps<"button"> {
+  children?: React.ReactNode;
   className?: string;
   onClick?: () => void;
   radius?: ButtonRadiusType;
