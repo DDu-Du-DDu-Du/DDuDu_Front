@@ -92,7 +92,11 @@ const config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animated"), require("tailwind-scrollbar-hide")],
+  plugins: [
+    require("tailwindcss-animated"),
+    require("tailwind-scrollbar-hide"),
+    require("daisyui"),
+  ],
 } satisfies Config;
 
 export default config;
