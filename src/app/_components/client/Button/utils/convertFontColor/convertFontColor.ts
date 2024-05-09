@@ -3,13 +3,13 @@ import { ButtonFontColorType } from "../../Button.type";
 const convertFontColor = (fontColorValue: ButtonFontColorType) => {
   switch (fontColorValue) {
     case "white":
-      return "white";
+      return "text-white";
 
     case "black":
-      return "text_black_900";
+      return "text-black";
 
     default:
-      return "black";
+      return "text-black";
   }
 };
 
