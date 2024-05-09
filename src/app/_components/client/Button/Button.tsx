@@ -1,9 +1,11 @@
 "use client";
 
+import { MouseEvent } from "react";
+
 import { ButtonProps } from "./Button.type";
 import { useConvertButtonStyle } from "./hooks";
 
-import { twJoin } from "tailwind-merge";
+import { twJoin, twMerge } from "tailwind-merge";
 
 const Button = ({
   children,
@@ -14,6 +16,9 @@ const Button = ({
   backgroundColor = "yellow",
   border = "none",
   shadow = false,
+  className,
+  onClick,
+  ...rest
 }: ButtonProps) => {
   const convertedStyle = useConvertButtonStyle({
     radius,
@@ -25,10 +30,19 @@ const Button = ({
     shadow,
   });
 
+  const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (!onClick) return;
+
+    onClick();
+  };
+
   return (
     <button
-      className={twJoin(`h-[3.5rem] w-[20rem]`, convertedStyle)}
+      className={twMerge(twJoin(`h-[3.5rem] w-[20rem]`, convertedStyle), className)}
       type="button"
+      onClick={handleClick}
+      {...rest}
     >
       {children}
     </button>
