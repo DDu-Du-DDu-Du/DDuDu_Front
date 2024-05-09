@@ -31,7 +31,8 @@ const meta = {
   argTypes: {
     buttonType: {
       control: { type: "inline-radio", options: ["large", "small"] },
-      description: "임시 Icon의 size를 전달 합니다.",
+      description:
+        "`large` `small` 둘중 하나의 타입에 맞는 button을 제공합니다. - default : `large`",
     },
 
     title: {
@@ -62,7 +63,7 @@ const meta = {
   },
 
   decorators: [
-    (SheetButtonCOmponent, { args }) => {
+    (SheetButtonComponent, { args }) => {
       return (
         <div
           style={{
@@ -76,7 +77,7 @@ const meta = {
             border: "1px solid gray",
           }}
         >
-          <SheetButtonCOmponent args={args} />
+          <SheetButtonComponent args={args} />
         </div>
       );
     },

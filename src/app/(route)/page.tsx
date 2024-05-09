@@ -2,7 +2,7 @@ import DDuDuSheet from "../_components/client/DDuDuSheet/DDuDuSheet";
 
 const Home = () => {
   return (
-    <main className="w-full h-full">
+    <main className="h-full w-full">
       DDuDu
       <DDuDuSheet />
     </main>
