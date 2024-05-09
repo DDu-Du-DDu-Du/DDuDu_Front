@@ -7,10 +7,12 @@ export type ButtonBackgroundColorType = "yellow" | "pink" | "blue";
 
 export interface ButtonProps {
   children: React.ReactNode;
+  className?: string;
   radius?: ButtonRadiusType;
   border?: ButtonBorderType;
   fontSize?: ButtonFontSizeType;
   fontWeight?: ButtonFontWeightType;
   fontColor?: ButtonFontColorType;
   backgroundColor?: ButtonBackgroundColorType;
+  shadow?: boolean;
 }
