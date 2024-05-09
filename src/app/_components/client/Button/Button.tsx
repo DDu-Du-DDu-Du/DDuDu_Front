@@ -5,9 +5,18 @@ import { useConvertButtonStyle } from "./hooks";
 
 import { twJoin } from "tailwind-merge";
 
-const Button = ({ children, radius = "0.94rem" }: ButtonProps) => {
+const Button = ({
+  children,
+  radius = "0.94rem",
+  fontSize = "0.94rem",
+  fontWeight = "bold",
+  fontColor = "black",
+}: ButtonProps) => {
   const convertedStyle = useConvertButtonStyle({
     radius,
+    fontSize,
+    fontWeight,
+    fontColor,
   });
 
   return (
