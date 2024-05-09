@@ -17,6 +17,7 @@ const useConvertButtonStyle = ({
   fontColor,
   backgroundColor,
   border,
+  shadow,
 }: UseConvertButtonStyleProps) => {
   return twJoin(
     convertRadius(radius),
@@ -25,6 +26,7 @@ const useConvertButtonStyle = ({
     convertFontColor(fontColor),
     convertBackgroundColor(backgroundColor),
     convertBorder(border),
+    shadow && "shadow-md",
   );
 };
 
