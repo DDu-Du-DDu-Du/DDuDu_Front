@@ -73,6 +73,7 @@ const config = {
         shadow_500: "0.3rem 0.3rem 2rem 0 rgba(0, 0, 0, 0.06)",
         shadow_700: "0 0.4rem 0.4rem 0 rgba(0, 0, 0, 0.25)",
         shadow_900: "",
+        example_shadow: "0 0 1rem 0.1rem rgba(0,0,0,0.15)",
       },
 
       screens: {
@@ -82,6 +83,10 @@ const config = {
 
       zIndex: {
         // 각 컴포넌트별 z index => 0 ~ 100
+        timeline_dashed: "22",
+        timeline_line: "23",
+        timeline_icon: "24",
+
         header: "300",
 
         modal: "500",
@@ -91,6 +96,10 @@ const config = {
         spinner: "800",
       },
     },
+  },
+
+  daisyui: {
+    darkTheme: false,
   },
   plugins: [
     require("tailwindcss-animated"),
