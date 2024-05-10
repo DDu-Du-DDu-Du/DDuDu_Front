@@ -17,7 +17,7 @@ const Modal = ({
   isShow = false,
   width = "300px",
   height,
-  backgroundColor,
+  backgroundColor = "white",
 }: ModalProps) => {
   return (
     <>
