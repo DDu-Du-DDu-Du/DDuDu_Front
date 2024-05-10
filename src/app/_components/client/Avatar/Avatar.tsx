@@ -1,41 +1,48 @@
 "use client";
 
+import { UserType } from "@/app/_types/response/user";
+
 import profileImage from "../../../../../public/assets/userProfile.svg";
-import { AVATAR_ICON, AVATAR_SIZE } from "./Avatar.constant";
+import { AVATAR_SIZE } from "./Avatar.constant";
+import { AvatarEdit, AvatarList } from "./components";
 import { useChangeImage, useClickAvatar } from "./hooks";
 
 import Image from "next/image";
+import { twJoin } from "tailwind-merge";
 
-export interface AvatarProps {
+export type AvatarProps = {
   type?: "view" | "edit";
   size?: "small" | "medium" | "large";
-  avatarImage: string | null;
-  userId?: string;
   onChangeAvatar?: (file: File | null) => void;
-}
+} & ({ user: UserType; users?: UserType[] } | { users: UserType[]; user?: UserType });
 
-const Avatar = ({
-  type = "view",
-  size = "small",
-  avatarImage = null,
-  userId,
-  onChangeAvatar,
-}: AvatarProps) => {
-  const { preview, inputRef, handleChangeImage } = useChangeImage({ avatarImage, onChangeAvatar });
+const Avatar = ({ type = "view", size = "small", user, users, onChangeAvatar }: AvatarProps) => {
+  const { userId = "", userName = "", userImage = null } = user ?? users?.[0] ?? {};
+  const { preview, inputRef, handleChangeImage } = useChangeImage({ userImage, onChangeAvatar });
   const { handleClickAvatar } = useClickAvatar({ type, inputRef, userId, onChangeAvatar });
-  const avatarImageSize = AVATAR_SIZE[size];
-  const avatarIconSize = AVATAR_ICON[size];
+
+  if (users && users.length > 1) {
+    return <AvatarList users={users} />;
+  }
+
+  if (users && users.length === 0) {
+    return <></>;
+  }
 
   return (
     <div
-      className={`relative ${avatarImageSize} ${(userId || type === "edit") && "cursor-pointer"}`}
+      className={twJoin(
+        "relative",
+        AVATAR_SIZE[size],
+        (userId || type === "edit") && "cursor-pointer",
+      )}
       onClick={handleClickAvatar}
     >
-      <div className="size-[100%] bg-gray-300 rounded-circle  overflow-hidden">
+      <div className="size-[100%] overflow-hidden rounded-circle bg-white_100 shadow-shadow_500">
         <Image
-          className="object-cover rounded-circle"
+          className="rounded-circle object-cover"
           src={preview || profileImage}
-          alt="프로필 이미지 사진"
+          alt={`${userName}님의 프로필 이미지`}
           sizes="100%"
           fill
           priority
@@ -43,19 +50,11 @@ const Avatar = ({
       </div>
 
       {type === "edit" && (
-        <>
-          <span
-            className={`absolute bottom-0 right-0 ${avatarIconSize} bg-[#F1F1F1] rounded-full`}
-          ></span>
-          <input
-            className="hidden"
-            ref={inputRef}
-            type="file"
-            name="profile"
-            id="profile"
-            onChange={handleChangeImage}
-          />
-        </>
+        <AvatarEdit
+          size={size}
+          inputRef={inputRef}
+          handleChangeImage={handleChangeImage}
+        />
       )}
     </div>
   );
