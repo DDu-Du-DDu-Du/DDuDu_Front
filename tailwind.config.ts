@@ -98,14 +98,7 @@ const config = {
     },
   },
 
-  daisyui: {
-    darkTheme: false,
-  },
-  plugins: [
-    require("tailwindcss-animated"),
-    require("tailwind-scrollbar-hide"),
-    require("daisyui"),
-  ],
+  plugins: [require("tailwindcss-animated"), require("tailwind-scrollbar-hide")],
 } satisfies Config;
 
 export default config;
