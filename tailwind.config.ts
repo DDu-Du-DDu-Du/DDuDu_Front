@@ -71,6 +71,7 @@ const config = {
         /* TODO
           추후 디자인 고려하여 값 추가
         */
+        shadow_100: "0 0.8rem 2.4rem rgba(149, 157, 165, 0.2)",
         shadow_300: "",
         shadow_500: "0.3rem 0.3rem 2rem 0 rgba(0, 0, 0, 0.06)",
         shadow_700: "0 0.4rem 0.4rem 0 rgba(0, 0, 0, 0.25)",
