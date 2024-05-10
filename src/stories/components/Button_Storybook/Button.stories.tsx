@@ -83,13 +83,11 @@ const meta = {
     (ButtonComponent) => (
       <div
         style={{
-          // padding: "5rem",
           width: "30rem",
           height: "13.5rem",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          // boxSizing: "border-box",
         }}
       >
         <ButtonComponent />
