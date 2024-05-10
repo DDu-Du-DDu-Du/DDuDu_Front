@@ -8,8 +8,13 @@ interface TimeStampProps {
 
 const TimeStamp = ({ children }: TimeStampProps) => {
   return (
-    <div className={twJoin("flex w-[5rem] items-center justify-center", TIMELINE_ITEM_HEIGHT)}>
-      <p className="flex h-[1.8rem] w-[3.5rem] items-center justify-center rounded-[0.5rem] text-size12 shadow-example_shadow">
+    <div
+      className={twJoin(
+        "flex w-[5rem] items-center justify-center pl-[0.5rem]",
+        TIMELINE_ITEM_HEIGHT,
+      )}
+    >
+      <p className="flex h-[2.4rem] w-[4rem] items-center justify-center rounded-[0.5rem] text-size12 shadow-example_shadow">
         {children}
       </p>
     </div>
