@@ -3,17 +3,17 @@
 import { twJoin } from "tailwind-merge";
 
 interface UseSheetButtonStyleProps {
-  buttonType: "large" | "small";
+  buttonType: "main" | "sub";
 }
 
 const useSheetButtonStyle = ({ buttonType }: UseSheetButtonStyleProps) => {
   return twJoin(
     "text-size13 flex items-center",
 
-    buttonType === "large" &&
+    buttonType === "main" &&
       "h-[8rem] flex-grow-[2] bg-example_gray_100 flex-col justify-center gap-[0.6rem] rounded-radius10",
 
-    buttonType === "small" && "w-full h-[3.2rem] gap-[1.6rem]",
+    buttonType === "sub" && "w-full h-[3.2rem] gap-[1.6rem]",
   );
 };
 

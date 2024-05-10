@@ -6,7 +6,7 @@ import type { Meta, StoryObj } from "@storybook/react";
  * ## Sheet Button Component
  *
  * ### Props
- * - **buttonType ? : **`large` `small` 둘중 하나의 타입에 맞는 button을 제공합니다. - default : `large`
+ * - **buttonType ? : **`main` `sub` 둘중 하나의 타입에 맞는 button을 제공합니다. - default : `main`
  * - **title : **Button 내부에 보여질 제목을 전달받습니다.
  * - **Icon : **Button 내부에 보여질 Icon Component를 전달받습니다. ( 🔥 size 32px 지정하기 )
  *
@@ -30,9 +30,8 @@ const meta = {
 
   argTypes: {
     buttonType: {
-      control: { type: "inline-radio", options: ["large", "small"] },
-      description:
-        "`large` `small` 둘중 하나의 타입에 맞는 button을 제공합니다. - default : `large`",
+      control: { type: "inline-radio", options: ["main", "sub"] },
+      description: "`main` `sub` 둘중 하나의 타입에 맞는 button을 제공합니다. - default : `main`",
     },
 
     title: {
@@ -89,28 +88,28 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
 
-export const TypeLarge: Story = {
+export const TypeMain: Story = {
   args: {
-    buttonType: "large",
+    buttonType: "main",
   },
 };
 
-export const TypeSmall: Story = {
+export const TypeSub: Story = {
   args: {
-    buttonType: "small",
+    buttonType: "sub",
   },
 };
 
-export const TypeLargeDisabled: Story = {
+export const TypeMainDisabled: Story = {
   args: {
-    buttonType: "large",
+    buttonType: "main",
     disabled: true,
   },
 };
 
-export const TypeSmallDisabled: Story = {
+export const TypeSubDisabled: Story = {
   args: {
-    buttonType: "small",
+    buttonType: "sub",
     disabled: true,
   },
 };
