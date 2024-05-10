@@ -11,7 +11,7 @@
   "proseWrap": "preserve",
   "endOfLine": "lf",
 
-  "plugins": ["@trivago/prettier-plugin-sort-imports", "prettier-plugin-tailwindcss"],
+  "plugins": ["@trivago/prettier-plugin-sort-imports"],
   "importOrder": [
     ".css$",
     ".styles",
