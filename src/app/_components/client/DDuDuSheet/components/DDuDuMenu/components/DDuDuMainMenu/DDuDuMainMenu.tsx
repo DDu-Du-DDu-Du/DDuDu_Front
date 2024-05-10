@@ -3,7 +3,7 @@ import { ExampleIcon } from "@/app/_components/server";
 
 const DDuDuMainMenu = () => {
   return (
-    <div className="w-full max-w-[50rem] flex gap-4">
+    <div className="flex w-full max-w-[50rem] gap-4">
       <SheetButton
         Icon={<ExampleIcon size={32} />}
         title="수정하기"
