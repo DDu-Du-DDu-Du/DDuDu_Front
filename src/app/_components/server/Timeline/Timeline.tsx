@@ -9,7 +9,7 @@ interface TimelineProps {
 
 const Timeline = ({ timeline }: TimelineProps) => {
   return (
-    <ul className="relative flex w-full flex-col gap-[4rem]">
+    <ul className="relative flex w-full min-w-[20rem] flex-col gap-[4rem]">
       <LineBox />
 
       {timeline &&
