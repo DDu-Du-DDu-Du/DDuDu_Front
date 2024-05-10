@@ -9,3 +9,6 @@ export { default as Button } from "./Button/Button";
 export { default as TextInput } from "./TextInput/TextInput";
 export { default as CheckboxInput } from "./CheckboxInput/CheckboxInput";
 export { default as Avatar } from "./Avatar/Avatar";
+export { default as Modal } from "./Modal/Modal";
+export { default as AlertModal } from "./AlertModal/AlertModal";
+export { default as ConfirmModal } from "./ConfirmModal/ConfirmModal";
