@@ -20,4 +20,5 @@ export interface ButtonProps extends HTMLMotionProps<"button"> {
   fontColor?: ButtonFontColorType;
   backgroundColor?: ButtonBackgroundColorType;
   shadow?: boolean;
+  disabled?: boolean;
 }
