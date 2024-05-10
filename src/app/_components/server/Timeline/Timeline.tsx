@@ -1,30 +1,25 @@
+import { TimelineItemType } from "@/app/_types/response";
+
 import { LineBox } from "./components";
 import TimelineItem from "./components/TimelineItem/TimelineItem";
 
-const Timeline = () => {
+interface TimelineProps {
+  timeline: TimelineItemType[];
+}
+
+const Timeline = ({ timeline }: TimelineProps) => {
   return (
-    <ul className="relative flex w-full flex-col gap-[2rem]">
+    <ul className="relative flex w-full flex-col gap-[4rem]">
       <LineBox />
 
-      <TimelineItem
-        baseTime="3:00"
-        TodoList={[
-          { todo: "투두 테스트 1", startAt: "3:00", endAt: "5:00" },
-          { todo: "투두 테스트 2", startAt: "3:00", endAt: "8:00" },
-          { todo: "투두 테스트 3", startAt: "3:00", endAt: "10:00" },
-          { todo: "투두 테스트 4", startAt: "3:00", endAt: "1:00" },
-        ]}
-      />
-
-      <TimelineItem
-        baseTime="3:00"
-        TodoList={[
-          { todo: "투두 테스트 1", startAt: "3:00", endAt: "5:00" },
-          { todo: "투두 테스트 2", startAt: "3:00", endAt: "8:00" },
-          { todo: "투두 테스트 3", startAt: "3:00", endAt: "10:00" },
-          { todo: "투두 테스트 4", startAt: "3:00", endAt: "1:00" },
-        ]}
-      />
+      {timeline &&
+        timeline.map(({ time, ddudus }, index) => (
+          <TimelineItem
+            key={`${time}${index}`}
+            baseTime={time}
+            dduduList={ddudus}
+          />
+        ))}
     </ul>
   );
 };

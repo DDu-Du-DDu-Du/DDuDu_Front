@@ -1,17 +1,13 @@
-import { TimeItem, TimeStamp } from "./components";
+import { TimelineDDuDuItemType } from "@/app/_types/response";
 
-interface TimeItemType {
-  todo: string;
-  startAt: string;
-  endAt: string;
-}
+import { TimeItem, TimeStamp } from "./components";
 
 interface TimelineItemProps {
   baseTime: string;
-  TodoList: TimeItemType[];
+  dduduList: TimelineDDuDuItemType[];
 }
 
-const TimelineItem = ({ baseTime, TodoList }: TimelineItemProps) => {
+const TimelineItem = ({ baseTime, dduduList }: TimelineItemProps) => {
   return (
     <li className="flex w-full">
       <TimeStamp>{baseTime}</TimeStamp>
@@ -19,14 +15,11 @@ const TimelineItem = ({ baseTime, TodoList }: TimelineItemProps) => {
       <div className="w-[5rem]" />
 
       <ul className="flex flex-1 flex-col gap-[1rem] pr-[1rem]">
-        {TodoList.map(({ todo, startAt, endAt }, index) => (
+        {dduduList.map((ddudu, index) => (
           <TimeItem
-            key={todo}
-            name={todo}
-            startTime={startAt}
-            endTime={endAt}
-            isLastItem={index === TodoList.length - 1}
-            themeColor="#000"
+            key={`${ddudu.id}${index}`}
+            ddudu={ddudu}
+            isLastItem={dduduList.length - 1 === index}
           />
         ))}
       </ul>
