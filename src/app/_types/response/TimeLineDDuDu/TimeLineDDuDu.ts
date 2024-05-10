@@ -1,4 +1,4 @@
-export interface TimeLineDDuDuItemType {
+export interface TimelineDDuDuItemType {
   id: string | number;
   name: string;
   status: "COMPLETED" | "UNCOMPLETED";
@@ -7,11 +7,11 @@ export interface TimeLineDDuDuItemType {
   goalId: number | string;
 }
 
-export interface TimeLineItemType {
+export interface TimelineItemType {
   time: string;
-  ddudus: TimeLineDDuDuItemType[];
+  ddudus: TimelineDDuDuItemType[];
 }
 
-export interface TimeLineListType {
-  timeline: TimeLineItemType[];
+export interface TimelineListType {
+  timeline: TimelineItemType[];
 }
