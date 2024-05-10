@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 
-import { CallbackType } from "./useClickAway.type";
+type CallbackType = (event?: MouseEvent | TouchEvent) => void;
 
 const EVENT_LIST: ["mousedown", "touchstart"] = ["mousedown", "touchstart"];
 
