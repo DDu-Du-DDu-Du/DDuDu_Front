@@ -1,27 +1,18 @@
 "use client";
 
 import tailwindConfig from "@/../tailwind.config";
+import { TimelineDDuDuItemType } from "@/app/_types/response";
 
 import { motion } from "framer-motion";
 import resolveConfig from "tailwindcss/resolveConfig";
 
 interface TimeItemProps {
-  name: string;
-  startTime: string;
-  endTime: string;
-  isLastItem?: boolean;
-  isCompleted?: boolean;
-  themeColor: string;
+  ddudu: TimelineDDuDuItemType;
+  isLastItem: boolean;
 }
 
-const TimeItem = ({
-  name,
-  startTime,
-  endTime,
-  isLastItem = false,
-  isCompleted = false,
-  themeColor,
-}: TimeItemProps) => {
+const TimeItem = ({ ddudu, isLastItem }: TimeItemProps) => {
+  const { /* id */ name, status, beginAt, endAt /* goalId */ } = ddudu;
   const { theme } = resolveConfig(tailwindConfig);
 
   return (
@@ -36,7 +27,9 @@ const TimeItem = ({
 
                 추후 상단에 생성될 전체 목표 목록 스토어에서 일치하는 컬러 매칭하기 
               */}
-              {true && <div className="h-[1.2rem] w-[1.2rem] bg-example_gray_900 rounded-circle" />}
+              {status === "COMPLETED" && (
+                <div className="h-[1.2rem] w-[1.2rem] bg-example_gray_900 rounded-circle" />
+              )}
             </div>
           </div>
         </div>
@@ -50,7 +43,10 @@ const TimeItem = ({
               추후 상단에 생성될 전체 목표 목록 스토어에서 일치하는 컬러 매칭하기
             */
             style={{
-              backgroundColor: isCompleted ? themeColor : theme.colors["example_gray_900"],
+              backgroundColor:
+                status === "COMPLETED"
+                  ? theme.colors["example_gray_100"]
+                  : theme.colors["example_gray_900"],
             }}
           />
         )}
@@ -63,7 +59,7 @@ const TimeItem = ({
         type="button"
       >
         <p className="text-size14">{name}</p>
-        <p className="text-size11 text-example_gray_900">{`${startTime} - ${endTime}`}</p>
+        <p className="text-size11 text-example_gray_900">{`${beginAt} - ${endAt}`}</p>
       </motion.button>
     </li>
   );
