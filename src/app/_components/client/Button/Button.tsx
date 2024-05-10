@@ -21,6 +21,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       shadow = false,
       className,
       onClick,
+      disabled = false,
       ...rest
     },
     ref,
@@ -37,19 +38,24 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
     const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
-      if (!onClick) return;
+      if (!onClick || disabled) return;
 
       onClick();
     };
 
+    const disableStyle = disabled ? "opacity-50" : "";
+
     return (
       <motion.button
         ref={ref}
-        className={twMerge(twJoin(`h-[3.5rem] w-[20rem]`, convertedStyle), className)}
+        className={twMerge(
+          twJoin(`h-[3.5rem] w-[20rem] px-2 will-change-transform`, convertedStyle, disableStyle),
+          className,
+        )}
         type="button"
         onClick={handleClick}
-        whileHover={{ scale: 1.015, filter: "brightness(105%)" }}
-        whileTap={{ scale: 0.95 }}
+        whileHover={disabled ? {} : { scale: 1.015, filter: "brightness(105%)" }}
+        whileTap={disabled ? {} : { scale: 0.95 }}
         transition={{ type: "spring", stiffness: 350 }}
         {...rest}
       >
