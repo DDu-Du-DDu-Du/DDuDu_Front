@@ -6,7 +6,7 @@ import { HTMLMotionProps, motion } from "framer-motion";
 import { twJoin, twMerge } from "tailwind-merge";
 
 interface SheetButtonProps extends HTMLMotionProps<"button"> {
-  buttonType?: "large" | "small";
+  buttonType?: "main" | "sub";
   title: string;
   Icon: React.ReactNode;
 
@@ -16,7 +16,7 @@ interface SheetButtonProps extends HTMLMotionProps<"button"> {
 }
 
 const SheetButton = ({
-  buttonType = "large",
+  buttonType = "main",
   title,
   Icon,
   rightPlace,
@@ -38,9 +38,9 @@ const SheetButton = ({
     >
       {Icon}
 
-      <p className={twJoin(buttonType === "small" && "flex-grow text-start")}>{title}</p>
+      <p className={twJoin(buttonType === "sub" && "flex-grow text-start")}>{title}</p>
 
-      {buttonType === "small" && rightPlace && rightPlace}
+      {buttonType === "sub" && rightPlace && rightPlace}
     </motion.button>
   );
 };
