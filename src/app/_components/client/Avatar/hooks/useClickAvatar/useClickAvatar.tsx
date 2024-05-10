@@ -1,7 +1,9 @@
+import { useCallback } from "react";
+
 import { useRouter } from "next/navigation";
 
 interface useClickAvatarProps {
-  type?: "view" | "edit";
+  type: "view" | "edit";
   inputRef: React.RefObject<HTMLInputElement>;
   userId?: string;
   onChangeAvatar?: (file: File | null) => void;
@@ -10,7 +12,7 @@ interface useClickAvatarProps {
 const useClickAvatar = ({ type, inputRef, userId, onChangeAvatar }: useClickAvatarProps) => {
   const router = useRouter();
 
-  const handleClickAvatar = () => {
+  const handleClickAvatar = useCallback(() => {
     if (type === "view" && userId) {
       router.push(`/user/${userId}`);
     }
@@ -20,7 +22,8 @@ const useClickAvatar = ({ type, inputRef, userId, onChangeAvatar }: useClickAvat
 
       current?.click();
     }
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return { handleClickAvatar };
 };
