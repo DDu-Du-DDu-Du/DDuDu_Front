@@ -22,7 +22,7 @@ const TimelineItem = ({ baseTime, TodoList }: TimelineItemProps) => {
         {TodoList.map(({ todo, startAt, endAt }, index) => (
           <TimeItem
             key={todo}
-            todo={todo}
+            name={todo}
             startTime={startAt}
             endTime={endAt}
             isLastItem={index === TodoList.length - 1}
