@@ -1,4 +1,4 @@
-import { CloseIcon, QuestionIcon } from "@/app/_components/server";
+import { CheckIcon, CloseIcon, QuestionIcon } from "@/app/_components/server";
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { IconViewer } from "./components";
@@ -49,4 +49,8 @@ export const Close: Story = {
 
 export const Question: Story = {
   args: { children: <QuestionIcon /> },
+};
+
+export const Check: Story = {
+  args: { children: <CheckIcon /> },
 };
