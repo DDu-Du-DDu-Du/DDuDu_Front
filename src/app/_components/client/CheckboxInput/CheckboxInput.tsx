@@ -1,7 +1,6 @@
 "use client";
 
-import { HTMLAttributes, useId, useMemo } from "react";
-import { FieldValues, RegisterOptions, useFormContext } from "react-hook-form";
+import { HTMLAttributes, useId } from "react";
 
 import tailwindConfig from "@/../tailwind.config";
 
@@ -11,38 +10,30 @@ import { motion } from "framer-motion";
 import { twMerge } from "tailwind-merge";
 import resolveConfig from "tailwindcss/resolveConfig";
 
-interface CheckboxInputProps extends Omit<HTMLAttributes<HTMLInputElement>, "type" | "onChange"> {
-  name: string;
-  value: string | number;
+interface CheckboxInputProps extends Omit<HTMLAttributes<HTMLInputElement>, "type"> {
+  children?: React.ReactNode;
+  type?: "icon" | "word";
+
+  value?: string | number;
   checked?: boolean;
-  options?: RegisterOptions<FieldValues, string>;
+
   size?: number;
   id?: string;
   className?: string;
 }
 
 const CheckboxInput = ({
+  children,
+  type = "icon",
   className,
   checked,
-  name,
   value,
-  options,
   size = 32,
   id,
   ...rest
 }: CheckboxInputProps) => {
   const inputId = useId();
-  const { register, watch } = useFormContext();
   const { theme } = resolveConfig(tailwindConfig);
-
-  const watchValue = watch(name);
-  const isChecked = useMemo(() => {
-    if (typeof watchValue === "object") {
-      return watchValue.includes(value);
-    }
-
-    return watchValue === value;
-  }, [value, watchValue]);
 
   return (
     <>
@@ -50,28 +41,31 @@ const CheckboxInput = ({
         id={id || inputId}
         value={value}
         type="checkbox"
-        checked={checked || isChecked}
+        checked={checked}
         className="hidden group"
         {...rest}
-        {...register(name, options)}
       />
 
       <motion.label
         htmlFor={id || inputId}
         className={twMerge(
           "block bg-example_gray_300 rounded-radius10 cursor-pointer",
-          (checked || isChecked) && "bg-example_gray_900",
+          checked && "bg-example_gray_900",
           className,
         )}
         style={{
-          width: size,
-          height: size,
+          width: type === "icon" ? size : "",
+          height: type === "icon" ? size : "",
         }}
       >
-        <CheckIcon
-          size={"100%"}
-          fill={theme.colors["white_100"]}
-        />
+        {type === "icon" && (
+          <CheckIcon
+            size={"100%"}
+            fill={theme.colors["white_100"]}
+          />
+        )}
+
+        {type === "word" && children}
       </motion.label>
     </>
   );
