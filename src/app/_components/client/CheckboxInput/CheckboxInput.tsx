@@ -13,10 +13,8 @@ import resolveConfig from "tailwindcss/resolveConfig";
 interface CheckboxInputProps extends Omit<HTMLAttributes<HTMLInputElement>, "type"> {
   children?: React.ReactNode;
   type?: "icon" | "word";
-
-  value?: string | number;
   checked?: boolean;
-
+  value?: string | number;
   size?: number;
   id?: string;
   className?: string;
@@ -51,11 +49,13 @@ const CheckboxInput = ({
         className={twMerge(
           "block bg-example_gray_300 rounded-radius10 cursor-pointer",
           checked && "bg-example_gray_900",
+          type === "word" &&
+            "p-[1.2rem] min-w-[4rem] flex items-center justify-center text-[1.3rem]",
           className,
         )}
         style={{
-          width: type === "icon" ? size : "",
-          height: type === "icon" ? size : "",
+          width: type === "icon" ? size : "fit-content",
+          height: type === "icon" ? size : "4rem",
         }}
       >
         {type === "icon" && (
