@@ -4,8 +4,6 @@ import { useEffect, useRef } from "react";
 
 type CallbackType = (event?: MouseEvent | TouchEvent) => void;
 
-const EVENT_LIST: ["mousedown", "touchstart"] = ["mousedown", "touchstart"];
-
 const useClickAway = <T>(callback: CallbackType) => {
   const ref = useRef<T | null>(null);
   const memoCallback = useRef(callback);
@@ -35,14 +33,12 @@ const useClickAway = <T>(callback: CallbackType) => {
       memoCallback.current(event);
     };
 
-    EVENT_LIST.forEach((eventName) => {
-      window.addEventListener(eventName, eventHandler);
-    });
+    window.addEventListener("mousedown", eventHandler);
+    window.addEventListener("touchstart", eventHandler);
 
     return () => {
-      EVENT_LIST.forEach((eventName) => {
-        window.removeEventListener(eventName, eventHandler);
-      });
+      window.removeEventListener("mousedown", eventHandler);
+      window.removeEventListener("touchstart", eventHandler);
     };
   }, []);
 
