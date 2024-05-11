@@ -62,11 +62,13 @@ const CheckboxInput = ({
           width: type === "icon" ? size : "fit-content",
           height: type === "icon" ? size : "4rem",
         }}
+        whileTap={disabled ? {} : { scale: 0.95 }}
       >
         {type === "icon" && (
           <CheckIcon
             size={"100%"}
             fill={theme.colors["white_100"]}
+            className="p-[0.2rem]"
           />
         )}
 
