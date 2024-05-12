@@ -22,7 +22,9 @@ const AlertModal = ({
   return (
     <Modal isToggle={isToggle}>
       <h3 className="mb-[2rem] pt-[2.4rem] text-size15 font-medium">{title}</h3>
-      {message && <p className="mb-[3.2rem] text-size13 font-regular">{message}</p>}
+      {message && (
+        <p className="mb-[3.2rem] whitespace-pre-line text-size13 font-regular">{message}</p>
+      )}
       {imageUrl && (
         <figure>
           <Image
