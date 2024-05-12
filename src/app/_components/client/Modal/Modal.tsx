@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 
 interface ModalProps {
   children: React.ReactNode;
-  isShow: boolean;
+  isToggle: boolean;
   width?: string;
   height?: string;
   backgroundColor?: string;
@@ -14,14 +14,14 @@ interface ModalProps {
 
 const Modal = ({
   children,
-  isShow = false,
+  isToggle = false,
   width = "300px",
   height,
   backgroundColor = "white",
 }: ModalProps) => {
   return (
     <>
-      {isShow && (
+      {isToggle && (
         <ModalPortal>
           <AnimatePresence>
             <motion.section
@@ -35,7 +35,7 @@ const Modal = ({
               {children}
             </motion.section>
           </AnimatePresence>
-          {isShow && <div className="fixed inset-0 z-10 size-[100%] opacity-0" />}
+          {isToggle && <div className="fixed inset-0 z-10 size-[100%] opacity-0" />}
         </ModalPortal>
       )}
     </>

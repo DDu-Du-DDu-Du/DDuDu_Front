@@ -1,25 +1,25 @@
 import { useState } from "react";
 
 const useToggle = () => {
-  const [isShow, setIsShow] = useState(false);
+  const [isToggle, setIsToggle] = useState(false);
 
-  const handleClickOpen = () => {
-    setIsShow(true);
+  const handleToggleOn = () => {
+    setIsToggle(true);
   };
 
-  const handleClickClose = () => {
-    setIsShow(false);
+  const handleToggleOff = () => {
+    setIsToggle(false);
   };
 
-  const handleClickToggle = () => {
-    setIsShow(!isShow);
+  const handleToggle = () => {
+    setIsToggle((prevState) => !prevState);
   };
 
   return {
-    isShow,
-    handleClickOpen,
-    handleClickClose,
-    handleClickToggle,
+    isToggle,
+    handleToggleOn,
+    handleToggleOff,
+    handleToggle,
   };
 };
 
