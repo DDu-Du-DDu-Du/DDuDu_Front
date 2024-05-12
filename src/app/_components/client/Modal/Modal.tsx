@@ -20,25 +20,23 @@ const Modal = ({
   backgroundColor = "white",
 }: ModalProps) => {
   return (
-    <>
+    <AnimatePresence>
       {isToggle && (
         <ModalPortal>
-          <AnimatePresence>
-            <motion.section
-              initial={{ opacity: 0, x: "-50%", y: "-40%" }}
-              animate={{ opacity: 1, x: "-50%", y: "-50%" }}
-              exit={{ opacity: 0, x: "-50%", y: "-40%" }}
-              whileTap={{ scale: 0.95 }}
-              className={`absolute left-[50%] top-[50%] z-modal rounded-radius10 text-center shadow-shadow_100`}
-              style={{ width, height, backgroundColor }}
-            >
-              {children}
-            </motion.section>
-          </AnimatePresence>
+          <motion.section
+            initial={{ opacity: 0, x: "-50%", y: "-40%" }}
+            animate={{ opacity: 1, x: "-50%", y: "-50%" }}
+            whileTap={{ scale: 0.95 }}
+            className={`absolute left-[50%] top-[50%] z-modal rounded-radius10 text-center shadow-shadow_100`}
+            style={{ width, height, backgroundColor }}
+          >
+            {children}
+          </motion.section>
+
           {isToggle && <div className="fixed inset-0 z-10 size-[100%] opacity-0" />}
         </ModalPortal>
       )}
-    </>
+    </AnimatePresence>
   );
 };
 
