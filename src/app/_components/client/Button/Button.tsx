@@ -2,11 +2,31 @@
 
 import React, { MouseEvent } from "react";
 
-import { ButtonProps } from "./Button.type";
 import { useConvertButtonStyle } from "./hooks";
 
-import { motion } from "framer-motion";
+import { HTMLMotionProps, motion } from "framer-motion";
 import { twJoin, twMerge } from "tailwind-merge";
+
+export type ButtonRadiusType = "basic" | "decreased";
+export type ButtonBorderType = "green" | "none";
+export type ButtonFontSizeType = "large" | "medium";
+export type ButtonFontWeightType = "regular" | "bold";
+export type ButtonFontColorType = "white" | "black";
+export type ButtonBackgroundColorType = "yellow" | "orange" | "red";
+
+export interface ButtonProps extends HTMLMotionProps<"button"> {
+  children?: React.ReactNode;
+  className?: string;
+  onClick?: () => void;
+  radius?: ButtonRadiusType;
+  border?: ButtonBorderType;
+  fontSize?: ButtonFontSizeType;
+  fontWeight?: ButtonFontWeightType;
+  fontColor?: ButtonFontColorType;
+  backgroundColor?: ButtonBackgroundColorType;
+  shadow?: boolean;
+  disabled?: boolean;
+}
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
