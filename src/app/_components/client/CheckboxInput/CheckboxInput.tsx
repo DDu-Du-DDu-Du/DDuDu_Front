@@ -42,7 +42,7 @@ const CheckboxInput = ({
         value={value}
         type="checkbox"
         checked={checked}
-        className="hidden group"
+        className="hidden"
         disabled={disabled}
         readOnly={!rest.onChange}
         {...rest}
