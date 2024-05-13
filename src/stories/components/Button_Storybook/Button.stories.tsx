@@ -12,7 +12,7 @@ import type { Meta, StoryObj } from "@storybook/react";
  * - **radius?: ** 버튼의 radius값입니다. `basic` `decreased` \- **default : `basic`**
  * - **border?: ** 버튼의 border 사용 여부, 색상입니다. `green` `none` \- **default : `none`**
  *
- * - **fontSize?: ** 버튼의 내부 텍스트 크기입니다. `0.94rem` `0.81rem` \- **default : `0.94rem`**
+ * - **fontSize?: ** 버튼의 내부 텍스트 크기입니다. `large` `medium` \- **default : `large`**
  * - **fontWeight?: ** 버튼의 내부 텍스트 두께입니다. `regular` `bold` \- **default : `bold`**
  * - **fontColor?: ** 버튼의 내부 텍스트 색상입니다. `white` `black` \- **default : `black`**
  *
@@ -46,7 +46,7 @@ const meta = {
     },
     fontSize: {
       control: "inline-radio",
-      options: ["0.94rem", "0.81rem"],
+      options: ["large", "medium"],
       description: "버튼의 내부 텍스트 크기입니다.",
     },
     fontWeight: {
@@ -105,7 +105,7 @@ export const Test1: Story = {
   args: {
     radius: "decreased",
     border: "green",
-    fontSize: "0.81rem",
+    fontSize: "medium",
     fontWeight: "regular",
     backgroundColor: "orange",
   },

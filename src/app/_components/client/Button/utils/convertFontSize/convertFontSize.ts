@@ -2,14 +2,14 @@ import { ButtonFontSizeType } from "../../Button.type";
 
 const convertFontSize = (fontSizeValue: ButtonFontSizeType) => {
   switch (fontSizeValue) {
-    case "0.94rem":
-      return "text-[0.94rem]";
+    case "large":
+      return "text-size15";
 
-    case "0.81rem":
-      return "text-[0.81rem]";
+    case "medium":
+      return "text-size13";
 
     default:
-      return "text-[0.94rem]";
+      return "text-size15";
   }
 };
 

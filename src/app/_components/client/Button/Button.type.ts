@@ -4,7 +4,7 @@ import { HTMLMotionProps } from "framer-motion";
 
 export type ButtonRadiusType = "basic" | "decreased";
 export type ButtonBorderType = "green" | "none";
-export type ButtonFontSizeType = "0.94rem" | "0.81rem";
+export type ButtonFontSizeType = "large" | "medium";
 export type ButtonFontWeightType = "regular" | "bold";
 export type ButtonFontColorType = "white" | "black";
 export type ButtonBackgroundColorType = "yellow" | "orange" | "red";
