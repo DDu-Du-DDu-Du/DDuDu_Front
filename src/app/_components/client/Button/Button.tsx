@@ -17,7 +17,7 @@ export type ButtonBackgroundColorType = "yellow" | "orange" | "red";
 export interface ButtonProps extends HTMLMotionProps<"button"> {
   children?: React.ReactNode;
   className?: string;
-  onClick?: () => void;
+  onClick: () => void;
   radius?: ButtonRadiusType;
   border?: ButtonBorderType;
   fontSize?: ButtonFontSizeType;
