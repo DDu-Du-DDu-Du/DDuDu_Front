@@ -3,16 +3,16 @@ import { ButtonBackgroundColorType } from "../../Button.type";
 const convertBackgroundColor = (colorValue: ButtonBackgroundColorType) => {
   switch (colorValue) {
     case "yellow":
-      return "bg-yellow-500";
+      return "bg-example_yellow_500";
 
-    case "pink":
-      return "bg-pink-500";
+    case "orange":
+      return "bg-example_orange_500";
 
-    case "blue":
-      return "bg-blue-500";
+    case "red":
+      return "bg-example_red_500";
 
     default:
-      return "bg-yellow-500";
+      return "bg-example_yellow_500";
   }
 };
 

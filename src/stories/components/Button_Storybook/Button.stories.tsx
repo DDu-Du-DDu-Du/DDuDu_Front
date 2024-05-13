@@ -9,14 +9,14 @@ import type { Meta, StoryObj } from "@storybook/react";
  * - **className?: **추가적인 CSS 스타일을 적용하기 위한 클래스명입니다. tailwind를 이용합니다.
  * - **onClick?: ** 사용자가 버튼을 클릭했을 때 실행될 함수입니다. ( e.preventDefault() 동작 ) \- type : `() => void`
  *
- * - **radius?: ** 버튼의 radius값입니다. `0.94rem` `0.625rem` \- **default : `0.94rem`**
+ * - **radius?: ** 버튼의 radius값입니다. `basic` `decreased` \- **default : `basic`**
  * - **border?: ** 버튼의 border 사용 여부, 색상입니다. `green` `none` \- **default : `none`**
  *
  * - **fontSize?: ** 버튼의 내부 텍스트 크기입니다. `0.94rem` `0.81rem` \- **default : `0.94rem`**
  * - **fontWeight?: ** 버튼의 내부 텍스트 두께입니다. `regular` `bold` \- **default : `bold`**
  * - **fontColor?: ** 버튼의 내부 텍스트 색상입니다. `white` `black` \- **default : `black`**
  *
- * - **backgroundColor?: ** 버튼의 배경색입니다. `yellow` `pink` `blue` \- **default : `yellow`**
+ * - **backgroundColor?: ** 버튼의 배경색입니다. `yellow` `orange` `red` \- **default : `yellow`**
  * - **shadow?: ** 버튼의 그림자 사용 여부입니다. `true` `false` \- **default : `false`**
  * - **disabled ? : ** 버튼의 disabled 사용 여부입니다. `true` `false` \- **default : `false`**
  * */
@@ -36,7 +36,7 @@ const meta = {
     },
     radius: {
       control: "inline-radio",
-      options: ["0.94rem", "0.625rem"],
+      options: ["basic", "decreased"],
       description: "버튼의 radius값입니다.",
     },
     border: {
@@ -61,7 +61,7 @@ const meta = {
     },
     backgroundColor: {
       control: "inline-radio",
-      options: ["yellow", "pink", "blue"],
+      options: ["yellow", "orange", "red"],
       description: "버튼의 배경색입니다.",
     },
     shadow: {
@@ -103,11 +103,11 @@ export const BasicButton: Story = {};
 
 export const Test1: Story = {
   args: {
-    radius: "0.625rem",
+    radius: "decreased",
     border: "green",
     fontSize: "0.81rem",
     fontWeight: "regular",
-    backgroundColor: "pink",
+    backgroundColor: "orange",
   },
 };
 
@@ -115,7 +115,7 @@ export const Test2: Story = {
   args: {
     className: "w-full h-[6rem]",
     fontColor: "white",
-    backgroundColor: "blue",
+    backgroundColor: "red",
     shadow: true,
   },
 };

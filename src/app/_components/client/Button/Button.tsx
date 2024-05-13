@@ -12,7 +12,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
       children,
-      radius = "0.94rem",
+      radius = "basic",
       fontSize = "0.94rem",
       fontWeight = "bold",
       fontColor = "black",
@@ -38,7 +38,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
     const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
-      if (!onClick || disabled) return;
+      if (!onClick || disabled) {
+        return;
+      }
 
       onClick();
     };
