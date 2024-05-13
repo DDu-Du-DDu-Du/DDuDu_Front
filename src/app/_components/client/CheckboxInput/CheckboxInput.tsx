@@ -55,7 +55,7 @@ const CheckboxInput = ({
           checked && "bg-example_gray_900",
           type === "word" &&
             "p-[1.2rem] min-w-[4rem] flex items-center justify-center text-[1.3rem]",
-          disabled ? "opacity-40 cursor-default" : "hover:brightness-90 cursor-pointer",
+          disabled ? "opacity-40 cursor-default" : "hover:bg-transparent_50 cursor-pointer",
           className,
         )}
         style={{
