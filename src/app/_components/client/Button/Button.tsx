@@ -13,7 +13,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     {
       children,
       radius = "basic",
-      fontSize = "0.94rem",
+      fontSize = "large",
       fontWeight = "bold",
       fontColor = "black",
       backgroundColor = "yellow",
