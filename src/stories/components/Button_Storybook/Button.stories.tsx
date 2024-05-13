@@ -99,10 +99,15 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const BasicButton: Story = {};
+export const BasicButton: Story = {
+  args: {
+    onClick: () => console.log("Button clicked"),
+  },
+};
 
 export const Test1: Story = {
   args: {
+    onClick: () => {},
     radius: "decreased",
     border: "green",
     fontSize: "medium",
@@ -113,6 +118,7 @@ export const Test1: Story = {
 
 export const Test2: Story = {
   args: {
+    onClick: () => {},
     className: "w-full h-[6rem]",
     fontColor: "white",
     backgroundColor: "red",
@@ -122,6 +128,7 @@ export const Test2: Story = {
 
 export const DisabledButton: Story = {
   args: {
+    onClick: () => {},
     disabled: true,
   },
 };
