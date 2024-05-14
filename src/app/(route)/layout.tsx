@@ -2,6 +2,7 @@ import "../_styles/globals.css";
 
 import { ToastProvider } from "@/app/_components/client";
 
+import { SpoqaHanSansFont } from "../_assets/font";
 import { BottomProvider } from "../_components/client/BottomSheet";
 import { TanstackProvider } from "./_components";
 
@@ -18,7 +19,10 @@ const RootLayout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <html lang="ko">
+    <html
+      lang="ko"
+      className={SpoqaHanSansFont.className}
+    >
       <body>
         <TanstackProvider>
           <main id="app">
