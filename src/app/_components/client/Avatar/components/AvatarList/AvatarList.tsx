@@ -1,6 +1,6 @@
 "use client";
 
-import { useToggle } from "@/app/_hooks";
+import { useClickAway, useToggle } from "@/app/_hooks";
 import { UserType } from "@/app/_types/response/user";
 
 import profileImage from "../../../../../../../public/assets/userProfile.svg";
@@ -15,22 +15,26 @@ export interface AvatarListProps {
 }
 
 const AvatarList = ({ users }: AvatarListProps) => {
-  const { isShow, handleClickToggle, handleClickClose } = useToggle();
+  const { isToggle, handleToggle, handleToggleOff } = useToggle();
+  const ref = useClickAway<HTMLDivElement>(handleToggleOff);
 
   return (
     <>
-      <div className="relative">
+      <div
+        className="relative inline-flex"
+        ref={ref}
+      >
         <div
           className="inline-flex cursor-pointer items-center"
-          onClick={handleClickToggle}
+          onClick={handleToggle}
         >
           {users.slice(0, 2).map(({ userId, userName, userImage }, index) => (
             <div
               key={userId}
               className={twJoin(
                 "relative h-[3rem] w-[3rem] overflow-hidden rounded-full",
-                index === 1 && "-ml-[2.2rem] mt-[1rem]",
-                index === 0 && "z-10",
+                index === 1 && "-ml-[2.2rem] top-[0.3rem]",
+                index === 0 && "z-10 mb-[0.5rem]",
               )}
             >
               <Image
@@ -44,12 +48,12 @@ const AvatarList = ({ users }: AvatarListProps) => {
             </div>
           ))}
         </div>
-        {isShow && (
-          <AnimatePresence>
+        <AnimatePresence>
+          {isToggle && (
             <motion.ul
-              className="absolute left-0 top-0 z-10 flex"
-              initial={{ x: "-100%" }}
-              animate={{ x: 0 }}
+              className="absolute left-0 top-0 z-10 flex px-[0.5rem] py-[0.5rem] bg-white_100 shadow-shadow_500 rounded-radius5"
+              initial={{ x: "-100%", y: "-4.5rem" }}
+              animate={{ x: "0" }}
               exit={{ x: "-100%" }}
               whileTap={{ scale: 0.95 }}
             >
@@ -58,19 +62,16 @@ const AvatarList = ({ users }: AvatarListProps) => {
                   className="mr-2 overflow-hidden rounded-full"
                   key={user.userId}
                 >
-                  <Avatar user={user} />
+                  <Avatar
+                    size="tiny"
+                    user={user}
+                  />
                 </li>
               ))}
             </motion.ul>
-          </AnimatePresence>
-        )}
+          )}
+        </AnimatePresence>
       </div>
-      {isShow && (
-        <div
-          className="fixed inset-0 z-0 size-[100%] cursor-pointer bg-black/50"
-          onClick={handleClickClose}
-        ></div>
-      )}
     </>
   );
 };
