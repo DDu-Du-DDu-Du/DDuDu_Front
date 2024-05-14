@@ -12,7 +12,7 @@ import { twJoin } from "tailwind-merge";
 
 export type AvatarProps = {
   type?: "view" | "edit";
-  size?: "small" | "medium" | "large";
+  size?: "tiny" | "small" | "medium" | "large";
   onChangeAvatar?: (file: File | null) => void;
 } & ({ user: UserType; users?: UserType[] } | { users: UserType[]; user?: UserType });
 

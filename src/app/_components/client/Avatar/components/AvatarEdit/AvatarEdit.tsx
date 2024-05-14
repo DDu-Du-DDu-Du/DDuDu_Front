@@ -5,7 +5,7 @@ import { AVATAR_ICON } from "../../Avatar.constant";
 import { twJoin } from "tailwind-merge";
 
 interface AvatarEditProps {
-  size: "small" | "medium" | "large";
+  size: "tiny" | "small" | "medium" | "large";
   inputRef: React.RefObject<HTMLInputElement>;
   handleChangeImage: ChangeEventHandler<HTMLInputElement>;
 }
