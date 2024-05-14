@@ -9,7 +9,7 @@ import { AvatarView } from "./components";
  * - **type : **Avatar의 종류(view, edit)를 선택합니다. (기본값은 view 입니다.)
  *   - view의 경우 Avatar를 보기 위한 용도와 유저 페이지로 이동이 필요한 경우 사용됩니다.
  *   - edit의 경우 Avatar를 수정하는 용도로 사용됩니다. (회원가입, 회원정보 변경)
- *- **size : **small(40px), medium(80px), large(100px) 정해진 사이즈로 변경할 수 있습니다.
+ *- **size : **tiny(30px), small(40px), medium(80px), large(100px) 정해진 사이즈로 변경할 수 있습니다.
  *- **user : ** userId, userName, userImage 정보를 객체로 전달받습니다.
  *     - **userId : **userId를 전달하면 user에 대한 페이지로 이동할 수 있는 버튼이 활성화됩니다.
  *     - **userName : **userName은 유저의 닉네임을 나타내는 정보입니다.
@@ -63,9 +63,9 @@ const meta = {
     },
     size: {
       control: "inline-radio",
-      options: ["small", "medium", "large"],
+      options: ["tiny", "small", "medium", "large"],
       description:
-        "small, medium, large를 통해 size를 전달받습니다. 해당 size는 현재 프로젝트 내 모든 avatar 사이즈를 통해 제작된 size입니다.",
+        "tiny, small, medium, large를 통해 size를 전달받습니다. 해당 size는 현재 프로젝트 내 모든 avatar 사이즈를 통해 제작된 size입니다.",
     },
     user: {
       control: { type: "object" },
