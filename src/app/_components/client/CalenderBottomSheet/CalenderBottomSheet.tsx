@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { CaptionLabelProps, DayPicker } from "react-day-picker";
 
 import ChevronLeftIcon from "../../server/icons/ChevronLeftIcon/ChevronLeftIcon";
@@ -8,20 +8,19 @@ import ChevronRightIcon from "../../server/icons/ChevronRightIcon/ChevronRightIc
 
 import { ko } from "date-fns/locale/ko";
 
-const CalenderBottomSheet = () => {
-  const [selected, setSelected] = useState<Date>();
+interface CalenderBottomSheetProps {
+  type: "single" | "multiple";
+}
 
-  useEffect(() => {
-    console.log(selected);
-    console.log(selected?.toLocaleDateString("MM"));
-  });
+const CalenderBottomSheet = ({ type = "multiple" }: CalenderBottomSheetProps) => {
+  const [selected, setSelected] = useState<Date | Date[]>();
 
   return (
     <section className="px-10 pb-10 flex flex-col items-center gap-5">
       <DayPicker
         locale={ko}
         fixedWeeks
-        mode="single"
+        mode={type}
         selected={selected}
         onSelect={setSelected}
         className="w-full"
@@ -68,6 +67,8 @@ const CalenderBottomSheet = () => {
           ),
         }}
       />
+
+      {/* TODO: 공용 컴포넌트로 교체 */}
       <button className="w-full h-[5.6rem] text-size15 bg-example_gray_700 rounded-radius15">
         확인
       </button>
