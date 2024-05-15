@@ -1,5 +1,4 @@
 import { BottomSheet } from "../_components/client";
-import CalenderBottomSheet from "../_components/client/CalenderBottomSheet/CalenderBottomSheet";
 
 const Home = () => {
   return (
@@ -10,7 +9,7 @@ const Home = () => {
         defaultHeight="fit-content"
         maxHeight="fit-content"
       >
-        <CalenderBottomSheet></CalenderBottomSheet>
+        temp
       </BottomSheet>
     </main>
   );
