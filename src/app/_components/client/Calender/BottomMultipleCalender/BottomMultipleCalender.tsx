@@ -9,7 +9,7 @@ import ChevronRightIcon from "@/app/_components/server/icons/ChevronRightIcon/Ch
 
 import { ko } from "date-fns/locale/ko";
 
-interface BottomMultipleCalenderProps {
+export interface BottomMultipleCalenderProps {
   selected: Date[];
   setSelected: (dates: Date[] | undefined) => void;
 }
@@ -21,7 +21,9 @@ const BottomMultipleCalender = ({ selected, setSelected }: BottomMultipleCalende
       fixedWeeks
       mode={"multiple"}
       selected={selected}
-      onSelect={setSelected}
+      onSelect={(date) => {
+        setSelected(date);
+      }}
       className="w-full"
       classNames={BottomSheetCalenderStyles}
       components={{

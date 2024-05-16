@@ -9,7 +9,7 @@ import ChevronRightIcon from "@/app/_components/server/icons/ChevronRightIcon/Ch
 
 import { ko } from "date-fns/locale/ko";
 
-interface BottomSingleCalenderProps {
+export interface BottomSingleCalenderProps {
   selected: Date;
   setSelected: (dates: Date | undefined) => void;
 }
