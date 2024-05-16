@@ -2,7 +2,6 @@
 
 import { BottomSheetCalenderStyles } from "../Calender.styles";
 
-import { useState } from "react";
 import { CaptionLabelProps, DayPicker } from "react-day-picker";
 
 import ChevronLeftIcon from "@/app/_components/server/icons/ChevronLeftIcon/ChevronLeftIcon";
@@ -10,9 +9,12 @@ import ChevronRightIcon from "@/app/_components/server/icons/ChevronRightIcon/Ch
 
 import { ko } from "date-fns/locale/ko";
 
-const BottomMultipleCalender = () => {
-  const [selected, setSelected] = useState<Date[]>();
+interface BottomMultipleCalenderProps {
+  selected: Date[];
+  setSelected: (dates: Date[] | undefined) => void;
+}
 
+const BottomMultipleCalender = ({ selected, setSelected }: BottomMultipleCalenderProps) => {
   return (
     <DayPicker
       locale={ko}
