@@ -40,11 +40,14 @@ const ConfirmModal = ({
         <p className="mb-[3.2rem] whitespace-pre-line text-size13 font-regular">{message}</p>
       )}
       {imageUrl && (
-        <figure>
+        <figure className="relative w-[94%] mx-auto rounded-[1rem] max-w-[30rem] max-h-[31rem]">
           <Image
             className="mx-auto mb-[3.2rem]"
             src={imageUrl}
-            alt="확인 알림 이미지"
+            alt="경고(알림) 이미지입니다."
+            width="300"
+            height="310"
+            priority
           />
         </figure>
       )}
