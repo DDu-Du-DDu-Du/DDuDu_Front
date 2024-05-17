@@ -1,1 +1,1 @@
-export { default as getTimeAge } from "./getTimeAgo/getTimeAge";
+export { default as getTimeAgo } from "./getTimeAgo/getTimeAgo";
