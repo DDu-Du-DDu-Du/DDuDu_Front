@@ -27,7 +27,7 @@ const Modal = ({
             initial={{ opacity: 0, x: "-50%", y: "-40%" }}
             animate={{ opacity: 1, x: "-50%", y: "-50%" }}
             whileTap={{ scale: 0.95 }}
-            className={`absolute left-[50%] top-[50%] z-modal rounded-radius10 text-center shadow-shadow_100`}
+            className={`fixed left-[50%] top-[50%] z-modal rounded-radius10 text-center shadow-shadow_100`}
             style={{ width, height, backgroundColor }}
           >
             {children}
