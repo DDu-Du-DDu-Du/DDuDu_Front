@@ -1,6 +1,5 @@
+import { NotificationTimeReminder } from "@/app/_components/server";
 import type { Meta, StoryObj } from "@storybook/react";
-
-import { NotificationTimeReminderView } from "./components";
 
 /**
  * ## NotificationTimeReminder Component
@@ -21,7 +20,7 @@ import { NotificationTimeReminderView } from "./components";
 
 const meta = {
   title: "components/NotificationTimeReminder",
-  component: NotificationTimeReminderView,
+  component: NotificationTimeReminder,
 
   tags: ["autodocs"],
 
@@ -35,7 +34,6 @@ const meta = {
       description: "시간 알림에 대한 투두 리스트 제목을 전달받습니다.",
     },
     todoDate: {
-      type: "string",
       description: "시간 알림에 대한 투두 리스트의 날짜, 시간 데이터를 string으로 전달받습니다.",
     },
   },
@@ -45,7 +43,7 @@ const meta = {
     todoTitle: "제목을 입력해주세요.",
     todoDate: "2024-05-12T23:20:00",
   },
-} satisfies Meta<typeof NotificationTimeReminderView>;
+} satisfies Meta<typeof NotificationTimeReminder>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
