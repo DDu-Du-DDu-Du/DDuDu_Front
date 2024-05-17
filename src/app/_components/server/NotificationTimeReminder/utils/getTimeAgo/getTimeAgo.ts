@@ -5,7 +5,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.locale("ko");
 dayjs.extend(relativeTime);
 
-const getTimeAge = (inputDate: string) => {
+const getTimeAgo = (inputDate: string) => {
   const currentDate = dayjs();
   const targetDate = dayjs(inputDate);
 
@@ -22,4 +22,4 @@ const getTimeAge = (inputDate: string) => {
   return `${targetDate.from(currentDate).replace(/\s+/g, "")} ${targetDate.format("A h:mm")}`;
 };
 
-export default getTimeAge;
+export default getTimeAgo;

@@ -1,4 +1,4 @@
-import { getTimeAge } from "./utils";
+import { getTimeAgo } from "./utils";
 
 import Link from "next/link";
 
@@ -21,7 +21,7 @@ const NotificationTimeReminder = ({
         title={`${todoTitle} 바로가기`}
       >
         <strong className="block text-size13 leading-[1.3rem] font-regular">{todoTitle}</strong>
-        <span className="text-size11 font-light">{getTimeAge(todoDate)}</span>
+        <span className="text-size11 font-light">{getTimeAgo(todoDate)}</span>
       </Link>
     </li>
   );
