@@ -14,3 +14,4 @@ export { default as Avatar } from "./Avatar/Avatar";
 export { default as Modal } from "./Modal/Modal";
 export { default as AlertModal } from "./AlertModal/AlertModal";
 export { default as ConfirmModal } from "./ConfirmModal/ConfirmModal";
+export { default as InputDate } from "./InputDate/InputDate";
