@@ -28,10 +28,11 @@ const BottomMultipleCalender = ({ selected, setSelected }: BottomMultipleCalende
       classNames={BottomSheetCalenderStyles}
       components={{
         CaptionLabel: (date: CaptionLabelProps) => (
-          <header className="flex text-size15 gap-2 w-full">
-            <h1>{date.displayMonth.getFullYear()}</h1>
-            <h1>{date.displayMonth.getMonth() + 1}월</h1>
-          </header>
+          <section className="flex text-size15 gap-2 w-full">
+            <p>
+              {date.displayMonth.getFullYear()} {date.displayMonth.getMonth() + 1}월
+            </p>
+          </section>
         ),
         IconLeft: ({ ...props }) => (
           <ChevronLeftIcon
