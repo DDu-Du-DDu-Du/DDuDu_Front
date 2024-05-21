@@ -5,9 +5,9 @@ import type { Meta, StoryObj } from "@storybook/react";
  * ## SwitchButton Component
  *
  * ### Props
- * - **firstLabel :** 첫 번째 요소의 이름을 string으로 전달 받습니다. (기본값은 `투두`입니다.)
- * - **secondLabel :** 두 번째 요소의 이름을 string으로 전달 받습니다. (기본값은 `스케줄`입니다.)
- * - **viewKey :** queryString의 key에 해당하는 데이터를 string으로 전달 받습니다. (기본값은 `view`입니다.)
+ * - **firstLabel :** 첫 번째 요소의 이름을 string으로 전달받습니다. (기본값은 `투두`입니다.)
+ * - **secondLabel :** 두 번째 요소의 이름을 string으로 전달받습니다. (기본값은 `스케줄`입니다.)
+ * - **viewKey :** queryString의 key에 해당하는 데이터를 string으로 전달받습니다. (기본값은 `view`입니다.)
  * - **selectedOption :** 첫 번째 요소를 클릭했을 때 변경될 상태를 전달합니다. 해당 값은 queryString의 value에도 해당되는 데이터입니다. string으로 전달 받습니다. (기본값은 `ddudu`입니다.)
  * - **alternativeOption :** 두 번째 요소를 클릭했을 때 변경될 상태를 전달합니다. 해당 값은 queryString의 value에도 해당되는 데이터입니다. string으로 전달 받습니다. (기본값은 `schedule`입니다.)
  * <br>
@@ -40,16 +40,16 @@ const meta = {
   argTypes: {
     firstLabel: {
       control: "text",
-      description: "첫 번째 요소의 이름을 string으로 전달 받습니다. (기본값은 `투두`입니다.)",
+      description: "첫 번째 요소의 이름을 string으로 전달받습니다. (기본값은 `투두`입니다.)",
     },
     secondLabel: {
       control: "text",
-      description: "두 번째 요소의 이름을 string으로 전달 받습니다. (기본값은 `스케줄`입니다.)",
+      description: "두 번째 요소의 이름을 string으로 전달받습니다. (기본값은 `스케줄`입니다.)",
     },
     viewKey: {
       control: "text",
       description:
-        "queryString의 key에 해당하는 데이터를 string으로 전달 받습니다. (기본값은 `view`입니다.)",
+        "queryString의 key에 해당하는 데이터를 string으로 전달받습니다. (기본값은 `view`입니다.)",
     },
     selectedOption: {
       control: "text",
