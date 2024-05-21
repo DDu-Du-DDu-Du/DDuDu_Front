@@ -10,6 +10,7 @@ import formatDateToYYYYMMDD from "@/app/_utils/formatDateToYYYYMMDD/formatDateTo
 
 import DailyDDuDu from "./components/DailyDDuDu/DailyDDuDu";
 import { DAILY_DDUDU_MOCK_DATA } from "./components/DailyDDuDu/DailyDDuDu.constant";
+import FeedCalenderHeader from "./components/FeedCalenderHeader/FeedCalenderHeader";
 
 import { ko } from "date-fns/locale/ko";
 
@@ -23,10 +24,11 @@ const FeedCalender = () => {
       classNames={FeedCalenderStyles}
       components={{
         CaptionLabel: (date: CaptionLabelProps) => (
-          <p>
+          <p className="flex items-center">
             {date.displayMonth.getFullYear()} {date.displayMonth.getMonth() + 1}월
           </p>
         ),
+        Caption: (props) => FeedCalenderHeader(props, ["코딩테스트 준비하기", "기술면접 준비하기"]),
         IconLeft: ({ ...props }) => (
           <ChevronLeftIcon
             {...props}
