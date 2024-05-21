@@ -1,4 +1,4 @@
-interface DAILY_DDUDU_MOCK_DATA_TYPE {
+export interface DAILY_DDUDU_MOCK_DATA_TYPE {
   [key: string]: { total: number; done: number; rest: number };
 }
 
