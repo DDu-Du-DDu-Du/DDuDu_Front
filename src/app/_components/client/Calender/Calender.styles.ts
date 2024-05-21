@@ -19,7 +19,7 @@ export const BottomSheetCalenderStyles = {
 };
 
 export const FeedCalenderStyles = {
-  caption: "flex justify-start py-2 mb-4 relative w-full select-none",
+  caption: "flex justify-between py-2 mb-4 relative w-full select-none items-center h-20",
   caption_label: "text-size15 font-medium text-gray-900",
   nav: "flex items-center",
   nav_button:
