@@ -1,5 +1,6 @@
 import { CheckIcon } from "@/app/_components/server";
 
+// TODO: API 형태에 따른 Props Type 수정 필요
 interface DailyDDuDuProps {
   totalCount: number;
   doneCount: number;
