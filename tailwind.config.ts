@@ -21,6 +21,7 @@ const config = {
         example_gray_300: "#E6E6E6",
         example_gray_500: "#D3D3D3",
         example_gray_700: "#D9D9D9",
+        example_gray_800: "#7f7f7f",
         example_gray_900: "#B6B6B6",
         example_gray_1000: "#a8a8a8",
         example_gray_1100: "#9c9c9c",
