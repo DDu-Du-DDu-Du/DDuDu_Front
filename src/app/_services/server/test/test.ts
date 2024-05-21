@@ -1,7 +1,7 @@
 import { fetchApi } from "@/app/_api/";
 
-export const getMe = async (id: string) => {
-  const response = await fetchApi(`/api/goals/${id}`);
+export const postTest = async () => {
+  const response = await fetchApi(`/actuator/health`);
 
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
