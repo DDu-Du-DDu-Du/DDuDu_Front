@@ -82,6 +82,9 @@ const config = {
       screens: {
         example_min: { min: "900px" },
         example_max: { max: "900px" },
+
+        color_sheet_450: { max: "450px" },
+        color_sheet_350: { max: "350px" },
       },
 
       zIndex: {
@@ -97,6 +100,12 @@ const config = {
         toast: "600",
 
         spinner: "800",
+      },
+
+      gridTemplateColumns: {
+        color8: "repeat(8, minmax(50px, 1fr))",
+        color6: "repeat(6, minmax(50px, 1fr))",
+        color4: "repeat(4, minmax(50px, 1fr))",
       },
     },
   },
