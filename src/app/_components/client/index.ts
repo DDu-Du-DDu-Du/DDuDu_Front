@@ -16,3 +16,4 @@ export { default as AlertModal } from "./AlertModal/AlertModal";
 export { default as ConfirmModal } from "./ConfirmModal/ConfirmModal";
 export { default as InputDate } from "./InputDate/InputDate";
 export { default as SwitchButton } from "./SwitchButton/SwitchButton";
+export { default as MonthlyGoal } from "./MonthlyGoal/MonthlyGoal";
