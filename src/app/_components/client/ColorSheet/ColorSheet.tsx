@@ -1,6 +1,11 @@
 "use client";
 
+import { Button } from "@/app/_components/client";
+
+import { BottomSheet } from "../BottomSheet";
 import { ColorPickerInput } from "./components";
+
+import { twJoin } from "tailwind-merge";
 
 const TEST = [
   "#e74c3c",
@@ -35,27 +40,64 @@ const TEST = [
   "#e74c3c",
 ];
 
-const ColorSheet = () => {
+interface ColorSheetProps {
+  isShow: boolean;
+  pickedColor: string;
+  disabled?: boolean;
+  onClick: (color: string) => void;
+  onClose: () => void;
+}
+
+const ColorSheet = ({ isShow, pickedColor, disabled, onClick, onClose }: ColorSheetProps) => {
+  /*
+  TODO
+
+  추후 Color API 호출 및 연결
+   */
   return (
-    <ul
-      className="w-full h-full p-[2.5rem] border-[0.1rem] grid grid-cols-color8 color_sheet_450:grid-cols-color6 color_sheet_350:grid-cols-color4 color_sheet_350:px-0 "
-      style={{
-        gridAutoRows: "50px",
-        alignItems: "center",
-      }}
+    <BottomSheet
+      isShow={isShow}
+      onClose={onClose}
+      defaultHeight="fit-content"
+      maxHeight="fit-content"
     >
-      {TEST.map((color, index) => (
-        <li
-          key={`${color}_${index}`}
-          className="w-[5rem] h-[5rem] flex items-center justify-center"
+      <div className="w-full flex items-center justify-center flex-col pb-[5rem]">
+        <ul
+          className={twJoin(
+            "w-full max-w-[50rem] h-full p-[2.5rem] border-[0.1rem] grid grid-cols-color8 color_sheet_450:grid-cols-color6 color_sheet_350:grid-cols-color4 color_sheet_350:px-0",
+            disabled && "opacity-35",
+          )}
+          style={{
+            gridAutoRows: "50px",
+            alignItems: "center",
+          }}
         >
-          <ColorPickerInput
-            color={color}
-            name="colorPick"
-          />
-        </li>
-      ))}
-    </ul>
+          {TEST.map((color, index) => (
+            <li
+              key={`${color}_${index}`}
+              className="w-[5rem] h-[5rem] flex items-center justify-center"
+            >
+              <ColorPickerInput
+                color={color}
+                isChecked={pickedColor === color}
+                name="color_sheet"
+                disabled={disabled}
+                onClick={onClick}
+              />
+            </li>
+          ))}
+        </ul>
+
+        <Button
+          onClick={onClose}
+          className="w-full max-w-[50rem] h-[5.6rem]"
+          fontSize="large"
+          backgroundColor="orange"
+        >
+          확인
+        </Button>
+      </div>
+    </BottomSheet>
   );
 };
 
