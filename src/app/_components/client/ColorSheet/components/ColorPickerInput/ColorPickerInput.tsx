@@ -3,9 +3,18 @@
 interface ColorPickerProps {
   color: string;
   name: string;
+  disabled?: boolean;
+  isChecked?: boolean;
+  onClick: (color: string) => void;
 }
 
-const ColorPickerInput = ({ color, name }: ColorPickerProps) => {
+const ColorPickerInput = ({
+  color,
+  name,
+  isChecked = false,
+  disabled,
+  onClick,
+}: ColorPickerProps) => {
   return (
     <>
       <input
@@ -14,14 +23,35 @@ const ColorPickerInput = ({ color, name }: ColorPickerProps) => {
         name={name}
         value={color}
         className="hidden"
+        onClick={() => !disabled && onClick(color)}
       />
-      <label
-        htmlFor={`${color}_picker`}
-        className="w-[3.2rem] h-[3.2rem] rounded-circle border-2 block"
-        style={{
-          backgroundColor: color,
-        }}
-      />
+
+      {!isChecked && (
+        <label
+          htmlFor={`${color}_picker`}
+          className="w-[3.2rem] h-[3.2rem] rounded-circle block cursor-pointer"
+          style={{
+            backgroundColor: color,
+          }}
+        />
+      )}
+
+      {isChecked && (
+        <label
+          htmlFor={`${color}_picker`}
+          className="w-[3.2rem] h-[3.2rem] rounded-circle border-[0.4rem] flex items-center justify-center cursor-pointer"
+          style={{
+            borderColor: color,
+          }}
+        >
+          <div
+            className="w-[1.8rem] h-[1.8rem] rounded-circle"
+            style={{
+              backgroundColor: color,
+            }}
+          />
+        </label>
+      )}
     </>
   );
 };
