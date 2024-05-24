@@ -24,11 +24,12 @@ const MonthlyGoal = ({ value, onChange, onBlur }: MonthlyGoalProps) => {
       <textarea
         ref={textareaRef}
         placeholder="월 별 목표를 설정해보세요!"
-        className="relative z-monthly_goal_textarea w-full min-h-[4.6rem] p-6 bg-example_gray_100 focus:outline-none rounded-radius10 text-size11 font-medium resize-none leading-[1.85] box-border"
+        className="relative z-monthly_goal_textarea w-full min-h-[4.6rem] max-h-[20rem] p-6 bg-example_gray_100 focus:outline-none rounded-radius10 text-size11 font-medium resize-none leading-[1.85] box-border overflow-y-auto"
         value={value}
         onChange={(e) => onChange(e.target.value)}
         onFocus={handleFocus}
         onBlur={handleBlur}
+        style={{ height: "auto" }}
       />
     </div>
   );
