@@ -1,20 +1,13 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 interface UseMonthlyGoalProps {
   value: string;
   onBlur?: () => void;
 }
 
-const useMonthlyGoal = ({ value, onBlur }: UseMonthlyGoalProps) => {
+const useMonthlyGoal = ({ onBlur }: UseMonthlyGoalProps) => {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const [isFocused, setIsFocused] = useState(false);
-
-  useEffect(() => {
-    if (textareaRef.current) {
-      textareaRef.current.style.height = "auto";
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight / 10}rem`;
-    }
-  }, [value]);
 
   const handleFocus = () => {
     setIsFocused(true);
@@ -22,6 +15,10 @@ const useMonthlyGoal = ({ value, onBlur }: UseMonthlyGoalProps) => {
 
   const handleBlur = () => {
     setIsFocused(false);
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto";
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight / 10}rem`;
+    }
     if (onBlur) onBlur();
   };
 
