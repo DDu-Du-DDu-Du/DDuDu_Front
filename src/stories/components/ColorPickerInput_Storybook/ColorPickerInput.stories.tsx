@@ -9,11 +9,11 @@ import type { Meta, StoryObj } from "@storybook/react";
  *
  * <br>
  *
- * Color 코드를 전달바다 선택시 해당 Color 코드를 반환하는 Radio Input입니다.
+ * Color 코드를 전달받아 선택시 해당 Color 코드를 반환하는 Radio Input입니다.
  *
  * <br>
  *
- * - **color : **생상 코드를 전달받습니다.
+ * - **color : **색상 코드를 전달받습니다.
  * - **name : **Radio Input의 name 필드를 전달받습니다.
  * - **onClick : **`(color : string) => void` 형태의 handler를 전달받아 Click Event시 실행합니다.
  *
