@@ -100,6 +100,9 @@ const config = {
         toast: "600",
 
         spinner: "800",
+
+        monthly_goal_overlay: "40",
+        monthly_goal_textarea: "50",
       },
 
       gridTemplateColumns: {
