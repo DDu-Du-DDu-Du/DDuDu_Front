@@ -5,9 +5,9 @@ import type { Meta, StoryObj } from "@storybook/react";
  * ## FollowRequestItem Component
  *
  * ### Props
- * - **user :** 팔로우 요청한 유저에 대한 데이터를 전달 받습니다. (userId, userName, userImage)
+ * - **user :** 팔로우 요청한 유저에 대한 데이터를 전달받습니다. (userId, userName, userImage)
  * - **followRequestAt :** 팔로우를 요청한 시간 데이터가 전달됩니다.
- * - **onFollowRequestCheck :** 수락, 거절에 대한 응답값을 props로 전달한 함수를 통해 boolean으로 전달 받습니다.
+ * - **onFollowRequestCheck :** 수락, 거절에 대한 응답 값을 props로 전달한 함수를 통해 boolean으로 전달받습니다.
  *
  * <br>
  *
@@ -52,7 +52,7 @@ const meta = {
     },
     onFollowRequestCheck: {
       control: { disable: true },
-      description: "수락, 거절에 대한 응답값을 boolean으로 전달 받습니다.",
+      description: "수락, 거절에 대한 응답 값을 boolean으로 전달받습니다.",
     },
   },
 
