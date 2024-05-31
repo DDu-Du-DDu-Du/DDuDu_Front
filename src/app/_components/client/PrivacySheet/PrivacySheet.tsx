@@ -28,28 +28,30 @@ const PrivacySheet = ({ isShow, onClose, onClick }: PrivacySheetProps) => {
       defaultHeight="fit-content"
       maxHeight="fit-content"
     >
-      <div className="flex flex-col gap-[1.6rem] p-[2rem] box-border">
-        <SheetButton
-          buttonType="sub"
-          title="전체공개"
-          Icon={<ExampleIcon />}
-          onClick={handleClickPublic}
-        />
-        <SheetButton
-          buttonType="sub"
-          title="팔로워 공개"
-          Icon={<ExampleIcon />}
-          onClick={handleClickFollower}
-        />
-        <SheetButton
-          buttonType="sub"
-          title="나만보기"
-          Icon={<ExampleIcon />}
-          onClick={handleClickPrivate}
-        />
+      <div className="p-[2rem] box-border">
+        <div className="flex flex-col px-[0.4rem] gap-[1.6rem] mb-[2.1rem]">
+          <SheetButton
+            buttonType="sub"
+            title="전체공개"
+            Icon={<ExampleIcon />}
+            onClick={handleClickPublic}
+          />
+          <SheetButton
+            buttonType="sub"
+            title="팔로워 공개"
+            Icon={<ExampleIcon />}
+            onClick={handleClickFollower}
+          />
+          <SheetButton
+            buttonType="sub"
+            title="나만보기"
+            Icon={<ExampleIcon />}
+            onClick={handleClickPrivate}
+          />
+        </div>
         <Button
           onClick={onClose}
-          className="w-full max-w-[50rem] h-[5.6rem]"
+          className="w-full h-[5.6rem]"
           fontSize="large"
           backgroundColor="orange"
         >
