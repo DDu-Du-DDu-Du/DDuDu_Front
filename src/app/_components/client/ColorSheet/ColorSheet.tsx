@@ -61,21 +61,17 @@ const ColorSheet = ({ isShow, pickedColor, disabled, onClick, onClose }: ColorSh
       defaultHeight="fit-content"
       maxHeight="fit-content"
     >
-      <div className="w-full flex items-center justify-center flex-col pb-[5rem]">
+      <div className="w-full flex items-center justify-center flex-col p-[2rem]">
         <ul
           className={twJoin(
-            "w-full max-w-[50rem] h-full p-[2.5rem] border-[0.1rem] grid grid-cols-color8 color_sheet_450:grid-cols-color6 color_sheet_350:grid-cols-color4 color_sheet_350:px-0",
+            "w-full h-full border-[0.1rem] grid grid-cols-color8 gap-x-[1.3rem] gap-y-[1.6rem] color_sheet_450:grid-cols-color6 color_sheet_420:grid-cols-color5 color_sheet_350:grid-cols-color4 color_sheet_350:px-0 pb-[3.1rem]",
             disabled && "opacity-35",
           )}
-          style={{
-            gridAutoRows: "50px",
-            alignItems: "center",
-          }}
         >
           {TEST.map((color, index) => (
             <li
               key={`${color}_${index}`}
-              className="w-[5rem] h-[5rem] flex items-center justify-center"
+              className="flex items-center justify-center"
             >
               <ColorPickerInput
                 color={color}
@@ -90,8 +86,7 @@ const ColorSheet = ({ isShow, pickedColor, disabled, onClick, onClose }: ColorSh
 
         <Button
           onClick={onClose}
-          className="w-full max-w-[50rem] h-[5.6rem]"
-          fontSize="large"
+          className="w-full h-[5.6rem]"
           backgroundColor="orange"
         >
           확인

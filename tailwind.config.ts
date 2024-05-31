@@ -84,6 +84,7 @@ const config = {
         example_max: { max: "900px" },
 
         color_sheet_450: { max: "450px" },
+        color_sheet_420: { max: "420px" },
         color_sheet_350: { max: "350px" },
       },
 
@@ -105,6 +106,7 @@ const config = {
       gridTemplateColumns: {
         color8: "repeat(8, minmax(50px, 1fr))",
         color6: "repeat(6, minmax(50px, 1fr))",
+        color5: "repeat(5, minmax(50px, 1fr))",
         color4: "repeat(4, minmax(50px, 1fr))",
       },
     },
