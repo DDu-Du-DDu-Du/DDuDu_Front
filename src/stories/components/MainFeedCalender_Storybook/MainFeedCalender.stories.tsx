@@ -13,7 +13,6 @@ import type { StoryObj } from "@storybook/react";
 const meta = {
   title: "components/Calender/MainFeedCalender",
   component: FeedCalender,
-  parameters: {},
 
   tags: ["autodocs"],
 
@@ -37,8 +36,13 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: { monthlyGoals: ["아침 7시 기상", "기술면접 준비"], monthlyDDuDus: DAILY_DDUDU_MOCK_DATA },
   decorators: [
-    (FeedCalender) => {
-      return <FeedCalender />;
+    () => {
+      return (
+        <FeedCalender
+          monthlyDDuDus={DAILY_DDUDU_MOCK_DATA}
+          monthlyGoals={["아침 7시 기상", "기술면접 준비"]}
+        />
+      );
     },
   ],
 };

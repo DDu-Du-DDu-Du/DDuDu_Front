@@ -27,9 +27,9 @@ export const FeedCalenderStyles = {
   table: "w-full border-collapse",
   head_row: "flex font-medium text-example_gray_1100 select-none",
   head_cell: "m-0.5 w-full font-normal text-size11",
-  row: "flex w-full mt-2",
+  row: "flex w-full mt-4",
   cell: "rounded-md h-16 flex items-end justify-center w-full text-center text-sm p-0 m-1 relative",
-  day: "h-12 w-12 p-0 font-normal flex flex-col justify-end items-center gap-2",
+  day: "h-12 w-12 p-0 font-normal flex flex-col justify-end items-center gap-4",
   day_range_end: "day-range-end",
   day_selected: "rounded-full bg-example_gray_1000 text-white focus:bg-example_gray_1000",
   day_outside:
