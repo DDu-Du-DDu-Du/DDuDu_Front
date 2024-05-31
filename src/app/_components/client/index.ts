@@ -9,6 +9,7 @@ export { default as Button } from "./Button/Button";
 export { default as TextInput } from "./TextInput/TextInput";
 export { default as CheckboxInput } from "./CheckboxInput/CheckboxInput";
 export { default as ColorSheet } from "./ColorSheet/ColorSheet";
+export { default as PrivacySheet } from "./PrivacySheet/PrivacySheet";
 
 export { default as Avatar } from "./Avatar/Avatar";
 export { default as Modal } from "./Modal/Modal";
