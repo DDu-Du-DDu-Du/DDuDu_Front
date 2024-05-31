@@ -17,7 +17,7 @@ const FeedCalenderDayContent = (
   return (
     <div
       className={twMerge(
-        "flex flex-col gap-2 p-2",
+        "flex flex-col gap-2",
         isToday && "font-bold bg-example_gray_300 rounded-radius5",
       )}
     >
