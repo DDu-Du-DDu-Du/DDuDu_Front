@@ -3,12 +3,18 @@ import { useState } from "react";
 interface UseToggleFollowProps {
   isFollowing: boolean;
   isPrivate: boolean;
-  handleToggleOn: () => void;
+  isRequestFollow: boolean;
+  openModal: () => void;
 }
 
-const useToggleFollow = ({ isFollowing, isPrivate, handleToggleOn }: UseToggleFollowProps) => {
+const useToggleFollow = ({
+  isFollowing,
+  isPrivate,
+  isRequestFollow,
+  openModal,
+}: UseToggleFollowProps) => {
   const [isFollow, setIsFollow] = useState(isFollowing);
-  const [isPrivateFollow, setIsPrivateFollow] = useState(false);
+  const [isFollowRequesting, setIsFollowRequesting] = useState(isRequestFollow);
 
   const handleFollowCheck = (isComplete: boolean) => {
     if (!isComplete) {
@@ -16,7 +22,7 @@ const useToggleFollow = ({ isFollowing, isPrivate, handleToggleOn }: UseToggleFo
     }
 
     setIsFollow(false);
-    setIsPrivateFollow(false);
+    setIsFollowRequesting(false);
   };
 
   const handleToggleFollow = () => {
@@ -29,15 +35,15 @@ const useToggleFollow = ({ isFollowing, isPrivate, handleToggleOn }: UseToggleFo
     // 비공개 계정인 경우
     if (isFollow === false) {
       // 팔로우 요청
-      setIsPrivateFollow(true);
+      setIsFollowRequesting(true);
       setIsFollow(true);
     }
 
     if (isFollow === true) {
       // 팔로우 취소
-      if (isPrivateFollow && handleToggleOn) {
+      if (isFollowRequesting && openModal) {
         // 팔로우 요청중인 경우 요청 취소 모달 등장
-        handleToggleOn();
+        openModal();
       } else {
         // 이미 팔로잉중인 경우 즉시 취소
         setIsFollow(false);
@@ -47,7 +53,7 @@ const useToggleFollow = ({ isFollowing, isPrivate, handleToggleOn }: UseToggleFo
 
   return {
     isFollow,
-    isPrivateFollow,
+    isFollowRequesting,
     handleToggleFollow,
     handleFollowCheck,
   };
