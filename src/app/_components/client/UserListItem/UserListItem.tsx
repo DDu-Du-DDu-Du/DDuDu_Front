@@ -14,14 +14,26 @@ interface UserListItemProps {
   user: UserType;
   isFollowing: boolean;
   isPrivate: boolean;
+  isRequestFollow: boolean;
 }
 
-const UserListItem = ({ type, user, isFollowing, isPrivate }: UserListItemProps) => {
-  const { isToggle, handleToggleOff, handleToggleOn } = useToggle();
-  const { isFollow, isPrivateFollow, handleToggleFollow, handleFollowCheck } = useToggleFollow({
+const UserListItem = ({
+  type,
+  user,
+  isFollowing,
+  isPrivate,
+  isRequestFollow,
+}: UserListItemProps) => {
+  const {
+    isToggle: isShowModal,
+    handleToggleOff: closeModal,
+    handleToggleOn: openModal,
+  } = useToggle();
+  const { isFollow, isFollowRequesting, handleToggleFollow, handleFollowCheck } = useToggleFollow({
     isFollowing,
     isPrivate,
-    handleToggleOn,
+    isRequestFollow,
+    openModal,
   });
 
   return (
@@ -39,13 +51,13 @@ const UserListItem = ({ type, user, isFollowing, isPrivate }: UserListItemProps)
         )}
         onClick={handleToggleFollow}
       >
-        {isPrivateFollow ? (isFollow ? "요청중" : "팔로우") : isFollow ? "팔로잉" : "팔로우"}
+        {isFollowRequesting ? (isFollow ? "요청중" : "팔로우") : isFollow ? "팔로잉" : "팔로우"}
       </button>
       <ConfirmModal
-        isToggle={isToggle}
+        isToggle={isShowModal}
         title="팔로잉 요청중 입니다."
         message="정말 취소하시겠습니까?"
-        handleToggleOff={handleToggleOff}
+        handleToggleOff={closeModal}
         onCompleteCheck={handleFollowCheck}
       />
     </li>
