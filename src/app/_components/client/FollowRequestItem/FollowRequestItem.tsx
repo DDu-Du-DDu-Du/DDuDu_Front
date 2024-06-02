@@ -5,7 +5,7 @@ import { useMemo } from "react";
 import { UserType } from "@/app/_types/response/user";
 
 import { Avatar } from "../../client";
-import getTimeDiffInKorean from "./utils/getTimeDiffInKorean/getTimeDiffInKorean";
+import getRelativeTime from "./utils/getRelativeTime/getRelativeTime";
 
 interface FollowRequestItemProps {
   user: UserType;
@@ -18,15 +18,13 @@ const FollowRequestItem = ({
   followRequestAt,
   onFollowRequestCheck,
 }: FollowRequestItemProps) => {
-  const timeAge = useMemo(() => getTimeDiffInKorean(followRequestAt), [followRequestAt]);
+  const timeAge = useMemo(() => getRelativeTime(followRequestAt), [followRequestAt]);
 
   const handleIncompleteClick = () => {
-    console.log("거절");
     onFollowRequestCheck(false);
   };
 
   const handleCompleteClick = () => {
-    console.log("수락");
     onFollowRequestCheck(true);
   };
 
