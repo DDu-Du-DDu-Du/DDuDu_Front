@@ -19,6 +19,7 @@ import type { Meta, StoryObj } from "@storybook/react";
  * - **isPrivate :** 회원이 비공개 계정인지 알 수 있는 boolean 값입니다.
  *  - **공개:** 팔로우 시 즉시 팔로우 되며 팔로우 취소 시 즉시 취소됩니다.
  *  - **비공개:** 팔로우 시 팔로우 요청되며 회원이 요청을 수락해야 팔로우가 됩니다. 요청 중일 때 팔로우 취소를 하려고 하면 ConfirmModal을 통해 재확인합니다. 만약 비공개 계정을 이미 팔로우 중이라면 즉시 취소가 가능합니다.
+ * - **isRequestFollow :** 회원에게 팔로우 요청중인지 여부를 체크하는 boolean 값입니다.
  *
  * <br>
  *
@@ -30,6 +31,7 @@ import type { Meta, StoryObj } from "@storybook/react";
  *  user={{ userId: "코카콜라", userName: "코카콜라", userImage: null }}
  *  isFollowing={true}
  *  isPrivate={true}
+ *  isRequestFollow={true}
  * />
  * ```
  **/
@@ -62,6 +64,10 @@ const meta = {
       control: "boolean",
       description: "해당 유저가 비공개 계정인지 알려주는 값입니다.",
     },
+    isRequestFollow: {
+      control: "boolean",
+      description: "해당 유저에게 팔로우 요청 중인지 알려주는 값입니다.",
+    },
   },
 
   args: {
@@ -69,6 +75,7 @@ const meta = {
     user: { userId: "코카콜라", userName: "코카콜라", userImage: null },
     isFollowing: true,
     isPrivate: true,
+    isRequestFollow: true,
   },
 } satisfies Meta<typeof UserListItem>;
 
