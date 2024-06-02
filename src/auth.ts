@@ -1,3 +1,5 @@
+import { socialLogin } from "./app/_services/server/auth/auth";
+
 import NextAuth from "next-auth";
 import kakao from "next-auth/providers/kakao";
 
@@ -14,10 +16,25 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     updateAge: 0,
   },
   callbacks: {
-    jwt: async ({ token, user }) => {
-      console.log(user);
-      console.log(token);
+    // 로그인 후 jwt 토큰이 생성되거나, 갱신될 때 호출
+    jwt: async ({ token, account }) => {
+      if (account && account.access_token) {
+        const response = await socialLogin({ socialToken: account.access_token });
+
+        token.accessToken = response.accessToken;
+        token.refreshToken = response.refreshToken;
+      }
+
+      // ? 카카오에서 넘겨주는 유저 정보 + 서비스에서 관리하는 유저 정보 모두 조회 가능한지
+
+      return token;
     },
-    // session: async ({ session, token }) => {},
+    // 세션을 조회할 때마다 호출
+    // session: async ({ session, token }) => {
+    //   console.log("session callbacked");
+    //   console.log("session:", session);
+
+    //   return session;
+    // },
   },
 });
