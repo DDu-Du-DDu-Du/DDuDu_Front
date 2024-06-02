@@ -10,7 +10,7 @@ dayjs.extend(relativeTime);
 dayjs.locale("ko");
 dayjs.tz.setDefault("Asia/Seoul");
 
-const getTimeDiffInKorean = (utcDateString: string) => {
+const getRelativeTime = (utcDateString: string) => {
   if (!dayjs(utcDateString).isValid()) {
     throw new Error("유효하지 않은 날짜 형식입니다.");
   }
@@ -44,4 +44,4 @@ const getTimeDiffInKorean = (utcDateString: string) => {
   }
 };
 
-export default getTimeDiffInKorean;
+export default getRelativeTime;
