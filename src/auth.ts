@@ -23,18 +23,23 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
         token.accessToken = response.accessToken;
         token.refreshToken = response.refreshToken;
+
+        console.log("isLogin");
       }
 
       // ? 카카오에서 넘겨주는 유저 정보 + 서비스에서 관리하는 유저 정보 모두 조회 가능한지
 
+      console.log("JWT Callbacked");
       return token;
     },
     // 세션을 조회할 때마다 호출
-    // session: async ({ session, token }) => {
-    //   console.log("session callbacked");
-    //   console.log("session:", session);
+    session: async ({ session, token }) => {
+      if (token?.accessToken) {
+        session.sessionToken = token.accessToken.toString();
+      }
 
-    //   return session;
-    // },
+      console.log("Session Callbacked");
+      return session;
+    },
   },
 });
