@@ -21,6 +21,8 @@ interface RootLayoutProps {
 }
 
 const RootLayout = ({ children, session }: Readonly<RootLayoutProps>) => {
+  // 현재 로그인 상태인 경우, 갖고 있는 액세스토큰을
+
   return (
     <html
       lang="ko"
