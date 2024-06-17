@@ -22,7 +22,7 @@ const Home = async () => {
       <form action={signInWithKakao}>
         <button type="submit">로그인</button>
       </form>
-      <Link href="/login">링크?</Link>
+      <Link href="/home">링크?</Link>
     </main>
   );
 };
