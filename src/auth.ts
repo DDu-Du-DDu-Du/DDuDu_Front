@@ -29,22 +29,20 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           refreshToken: response.refreshToken,
           expiresAt: Date.now() + 6 * 60 * 60 * 1000,
         };
-      } else if (token.expiresAt - Date.now() <= threshold) {
+      } else if ((token.expiresAt as number) - Date.now() <= threshold) {
         // 유효한 액세스 토큰 보유 시
         return token;
       } else {
         // 액세스 토큰 만료 시
         try {
-          const response = await refreshAccessToken(token.accessToken as string);
-
+          const response = await refreshAccessToken(token.refreshToken as string);
           return {
             ...token,
             accessToken: response.accessToken,
             expiresAt: Date.now() + 6 * 60 * 60 * 1000,
           };
         } catch (error) {
-          // TODO: 액세스 토큰 갱신(refresh) 실패 시 로직 처리
-          // 유저 로그아웃 + 쿠키 스토리지 초기화 + 로그인 페이지로 리다이렉트
+          // TODO: 에러처리
           return { ...token };
         }
       }
