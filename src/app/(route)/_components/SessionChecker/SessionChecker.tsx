@@ -2,21 +2,25 @@
 
 import { useEffect } from "react";
 
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 
-interface SessionLoaderProps {
+interface SessionCheckerProps {
   children: React.ReactNode;
 }
-const SessionLoader = ({ children }: SessionLoaderProps) => {
+const SessionChecker = ({ children }: SessionCheckerProps) => {
   const session = useSession();
   const pathname = usePathname();
 
   useEffect(() => {
     console.log(session);
+
+    if (session.data?.errorMessage) {
+      signOut();
+    }
   }, [pathname, session, session.status]);
 
   return <>{children}</>;
 };
 
-export default SessionLoader;
+export default SessionChecker;

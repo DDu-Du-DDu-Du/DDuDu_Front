@@ -7,12 +7,14 @@ declare module "next-auth" {
   }
   interface Session {
     sessionToken: string;
+    errorMessage: string;
   }
 }
 
 declare module "@auth/core/jwt" {
   interface JWT {
     sessionToken: string;
+    refreshToken: string;
     expiresAt: number;
   }
 }

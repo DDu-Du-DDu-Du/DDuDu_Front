@@ -1,4 +1,4 @@
-const LoginPage = () => {
+const LoginPage = async () => {
   return <div>LoginPage</div>;
 };
 
