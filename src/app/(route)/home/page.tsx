@@ -15,7 +15,6 @@ const page = () => {
     update();
   };
 
-  console.log("homeSession(client):", session);
   return (
     <div className="mt-[5.2rem]">
       ds

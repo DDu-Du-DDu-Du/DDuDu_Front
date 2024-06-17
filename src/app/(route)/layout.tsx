@@ -5,6 +5,7 @@ import { ToastProvider } from "@/app/_components/client";
 import { SpoqaHanSansFont } from "../_assets/font";
 import { BottomProvider } from "../_components/client/BottomSheet";
 import { TanstackProvider } from "./_components";
+import SessionLoader from "./_components/SessionLoader/SessionLoader";
 
 import type { Metadata } from "next";
 import { Session } from "next-auth";
@@ -21,8 +22,6 @@ interface RootLayoutProps {
 }
 
 const RootLayout = ({ children, session }: Readonly<RootLayoutProps>) => {
-  // 현재 로그인 상태인 경우, 갖고 있는 액세스토큰을
-
   return (
     <html
       lang="ko"
@@ -30,12 +29,14 @@ const RootLayout = ({ children, session }: Readonly<RootLayoutProps>) => {
     >
       <body>
         <SessionProvider session={session}>
-          <TanstackProvider>
-            <main id="app">
-              <ToastProvider>{children}</ToastProvider>
-              <BottomProvider />
-            </main>
-          </TanstackProvider>
+          <SessionLoader>
+            <TanstackProvider>
+              <main id="app">
+                <ToastProvider>{children}</ToastProvider>
+                <BottomProvider />
+              </main>
+            </TanstackProvider>
+          </SessionLoader>
         </SessionProvider>
       </body>
     </html>
