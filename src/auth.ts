@@ -26,6 +26,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           const response = await socialLogin(account.access_token);
           console.log("토큰 신규 발급 성공");
 
+          // TODO: 서버로부터 유저정보를 받아온 후 세션에 저장
+
           return {
             ...token,
             accessToken: response.accessToken,

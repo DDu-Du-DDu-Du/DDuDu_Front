@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 
 import { signOut, useSession } from "next-auth/react";
-import { usePathname } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 
 interface SessionCheckerProps {
   children: React.ReactNode;
@@ -17,6 +17,7 @@ const SessionChecker = ({ children }: SessionCheckerProps) => {
 
     if (session.data?.errorMessage) {
       signOut();
+      redirect("/home");
     }
   }, [pathname, session, session.status]);
 
