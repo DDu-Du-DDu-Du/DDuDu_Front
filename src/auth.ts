@@ -47,10 +47,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         try {
           console.log("액세스 토큰이 만료되었습니다. 갱신을 시도합니다.");
 
-          // !TODO 정상적인 refreshToken을 통해 accessToken 갱신
           const response = await refreshAccessToken(token.refreshToken);
 
-          console.log("성공적으로 갱신되었습니다.");
+          console.log("성공적으로 갱신되었습니다.", response);
           return {
             ...token,
             accessToken: response.accessToken,
