@@ -1,4 +1,13 @@
-import { CheckIcon, CloseIcon, QuestionIcon } from "@/app/_components/server";
+import {
+  ArrowLeftIcon,
+  CheckIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  CloseIcon,
+  DragIcon,
+  PlusIcon,
+  QuestionIcon,
+} from "@/app/_components/server";
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { IconViewer } from "./components";
@@ -53,4 +62,24 @@ export const Question: Story = {
 
 export const Check: Story = {
   args: { children: <CheckIcon /> },
+};
+
+export const Drag: Story = {
+  args: { children: <DragIcon /> },
+};
+
+export const Plus: Story = {
+  args: { children: <PlusIcon /> },
+};
+
+export const ArrowLeft: Story = {
+  args: { children: <ArrowLeftIcon /> },
+};
+
+export const ChevronLeft: Story = {
+  args: { children: <ChevronLeftIcon /> },
+};
+
+export const ChevronRight: Story = {
+  args: { children: <ChevronRightIcon /> },
 };
