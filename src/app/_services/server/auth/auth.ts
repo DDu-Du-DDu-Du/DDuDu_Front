@@ -1,9 +1,9 @@
 import { fetchApi } from "@/app/_api";
-import Auth from "@/app/_constants/endPoint/auth/auth";
+import AUTH from "@/app/_constants/endPoint/auth/auth";
 
 export const socialLogin = async (socialToken: string) => {
   // TODO: API 엔드포인트 상수로 관리, QueryClient Cache 에러 발생
-  const response = await fetchApi(`${Auth.SOCIAL_LOGIN}`, {
+  const response = await fetchApi(`${AUTH.SOCIAL_LOGIN}`, {
     method: "POST",
     headers: {
       accept: "application/json",
@@ -20,7 +20,7 @@ export const socialLogin = async (socialToken: string) => {
 
 export const refreshAccessToken = async (refreshToken: string) => {
   // TODO: API 엔드포인트 상수로 관리, QueryClient Cache 에러 발생
-  const response = await fetchApi(`${Auth.REFRESH_TOKEN}`, {
+  const response = await fetchApi(`${AUTH.REFRESH_TOKEN}`, {
     method: "POST",
     headers: { accept: "application/json", "Content-Type": "application/json" },
     body: JSON.stringify({
