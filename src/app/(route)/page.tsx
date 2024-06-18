@@ -1,11 +1,11 @@
-// import { auth as getSession } from "@/auth";
+// import { auth } from "@/auth";
 import { signInWithKakao } from "../_api/serverActions/auth";
 import { QUERY_KEY, QUERY_OPTIONS, getQueryClient } from "../_constants";
 
 import Link from "next/link";
 
 const Home = async () => {
-  // const session = await getSession();
+  // const session = await auth();
   // console.log("homeSession(server):", session);
 
   const queryClient = getQueryClient();

@@ -1,4 +1,6 @@
+import { getMe } from "./app/_services/server";
 import { refreshAccessToken, socialLogin } from "./app/_services/server/auth/auth";
+import { ServiceUser } from "./app/_types/auth/auth.type";
 
 import NextAuth from "next-auth";
 import kakao from "next-auth/providers/kakao";
@@ -13,7 +15,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   session: {
     strategy: "jwt",
     maxAge: 60 * 60 * 6, // 뚜두 서버 액세스토큰 만료 시간과 같음 (6시간)
-    // updateAge: 0,
   },
   callbacks: {
     jwt: async ({ token, account }) => {
@@ -23,42 +24,61 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         console.log("first authenticate");
         // 첫 로그인 시
         try {
-          const response = await socialLogin(account.access_token);
+          const tokenResponse = await socialLogin(account.access_token);
           console.log("토큰 신규 발급 성공");
+          console.log("account:", account);
 
-          // TODO: 서버로부터 유저정보를 받아온 후 세션에 저장
+          const meResponse = await getMe(tokenResponse.accessToken);
+
+          console.log(meResponse);
 
           return {
             ...token,
-            accessToken: response.accessToken,
-            refreshToken: response.refreshToken,
+            accessToken: tokenResponse.accessToken,
+            refreshToken: tokenResponse.refreshToken,
             expiresAt: Date.now() + 6 * 60 * 60 * 1000,
             errorMessage: null,
+            user: meResponse,
           };
         } catch (error) {
+          console.log("토큰 생성에 실패하였습니다. 에러:", error);
           return { ...token, errorMessage: "failed to get token" };
         }
       } else if (token.expiresAt && (token.expiresAt as number) - Date.now() >= threshold) {
         // 유효한 액세스 토큰 보유 시
-        console.log("현재 토큰을 그대로 사용합니다.", token);
-        return token;
+        console.log("현재 토큰을 그대로 사용합니다.");
+
+        try {
+          const meResponse = await getMe(token.accessToken as string);
+
+          return {
+            ...token,
+            errorMessage: null,
+            user: meResponse,
+          };
+        } catch (error) {
+          console.log("유저 정보 갱신에 실패하였습니다. 에러:", error);
+          return { ...token, errorMessage: "failed to update user information" };
+        }
       } else {
         // 액세스 토큰 만료 시
         try {
           console.log("액세스 토큰이 만료되었습니다. 갱신을 시도합니다.");
 
-          const response = await refreshAccessToken(token.refreshToken);
+          const tokenResponse = await refreshAccessToken(token.refreshToken);
+          const meResponse = await getMe(tokenResponse.accessToken);
 
-          console.log("성공적으로 갱신되었습니다.", response);
+          console.log("성공적으로 갱신되었습니다.", tokenResponse);
           return {
             ...token,
-            accessToken: response.accessToken,
-            refreshToken: response.refreshToken,
+            accessToken: tokenResponse.accessToken,
+            refreshToken: tokenResponse.refreshToken,
             expiresAt: Date.now() + 6 * 60 * 60 * 1000,
             errorMessage: null,
+            user: meResponse,
           };
         } catch (error) {
-          console.log("갱신에 실패하였습니다. 에러:", error);
+          console.log("토큰 갱신에 실패하였습니다. 에러:", error);
           return { ...token, errorMessage: "failed to update token" };
         }
       }
@@ -71,6 +91,19 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
       if (token.errorMessage) {
         session.errorMessage = token.errorMessage.toString();
+      }
+
+      if (token.user) {
+        const { id, username, nickname, profileImageUrl, authority } = token.user as ServiceUser;
+        session.user = {
+          userId: id,
+          id: username,
+          nickname,
+          authority,
+          image: profileImageUrl,
+          email: "non-used",
+          emailVerified: null,
+        };
       }
 
       return session;
