@@ -13,11 +13,9 @@ const SessionChecker = ({ children }: SessionCheckerProps) => {
   const pathname = usePathname();
 
   useEffect(() => {
-    console.log(session);
-
     if (session.data?.errorMessage) {
       signOut();
-      redirect("/home");
+      redirect("/login");
     }
   }, [pathname, session, session.status]);
 

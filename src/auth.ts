@@ -25,13 +25,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         // 첫 로그인 시
         try {
           const tokenResponse = await socialLogin(account.access_token);
-          console.log("토큰 신규 발급 성공");
-          console.log("account:", account);
-
           const meResponse = await getMe(tokenResponse.accessToken);
-
-          console.log(meResponse);
-
+          console.log("토큰 신규 발급 성공");
           return {
             ...token,
             accessToken: tokenResponse.accessToken,
@@ -50,7 +45,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
         try {
           const meResponse = await getMe(token.accessToken as string);
-
           return {
             ...token,
             errorMessage: null,
@@ -64,10 +58,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         // 액세스 토큰 만료 시
         try {
           console.log("액세스 토큰이 만료되었습니다. 갱신을 시도합니다.");
-
           const tokenResponse = await refreshAccessToken(token.refreshToken);
           const meResponse = await getMe(tokenResponse.accessToken);
-
           console.log("성공적으로 갱신되었습니다.", tokenResponse);
           return {
             ...token,
