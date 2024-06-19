@@ -1,9 +1,9 @@
-import { cache } from "react";
-
+// import { cache } from "react";
 import { getMe, postTest } from "@/app/_services/server";
-import { QueryClient } from "@tanstack/react-query";
 
-export const getQueryClient = cache(() => new QueryClient());
+// import { QueryClient } from "@tanstack/react-query";
+
+// export const getQueryClient = cache(() => new QueryClient());
 
 export const QUERY_KEY = {
   USER: {
