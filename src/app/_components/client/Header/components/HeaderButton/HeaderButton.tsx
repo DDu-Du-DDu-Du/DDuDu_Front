@@ -16,7 +16,7 @@ const HeaderButton = ({ buttonFn, buttonPosition, children }: HeaderButtonProps)
 
   return (
     <button
-      className={`absolute flex h-[1.6rem] w-[1.6rem] items-center justify-center ${buttonPositionVariants[buttonPosition]}`}
+      className={`absolute flex h-[1.6rem] w-[1.6rem] items-center justify-center ${buttonPositionVariants[buttonPosition]} pointer-events-auto`}
       onClick={buttonFn}
     >
       {children}

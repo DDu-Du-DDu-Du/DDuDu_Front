@@ -8,9 +8,11 @@ const useHeaderLabel = ({ segments }: useHeaderLabelProps) => {
   return useMemo(() => {
     let headerLabel = "";
 
-    switch (segments[0]) {
-      case "example":
-        headerLabel = "example";
+    const url = "/" + segments.join("/");
+
+    switch (url) {
+      case "/goal":
+        headerLabel = "목표 관리";
         break;
 
       default:
