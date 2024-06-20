@@ -1,6 +1,6 @@
 import "../_styles/globals.css";
 
-import { ToastProvider } from "@/app/_components/client";
+import { Header, ToastProvider } from "@/app/_components/client";
 
 import { SpoqaHanSansFont } from "../_assets/font";
 import { BottomProvider } from "../_components/client/BottomSheet";
@@ -25,7 +25,11 @@ const RootLayout = ({
     >
       <body>
         <TanstackProvider>
-          <main id="app">
+          <Header />
+          <main
+            id="app"
+            className="pt-[5.2rem]"
+          >
             <ToastProvider>{children}</ToastProvider>
             <BottomProvider />
           </main>
