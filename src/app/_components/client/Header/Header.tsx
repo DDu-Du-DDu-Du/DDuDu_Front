@@ -13,7 +13,7 @@ const Header = () => {
   const { rightButtonIcon, rightButtonFn } = useHeaderRightButton({ segments });
 
   return (
-    <nav className="fixed top-0 flex h-[5.2rem] w-full max-w-[60rem] items-center justify-center">
+    <header className="fixed top-0 flex h-[5.2rem] w-full max-w-[60rem] items-center justify-center z-header pointer-events-none">
       <HeaderButton
         buttonPosition="LEFT"
         buttonFn={() => router.back()}
@@ -32,7 +32,7 @@ const Header = () => {
       >
         {rightButtonIcon}
       </HeaderButton>
-    </nav>
+    </header>
   );
 };
 
