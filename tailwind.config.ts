@@ -95,6 +95,7 @@ const config = {
         timeline_icon: "24",
 
         header: "300",
+        headerLink: "400",
 
         modal: "500",
 
