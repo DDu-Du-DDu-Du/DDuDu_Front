@@ -6,3 +6,4 @@ export { default as DragIcon } from "./DragIcon/DragIcon";
 export { default as ChevronLeftIcon } from "./ChevronLeftIcon/ChevronLeftIcon";
 export { default as ChevronRightIcon } from "./ChevronRightIcon/ChevronRightIcon";
 export { default as PlusIcon } from "./PlusIcon/PlusIcon";
+export { default as OptionIcon } from "./OptionIcon/OptionIcon";
