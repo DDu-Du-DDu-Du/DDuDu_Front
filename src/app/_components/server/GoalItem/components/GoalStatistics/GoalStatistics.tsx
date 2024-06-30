@@ -3,7 +3,7 @@ import { ChevronRightIcon } from "@/app/_components/server";
 import Link from "next/link";
 
 interface GoalStatisticsProps {
-  id: number;
+  id?: number;
   goalName: string;
 }
 
