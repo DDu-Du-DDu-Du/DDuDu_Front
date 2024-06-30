@@ -3,15 +3,16 @@ import type {
   DraggableProvidedDraggableProps,
 } from "@hello-pangea/dnd";
 
-import { GoalManagement, GoalStatistics } from "./components";
+import { GoalCreateDDuDu, GoalManagement, GoalStatistics } from "./components";
 
 export interface GoalItemProps {
-  type?: "management" | "statistic";
-  id: number;
+  type?: "create" | "management" | "statistic";
+  id?: number;
   goalName: string;
   innerRef?: (element: HTMLElement | null) => void;
   draggableProps?: DraggableProvidedDraggableProps;
   dragHandleProps?: DraggableProvidedDragHandleProps | null | undefined;
+  onOpenDDuDuInput?: () => void;
 }
 
 const GoalItem = ({
@@ -21,6 +22,7 @@ const GoalItem = ({
   innerRef,
   draggableProps,
   dragHandleProps,
+  onOpenDDuDuInput,
 }: GoalItemProps) => {
   return (
     <>
@@ -37,6 +39,12 @@ const GoalItem = ({
         <GoalStatistics
           id={id}
           goalName={goalName}
+        />
+      )}
+      {type === "create" && (
+        <GoalCreateDDuDu
+          goalName={goalName}
+          onOpenDDuDuInput={onOpenDDuDuInput}
         />
       )}
     </>

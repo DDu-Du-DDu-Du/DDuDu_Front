@@ -7,7 +7,7 @@ import {
 import Link from "next/link";
 
 interface GoalManagementProps {
-  id: number;
+  id?: number;
   goalName: string;
   innerRef?: (element: HTMLElement | null) => void;
   draggableProps?: DraggableProvidedDraggableProps;
