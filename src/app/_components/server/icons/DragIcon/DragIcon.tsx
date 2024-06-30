@@ -1,6 +1,6 @@
 import { IconProps } from "../Icons.Type";
 
-const DragIcon = ({ size = 12, fill = "black", className = "", ...rest }: IconProps) => {
+const DragIcon = ({ size = 12, fill = "#D9D9D9", className = "", ...rest }: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -15,25 +15,25 @@ const DragIcon = ({ size = 12, fill = "black", className = "", ...rest }: IconPr
         cx="2"
         cy="2"
         r="2"
-        fill="#D9D9D9"
+        fill={fill}
       />
       <circle
         cx="2"
         cy="10"
         r="2"
-        fill="#D9D9D9"
+        fill={fill}
       />
       <circle
         cx="10"
         cy="2"
         r="2"
-        fill="#D9D9D9"
+        fill={fill}
       />
       <circle
         cx="10"
         cy="10"
         r="2"
-        fill="#D9D9D9"
+        fill={fill}
       />
     </svg>
   );
