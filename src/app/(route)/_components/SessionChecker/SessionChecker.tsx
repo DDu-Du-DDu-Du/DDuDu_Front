@@ -17,7 +17,7 @@ const SessionChecker = ({ children }: SessionCheckerProps) => {
       signOut();
       redirect("/login");
     }
-  }, [pathname, session, session.status]);
+  }, [pathname, session]);
 
   return <>{children}</>;
 };
