@@ -1,10 +1,18 @@
 import { PlusIcon } from "@/app/_components/server";
+import { getGoalList } from "@/app/_services/client/goal/goal";
+import { auth } from "@/auth";
 
 import { GoalDragDrop } from "./components";
 
 import Link from "next/link";
 
-const GoalPage = () => {
+const GoalPage = async () => {
+  const session = await auth();
+  const goalList = await getGoalList(
+    session?.sessionToken as string,
+    session?.user.userId as number,
+  );
+
   return (
     <div className="relative pt-[2.6rem] px-[2.4rem]">
       <Link
@@ -14,7 +22,7 @@ const GoalPage = () => {
       >
         <PlusIcon />
       </Link>
-      <GoalDragDrop />
+      <GoalDragDrop goal={goalList} />
     </div>
   );
 };

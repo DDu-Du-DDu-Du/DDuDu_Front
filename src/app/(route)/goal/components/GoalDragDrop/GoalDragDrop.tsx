@@ -3,10 +3,15 @@
 import { GoalItem } from "@/app/_components/server";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 
+import { GoalType } from "../../goal.types";
 import { useAnimationChecker, useDragDrop } from "./hooks";
 
-const GoalDragDrop = () => {
-  const { goalList, onDragEnd } = useDragDrop();
+interface GoalDragDropProps {
+  goal: GoalType[];
+}
+
+const GoalDragDrop = ({ goal }: GoalDragDropProps) => {
+  const { goalList, onDragEnd } = useDragDrop({ goal });
   const { checker } = useAnimationChecker();
 
   if (!checker) {

@@ -1,10 +1,14 @@
 import { useState } from "react";
 
-import { GOAL_DUMMY_DATA } from "@/app/(route)/goal/goal.constants";
+import { GoalType } from "@/app/(route)/goal/goal.types";
 import { DropResult } from "@hello-pangea/dnd";
 
-const useDragDrop = () => {
-  const [goalList, setGoalList] = useState(GOAL_DUMMY_DATA);
+interface UseDragDropProps {
+  goal: GoalType[];
+}
+
+const useDragDrop = ({ goal }: UseDragDropProps) => {
+  const [goalList, setGoalList] = useState(goal);
 
   const onDragEnd = ({ source, destination }: DropResult) => {
     if (!destination) {
