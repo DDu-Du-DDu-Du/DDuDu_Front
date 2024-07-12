@@ -1,11 +1,18 @@
 import { Fragment } from "react";
 
 import { FeedCalender } from "@/app/_components/client/Calender";
+import { MonthlyGoalsType } from "@/app/_components/client/Calender/FeedCalender/FeedCalender";
 
 import { MainGoalItem } from "..";
-import { DAILY_DDUDU_LIST } from "../../feed.constants";
+import { MainDailyListType } from "../../feed.types";
 
-const MainFeed = () => {
+interface MainFeedProps {
+  dailyList: MainDailyListType[];
+  monthlyGoals: MonthlyGoalsType[];
+  selectedDDuDu?: string;
+}
+
+const MainFeed = ({ dailyList, monthlyGoals, selectedDDuDu }: MainFeedProps) => {
   return (
     <>
       <FeedCalender
@@ -18,10 +25,11 @@ const MainFeed = () => {
           "2024-06-21": { total: 20, done: 15, rest: 5 },
           "2024-06-25": { total: 20, done: 20, rest: 0 },
         }}
-        monthlyGoals={["test", "test2"]}
+        monthlyGoals={monthlyGoals}
+        selectedDDuDu={selectedDDuDu}
       />
       <ul className="mt-[2rem]">
-        {DAILY_DDUDU_LIST.map(({ goal, ddudus }, index) => (
+        {dailyList?.map(({ goal, ddudus }, index) => (
           <Fragment key={index}>
             <MainGoalItem
               goal={goal}
