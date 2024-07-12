@@ -6,6 +6,28 @@ const DDuDuSubMenu = () => {
     <div className="flex w-full max-w-[50rem] flex-col gap-[1.6rem]">
       <SheetButton
         Icon={<ExampleIcon />}
+        title="오늘 또 하기"
+        buttonType="sub"
+        rightPlace={<p>5 일전</p>}
+      />
+      <SheetButton
+        Icon={<ExampleIcon />}
+        title="오늘 다시 하기"
+        buttonType="sub"
+        rightPlace={<p>5 일전</p>}
+      />
+      <SheetButton
+        Icon={<ExampleIcon />}
+        title="다른날 또 하기"
+        buttonType="sub"
+      />
+      <SheetButton
+        Icon={<ExampleIcon />}
+        title="날짜 바꾸기"
+        buttonType="sub"
+      />
+      <SheetButton
+        Icon={<ExampleIcon />}
         title="알림 설정하기"
         buttonType="sub"
         rightPlace={<p>5 일전</p>}
