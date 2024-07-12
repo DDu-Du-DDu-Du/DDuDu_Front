@@ -3,11 +3,11 @@ import { refreshAccessToken, socialLogin } from "./app/_services/server/auth/aut
 import { ServiceUser } from "./app/_types/auth/auth.type";
 
 import NextAuth from "next-auth";
-import kakao from "next-auth/providers/kakao";
+import KakaoProvider from "next-auth/providers/kakao";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
-    kakao({
+    KakaoProvider({
       clientId: process.env.KAKAO_CLIENT_ID,
       clientSecret: process.env.KAKAO_CLIENT_SECRET,
     }),
@@ -17,6 +17,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     strategy: "jwt",
     maxAge: 60 * 60 * 6, // 뚜두 서버 액세스토큰 만료 시간과 같음 (6시간)
   },
+  secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     jwt: async ({ token, account }) => {
       const threshold = 5 * 60 * 1000; // 액세스토큰 만료 판별에 사용되는 오프셋 (5분)
