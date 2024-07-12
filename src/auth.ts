@@ -12,6 +12,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       clientSecret: process.env.KAKAO_CLIENT_SECRET,
     }),
   ],
+  secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: "jwt",
     maxAge: 60 * 60 * 6, // 뚜두 서버 액세스토큰 만료 시간과 같음 (6시간)
@@ -27,6 +28,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           const tokenResponse = await socialLogin(account.access_token);
           const meResponse = await getMe(tokenResponse.accessToken);
           console.log("토큰 신규 발급 성공");
+
           return {
             ...token,
             accessToken: tokenResponse.accessToken,
@@ -58,6 +60,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         // 액세스 토큰 만료 시
         try {
           console.log("액세스 토큰이 만료되었습니다. 갱신을 시도합니다.");
+
           const tokenResponse = await refreshAccessToken(token.refreshToken);
           const meResponse = await getMe(tokenResponse.accessToken);
           console.log("성공적으로 갱신되었습니다.", tokenResponse);
