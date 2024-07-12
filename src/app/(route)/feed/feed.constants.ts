@@ -1,6 +1,6 @@
-import { MainGoalItemType } from "./feed.types";
+import { MainDailyListType, MainDailyTimeTableType } from "./feed.types";
 
-export const DAILY_DDUDU_LIST: MainGoalItemType[] = [
+export const DAILY_DDUDU_LIST: MainDailyListType[] = [
   {
     goal: {
       id: 0,
@@ -56,14 +56,49 @@ export const DAILY_DDUDU_LIST: MainGoalItemType[] = [
   },
 ];
 
-export const TIMETABLE_DDUDU_LIST = {
+export const TIMETABLE_DDUDU_LIST: MainDailyTimeTableType = {
   timetable: [
     {
       beginAt: "14:00",
       ddudus: [
         {
           id: 0,
-          name: "string",
+          name: "테스트",
+          status: "UNCOMPLETED",
+          goalId: 0,
+        },
+        {
+          id: 1,
+          name: "테스트2",
+          status: "COMPLETE",
+          goalId: 0,
+        },
+        {
+          id: 2,
+          name: "테스트3",
+          status: "UNCOMPLETED",
+          goalId: 0,
+        },
+      ],
+    },
+    {
+      beginAt: "15:00",
+      ddudus: [
+        {
+          id: 0,
+          name: "테스트",
+          status: "UNCOMPLETED",
+          goalId: 0,
+        },
+        {
+          id: 1,
+          name: "테스트2",
+          status: "COMPLETE",
+          goalId: 0,
+        },
+        {
+          id: 2,
+          name: "테스트3",
           status: "UNCOMPLETED",
           goalId: 0,
         },
