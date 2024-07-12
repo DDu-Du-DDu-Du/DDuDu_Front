@@ -19,7 +19,7 @@ const DailyDDuDu = ({ totalCount, doneCount, restCount }: DailyDDuDuProps) => {
           size={14}
         />
       ) : (
-        <div className="w-[2.1rem] h-[2.1rem] p-4 bg-example_gray_500 rounded-full flex justify-center items-center text-white">
+        <div className="w-[2.1rem] h-[2.1rem] p-4 bg-example_gray_500 rounded-full flex justify-center items-center text-white text-size11">
           {upperLimitRestCount}
         </div>
       )}

@@ -8,13 +8,32 @@ import { FeedCalenderDayContent, FeedCalenderHeader } from "./components";
 import { DAILY_DDUDU_MOCK_DATA_TYPE } from "./components/DailyDDuDu/DailyDDuDu.constant";
 
 import { ko } from "date-fns/locale/ko";
+import { usePathname, useSearchParams } from "next/navigation";
 
-export interface FeedCalenderProps {
-  monthlyGoals?: string[];
-  monthlyDDuDus: DAILY_DDUDU_MOCK_DATA_TYPE;
+export interface MonthlyGoalsType {
+  id: number;
+  contents: string;
+  type: "WEEK" | "MONTH";
 }
 
-const FeedCalender = ({ monthlyGoals, monthlyDDuDus }: FeedCalenderProps) => {
+export interface FeedCalenderProps {
+  monthlyGoals?: MonthlyGoalsType[];
+  monthlyDDuDus: DAILY_DDUDU_MOCK_DATA_TYPE;
+  selectedDDuDu?: string;
+}
+
+const FeedCalender = ({ monthlyGoals, monthlyDDuDus, selectedDDuDu }: FeedCalenderProps) => {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  let queryString = searchParams.toString();
+  const deleteParamIndex = searchParams.toString().indexOf("&date=");
+
+  if (deleteParamIndex > -1) {
+    queryString = searchParams.toString().slice(0, deleteParamIndex);
+  }
+
+  const currentURL = `${pathname}?${queryString}`;
+
   return (
     <DayPicker
       locale={ko}
@@ -24,7 +43,8 @@ const FeedCalender = ({ monthlyGoals, monthlyDDuDus }: FeedCalenderProps) => {
       classNames={FeedCalenderStyles}
       components={{
         Caption: (props: CaptionProps) => FeedCalenderHeader(props, monthlyGoals),
-        DayContent: (props: DayContentProps) => FeedCalenderDayContent(props, monthlyDDuDus),
+        DayContent: (props: DayContentProps) =>
+          FeedCalenderDayContent({ props, monthlyDDuDus, currentURL, selectedDDuDu }),
       }}
     />
   );
