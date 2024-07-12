@@ -27,7 +27,7 @@ const MainDDuDuItem = ({
     <li className="flex items-center justify-between">
       <label
         className="relative block size-[2rem] rounded-circle border-solid border-2 bg-[white]  mr-[1rem] cursor-pointer"
-        style={{ borderColor: color }}
+        style={{ borderColor: `#${color}` }}
         htmlFor={`${ddudu}${id}`}
       >
         <input
@@ -39,7 +39,7 @@ const MainDDuDuItem = ({
         {status === "COMPLETE" && (
           <div
             className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 size-[1rem] rounded-circle"
-            style={{ backgroundColor: color }}
+            style={{ backgroundColor: `#${color}` }}
           />
         )}
       </label>
