@@ -2,10 +2,20 @@ import { BottomSheet } from "../BottomSheet";
 import { DDuDuMenu } from "./components";
 
 interface DDuDuSheetProps {
+  dduduId: number;
+  handleEditDDuDuId: (id: number) => void;
+  handleDeleteDDuDuId: (id: number) => void;
   onClose: () => void;
 }
 
-const DDuDuSheet = ({ onClose }: DDuDuSheetProps) => {
+const DDuDuSheet = ({
+  dduduId,
+  handleEditDDuDuId,
+  handleDeleteDDuDuId,
+  onClose,
+}: DDuDuSheetProps) => {
+  console.log("dduduId", dduduId);
+
   return (
     <BottomSheet
       isShow
@@ -13,7 +23,12 @@ const DDuDuSheet = ({ onClose }: DDuDuSheetProps) => {
       maxHeight={"fit-content"}
       onClose={onClose}
     >
-      <DDuDuMenu />
+      <DDuDuMenu
+        dduduId={dduduId}
+        handleEditDDuDuId={handleEditDDuDuId}
+        handleDeleteDDuDuId={handleDeleteDDuDuId}
+        onClose={onClose}
+      />
     </BottomSheet>
   );
 };
