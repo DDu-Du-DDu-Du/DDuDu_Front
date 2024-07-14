@@ -61,7 +61,7 @@ export const getDDuDuDetail = async ({ accessToken, id }: FetchUpdateDDuDuProps)
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      header: `Bearer ${accessToken}`,
+      Authorization: `Bearer ${accessToken}`,
     },
   });
 
