@@ -2,7 +2,8 @@
 
 import { Fragment, useState } from "react";
 
-import { DDuDuSheet } from "@/app/_components/client";
+import { AlarmSheet, DDuDuSheet } from "@/app/_components/client";
+import { BottomSingleCalender } from "@/app/_components/client/Calender";
 import { GoalItem } from "@/app/_components/server";
 import { useToggle } from "@/app/_hooks";
 import { fetchCompleteToggleDDuDu, fetchDeleteDDuDu } from "@/app/_services/client";
@@ -19,7 +20,21 @@ const MainGoalList = ({ goal, ddudus }: MainDailyListType) => {
   const [currentDDuDuId, setCurrentDDuDuId] = useState(-1);
   const [isDDuDuEdit, setIsDDuDuEdit] = useState(-1);
 
+  const [selectedDate, setSelectedDate] = useState<Date>();
+
   const { isToggle, handleToggleOn, handleToggleOff } = useToggle();
+
+  const {
+    isToggle: isAlarmSheetToggle,
+    handleToggleOn: handleAlarmSheetToggleOn,
+    // handleToggleOff: handleAlarmSheetToggleOff,
+  } = useToggle();
+
+  const {
+    isToggle: isCalendarSheetToggle,
+    handleToggleOn: handleCalendarSheetToggleOn,
+    handleToggleOff: handleCalendarSheetToggleOff,
+  } = useToggle();
 
   const { data: session } = useSession();
 
@@ -101,6 +116,20 @@ const MainGoalList = ({ goal, ddudus }: MainDailyListType) => {
     handleToggleOff();
   };
 
+  const handleSelectDifferentDate = () => {
+    handleCalendarSheetToggleOn();
+    handleToggleOff();
+  };
+
+  const handleAlarmSetting = () => {
+    handleAlarmSheetToggleOn();
+    handleToggleOff();
+  };
+
+  const handleSelectedDate = (selectedDate: Date | undefined) => {
+    setSelectedDate(selectedDate);
+  };
+
   return (
     <li className="mb-[2.5rem]">
       <GoalItem
@@ -148,6 +177,16 @@ const MainGoalList = ({ goal, ddudus }: MainDailyListType) => {
           handleEditDDuDuId={handleEditDDuDuId}
           handleDeleteDDuDuId={handleDeleteDDuDuId}
           onClose={handleToggleOff}
+          handleSelectDifferentDate={handleSelectDifferentDate}
+          handleAlarmSetting={handleAlarmSetting}
+        />
+      )}
+      {isAlarmSheetToggle && <AlarmSheet />}
+      {isCalendarSheetToggle && (
+        <BottomSingleCalender
+          selected={selectedDate}
+          setSelected={handleSelectedDate}
+          handleCalendarSheetToggleOff={handleCalendarSheetToggleOff}
         />
       )}
     </li>
