@@ -3,6 +3,8 @@ import { ExampleIcon } from "@/app/_components/server";
 
 interface DDuDuMainMenuProps {
   dduduId: number;
+  isDDuDuDateNow: boolean;
+  status: "COMPLETE" | "UNCOMPLETED";
   handleEditDDuDuId: (id: number) => void;
   handleDeleteDDuDuId: (id: number) => void;
   onClose: () => void;
@@ -10,6 +12,8 @@ interface DDuDuMainMenuProps {
 
 const DDuDuMainMenu = ({
   dduduId,
+  isDDuDuDateNow,
+  status,
   handleEditDDuDuId,
   handleDeleteDDuDuId,
   onClose,
@@ -30,11 +34,13 @@ const DDuDuMainMenu = ({
         title="수정하기"
         onClick={handleCurrentDDuDuEdit}
       />
-      <SheetButton
-        Icon={<ExampleIcon />}
-        title="투두시간"
-        onClick={() => console.log("투두시간 설정하기", dduduId)}
-      />
+      {(isDDuDuDateNow || status === "COMPLETE") && (
+        <SheetButton
+          Icon={<ExampleIcon />}
+          title="뚜두시간"
+          onClick={() => {}}
+        />
+      )}
       <SheetButton
         Icon={<ExampleIcon />}
         title="삭제하기"

@@ -6,6 +6,8 @@ interface DDuDuSheetProps {
   handleEditDDuDuId: (id: number) => void;
   handleDeleteDDuDuId: (id: number) => void;
   onClose: () => void;
+  handleSelectDifferentDate: () => void;
+  handleAlarmSetting: () => void;
 }
 
 const DDuDuSheet = ({
@@ -13,9 +15,9 @@ const DDuDuSheet = ({
   handleEditDDuDuId,
   handleDeleteDDuDuId,
   onClose,
+  handleSelectDifferentDate,
+  handleAlarmSetting,
 }: DDuDuSheetProps) => {
-  console.log("dduduId", dduduId);
-
   return (
     <BottomSheet
       isShow
@@ -28,6 +30,8 @@ const DDuDuSheet = ({
         handleEditDDuDuId={handleEditDDuDuId}
         handleDeleteDDuDuId={handleDeleteDDuDuId}
         onClose={onClose}
+        handleSelectDifferentDate={handleSelectDifferentDate}
+        handleAlarmSetting={handleAlarmSetting}
       />
     </BottomSheet>
   );
