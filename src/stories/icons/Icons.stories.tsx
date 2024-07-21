@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import IconStoryBox from "./IconStoryBox";
+import { IconStoryBox } from "./components";
 
 /**
  * **공통 Icon 컴포넌트 모음**
