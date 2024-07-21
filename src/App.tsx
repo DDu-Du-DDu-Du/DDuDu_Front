@@ -1,13 +1,19 @@
+import { GlobalStyles, theme } from "@/styles";
+
+import { ThemeProvider } from "styled-components";
+
 import { RouterProvider } from "react-router-dom";
 
+import { QueryProvider } from "@/api";
 import { route } from "@/router";
-
-import { QueryProvider } from "./api";
 
 const App = () => {
   return (
     <QueryProvider>
-      <RouterProvider router={route} />
+      <ThemeProvider theme={theme}>
+        <GlobalStyles />
+        <RouterProvider router={route} />
+      </ThemeProvider>
     </QueryProvider>
   );
 };
