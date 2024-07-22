@@ -4,8 +4,8 @@ import { ThemeProvider } from "styled-components";
 
 import { RouterProvider } from "react-router-dom";
 
-import { QueryProvider } from "@/api";
-import { route } from "@/router";
+import { QueryProvider } from "@/lib/api";
+import { route } from "@/lib/router";
 
 const App = () => {
   return (
