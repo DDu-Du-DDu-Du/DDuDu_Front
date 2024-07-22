@@ -1,2 +1,2 @@
-export * from "./User/User";
-export * from "./TimelineDDuDu/TimelineDDuDu";
+export * from "./User/User.type";
+export * from "./TimelineDDuDu/TimelineDDuDu.type";
