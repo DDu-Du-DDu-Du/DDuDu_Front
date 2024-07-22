@@ -1,5 +1,5 @@
 ---
-name: PinkCotton_FE_Issue_Template
+name: Issue 템플릿
 about: FE 팀에서 사용할 이슈 템플릿 입니다.
 title: ""
 labels: ""
