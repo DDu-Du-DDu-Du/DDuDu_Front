@@ -4,6 +4,7 @@ import { ThemeProvider } from "styled-components";
 
 import { RouterProvider } from "react-router-dom";
 
+import { ToastProvider } from "@/components";
 import { QueryProvider } from "@/lib/api";
 import { route } from "@/lib/router";
 
@@ -12,7 +13,9 @@ const App = () => {
     <QueryProvider>
       <ThemeProvider theme={theme}>
         <GlobalStyles />
-        <RouterProvider router={route} />
+        <ToastProvider>
+          <RouterProvider router={route} />
+        </ToastProvider>
       </ThemeProvider>
     </QueryProvider>
   );
