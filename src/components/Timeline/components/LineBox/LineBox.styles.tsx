@@ -17,6 +17,8 @@ export const LineBoxDivider = styled.hr`
 
   position: relative;
 
+  border-left: 0.3rem dashed ${({ theme }) => theme.colors.example_gray_300};
+
   &::before {
     content: "";
 
@@ -25,8 +27,6 @@ export const LineBoxDivider = styled.hr`
 
     position: absolute;
     left: 50%;
-
-    border-left: 0.3rem dashed;
 
     transform: translateX(50%);
   }
