@@ -2,19 +2,61 @@ import * as S from "./ToastItem.styles";
 
 import { CloseIcon } from "@/components/icons";
 
-const ToastItem = () => {
+import { ToastType } from "../../ToastProvider.type";
+import { useToastDeleteTimer } from "./hooks";
+
+import { AnimatePresence } from "framer-motion";
+
+interface ToastItemProps {
+  message: string;
+  deleteTime: number;
+  type: ToastType;
+  onRemove: () => void;
+}
+
+const ToastItem = ({ message, deleteTime, type, onRemove }: ToastItemProps) => {
+  const isShow = useToastDeleteTimer({ time: deleteTime });
+
+  const initialStyle = {
+    translateX: "100%",
+    scale: 0.5,
+    opacity: 0,
+  };
+
   return (
-    <S.ToastItemLayout>
-      <S.ToastCloseButton>
-        <CloseIcon size={16} />
-      </S.ToastCloseButton>
+    <AnimatePresence>
+      {isShow && (
+        <S.ToastItemLayout
+          initial={initialStyle}
+          animate={{
+            translateX: "0%",
+            scale: 1,
+            opacity: 1,
+          }}
+          exit={initialStyle}
+        >
+          <S.ToastCloseButton
+            onClick={onRemove}
+            type="button"
+          >
+            <CloseIcon size={16} />
+          </S.ToastCloseButton>
 
-      <S.ToastItemContent>이건이건 저건 이건 저런건 이런건 안되고 이런건 저런건</S.ToastItemContent>
+          <S.ToastItemContent dangerouslySetInnerHTML={{ __html: message }} />
 
-      <S.ToastProgressbarOutline>
-        <S.ToastProgressbar />
-      </S.ToastProgressbarOutline>
-    </S.ToastItemLayout>
+          <S.ToastProgressbarOutline>
+            <S.ToastProgressbar
+              initial={{ translate: "-100%" }}
+              animate={{
+                translate: "0%",
+                transition: { duration: deleteTime / 1000 + 0.05, ease: "linear" },
+              }}
+              $toastType={type}
+            />
+          </S.ToastProgressbarOutline>
+        </S.ToastItemLayout>
+      )}
+    </AnimatePresence>
   );
 };
 
