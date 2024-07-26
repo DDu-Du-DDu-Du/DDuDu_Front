@@ -166,7 +166,7 @@ const TEST_VALUE: TimelineListResponse = {
  * <br>
  * 현재 여러 상황에 대한 데이터를 임시로 넣은 상태입니다.<br>
  *
- * ```
+ * ```tsx
  * {
  *  timeline: [
  *    {
