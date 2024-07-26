@@ -2,11 +2,11 @@ import styled from "styled-components";
 
 export const TimeStampContainer = styled.div`
   width: 5rem;
+  min-width: 5rem;
   height: 5.7rem;
   padding-left: 1rem;
 
   display: flex;
-  justify-content: center;
   align-items: center;
 `;
 
