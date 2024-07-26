@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+import { ToastType } from "../../ToastProvider.type";
+
 import { motion } from "framer-motion";
 
 export const ToastItemLayout = styled(motion.li)`
@@ -43,11 +45,29 @@ export const ToastProgressbarOutline = styled.div`
   background-color: ${({ theme }) => theme.colors.example_gray_500};
 `;
 
-export const ToastProgressbar = styled(motion.div)`
+export const ToastProgressbar = styled(motion.div)<{ $toastType: ToastType }>`
   width: 20rem;
   height: 0.5rem;
 
   translate: -100%;
 
-  background-color: ${({ theme }) => theme.colors.example_green_100};
+  background-color: ${({ theme, $toastType }) => {
+    if ($toastType === "alert") {
+      return theme.colors.example_orange_500;
+    }
+
+    if ($toastType === "safe") {
+      return theme.colors.example_green_100;
+    }
+
+    if ($toastType === "warning") {
+      return theme.colors.example_yellow_500;
+    }
+
+    if ($toastType === "danger") {
+      return theme.colors.example_red_500;
+    }
+
+    return theme.colors.example_orange_500;
+  }};
 `;
