@@ -29,7 +29,9 @@ const GlobalStyles = createGlobalStyle`
     cursor: pointer;
   }
 
-
+  hr{
+    border: none;
+  }
 
   html, body, div, span, applet, object, iframe,
   h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -37,7 +39,7 @@ const GlobalStyles = createGlobalStyle`
   del, dfn, em, img, ins, kbd, q, s, samp,
   small, strike, strong, sub, sup, tt, var,
   b, u, i, center,
-  dl, dt, dd, ol, ul, li,
+  dl, dt, dd, ol, ul, li, hr,
   fieldset, form, label, legend,
   table, caption, tbody, tfoot, thead, tr, th, td,
   article, aside, canvas, details, embed, 
@@ -48,6 +50,11 @@ const GlobalStyles = createGlobalStyle`
   }
 
   body {
+    width: 100%;
+    height: 100%;
+  }
+
+  #root {
     width: 100%;
     height: 100%;
 
