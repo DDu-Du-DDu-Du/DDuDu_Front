@@ -1,25 +1,22 @@
-import { useState } from "react";
-
 import { useToggle } from "@/app/_hooks";
 
 interface UseColorToggleProps {
-  defaultColor: string;
+  onSelectColor: (color: string) => void;
+  onSetIsEditing: (isEdit: boolean) => void;
 }
 
-const useColorToggle = ({ defaultColor }: UseColorToggleProps) => {
-  const [color, setColor] = useState(defaultColor ?? "");
-
+const useColorToggle = ({ onSelectColor, onSetIsEditing }: UseColorToggleProps) => {
   const {
     isToggle: isColorToggle,
     handleToggleOn: handleColorToggleOn,
     handleToggleOff: handleColorToggleOff,
   } = useToggle();
   const handleSelectColor = (color: string) => {
-    setColor(color);
+    onSelectColor(color);
+    onSetIsEditing(true);
   };
 
   return {
-    color,
     isColorToggle,
     handleColorToggleOn,
     handleColorToggleOff,

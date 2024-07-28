@@ -1,26 +1,24 @@
-import { useState } from "react";
-
 import { useToggle } from "@/app/_hooks";
 
-import { GoalPrivacyType } from "../../GoalEditor.types";
+import { GoalPrivacyType } from "../../GoalEditorForm.types";
 
 interface UseGoalPrivacyToggleProps {
-  defaultGoalPrivacy: GoalPrivacyType;
+  onSelectPrivacy: (goalPrivacy: GoalPrivacyType) => void;
+  onSetIsEditing: (ieEdit: boolean) => void;
 }
 
-const useGoalPrivacyToggle = ({ defaultGoalPrivacy }: UseGoalPrivacyToggleProps) => {
-  const [goalPrivacy, setGoalPrivacy] = useState<GoalPrivacyType>(defaultGoalPrivacy ?? "PUBLIC");
+const useGoalPrivacyToggle = ({ onSelectPrivacy, onSetIsEditing }: UseGoalPrivacyToggleProps) => {
   const {
     isToggle: isGoalPrivacyToggle,
     handleToggleOn: handleGoalPrivacyToggleOn,
     handleToggleOff: handleGoalPrivacyToggleOff,
   } = useToggle();
   const handleSelectGoalPrivacy = (goalPrivacy: GoalPrivacyType) => {
-    setGoalPrivacy(goalPrivacy);
+    onSelectPrivacy(goalPrivacy);
+    onSetIsEditing(true);
   };
 
   return {
-    goalPrivacy,
     isGoalPrivacyToggle,
     handleGoalPrivacyToggleOn,
     handleGoalPrivacyToggleOff,
