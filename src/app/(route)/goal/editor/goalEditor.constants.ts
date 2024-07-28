@@ -1,0 +1,50 @@
+import { GoalType } from "./goalEditor.types";
+
+export const GOAL_API_DUMMY: GoalType = {
+  id: 0,
+  name: "네이버 부스트캠프 합격하기",
+  status: "IN_PROGRESS",
+  color: "#95a5a6",
+  privacyType: "FOLLOWER",
+  repeatDDuDu: [
+    {
+      repeatId: 0,
+      goalId: 0,
+      name: "코딩 테스트 풀기",
+      repeatType: "DAILY",
+      startDate: "2024-06-10",
+      endDate: "2024-06-20",
+      time: "08:00",
+    },
+    {
+      repeatId: 1,
+      goalId: 1,
+      name: "리액트 딥다이브 스터디",
+      repeatType: "WEEKLY",
+      repeatDaysOfWeek: ["수"],
+      startDate: "2024-06-12",
+      endDate: "2024-12-20",
+      time: "14:30",
+    },
+    {
+      repeatId: 2,
+      goalId: 2,
+      name: "일주일 회고 작성하기",
+      repeatType: "WEEKLY",
+      repeatDaysOfWeek: ["일"],
+      startDate: "2024-06-10",
+      endDate: "2024-12-31",
+      time: "15:00",
+    },
+    {
+      repeatId: 3,
+      goalId: 3,
+      name: "매일 프로젝트 코어 타임 참석하기",
+      repeatType: "MONTHLY",
+      repeatDatesOfMonth: [1, 5, 10, 15, 20, 25],
+      startDate: "2024-06-10",
+      endDate: "2024-08-20",
+      time: "10:00",
+    },
+  ],
+};
