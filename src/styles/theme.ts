@@ -1,6 +1,6 @@
 import { DefaultTheme, css } from "styled-components";
 
-const colors = {
+export const colors = {
   white_100: "#FFFFFF",
   black_500: "#000000",
 
