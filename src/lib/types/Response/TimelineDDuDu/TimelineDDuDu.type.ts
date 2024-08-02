@@ -1,14 +1,14 @@
 export interface TimelineItemResponse {
-  id: string | number;
+  id: number;
   name: string;
-  status: "COMPLETED" | "UNCOMPLETED";
+  status: "UNCOMPLETED" | "COMPLETE";
   beginAt: string;
   endAt: string;
-  goalId: number | string;
+  goalId: number;
 }
 
 export interface TimelineResponse {
-  time: string;
+  beginAt: string;
   ddudus: TimelineItemResponse[];
 }
 
