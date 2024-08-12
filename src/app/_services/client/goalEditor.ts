@@ -73,3 +73,27 @@ export const fetchEditGoal = async ({ accessToken, goalData, goalId }: FetchEdit
 
   return response.json();
 };
+
+interface FetchDeleteGoalProps {
+  accessToken: string;
+  goalId: string;
+}
+
+export const fetchDeleteGoal = async ({ accessToken, goalId }: FetchDeleteGoalProps) => {
+  const response = await fetchApi(`${GOAL_EDITOR.DATA}/${goalId}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+    next: {
+      tags: ["goal", "delete", goalId],
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+
+  return response.json();
+};

@@ -5,7 +5,7 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
 import { Button, ColorSheet, PrivacySheet, SelectUiDiv, TextInput } from "@/app/_components/client";
 import { ArrowRightIcon, GoalTodoListItem } from "@/app/_components/server";
-import { fetchCreateGoal, fetchEditGoal } from "@/app/_services/client/goalEditor";
+import { fetchCreateGoal, fetchDeleteGoal, fetchEditGoal } from "@/app/_services/client/goalEditor";
 import useGoalFormStore from "@/app/_store/useGoalFormStore/useGoalFormStore";
 import { GoalPrivacyType, RepeatDdudusType } from "@/app/_types/response/goal/goal";
 import { useMutation } from "@tanstack/react-query";
@@ -89,6 +89,12 @@ const GoalEditorForm = ({ goalId, goalFormData, isLoadTempData }: GoalEditorForm
   }, []);
 
   const { data: session } = useSession();
+
+  const deleteGoalMutation = useMutation({
+    mutationKey: ["goal", "delete", goalId],
+    mutationFn: fetchDeleteGoal,
+  });
+
   const createGoalMutation = useMutation({
     mutationKey: ["goal", "create"],
     mutationFn: fetchCreateGoal,
@@ -128,6 +134,11 @@ const GoalEditorForm = ({ goalId, goalFormData, isLoadTempData }: GoalEditorForm
   const handleGoalEnd = () => {
     // 목표 종료 API 호출
     console.log("목표 종료 !");
+    router.replace("/goal");
+  };
+
+  const handleGoalDelete = () => {
+    deleteGoalMutation.mutate({ accessToken: session?.sessionToken as string, goalId });
     router.replace("/goal");
   };
 
@@ -214,12 +225,18 @@ const GoalEditorForm = ({ goalId, goalFormData, isLoadTempData }: GoalEditorForm
           </li>
 
           {goalId && (
-            <li>
+            <li className="flex gap-[1rem]">
               <Button
                 className="w-full h-[4rem] text-size13 font-medium bg-example_gray_100 rounded-radius10"
                 onClick={handleGoalEnd}
               >
                 목표 종료하기
+              </Button>
+              <Button
+                className="w-full h-[4rem] text-size13 font-medium bg-example_gray_100 rounded-radius10"
+                onClick={handleGoalDelete}
+              >
+                목표 삭제하기
               </Button>
             </li>
           )}
