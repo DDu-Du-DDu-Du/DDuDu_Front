@@ -8,6 +8,7 @@ import { ArrowRightIcon, GoalTodoListItem } from "@/app/_components/server";
 import useGoalFormStore from "@/app/_store/useGoalFormStore/useGoalFormStore";
 import { GoalPrivacyType, RepeatDdudusType } from "@/app/_types/response/goal/goal";
 
+import { DAY_OF_WEEK_STRING } from "../../../../[id]/repeat/components/DDuDuRepeatForm/DDuDuRepeatForm.constants";
 import { PRIVACY_TYPE } from "./GoalEditorForm.constants";
 import { useColorToggle, useGoalPrivacyToggle } from "./hooks";
 
@@ -81,7 +82,6 @@ const GoalEditorForm = ({ goalId, goalFormData, isLoadTempData }: GoalEditorForm
     }
 
     methods.setValue("goal", goalText);
-    console.log("goalText", goalText);
   }, []);
 
   const onValid: SubmitHandler<GoalEditorFormInfo> = (data) => {
@@ -175,7 +175,9 @@ const GoalEditorForm = ({ goalId, goalFormData, isLoadTempData }: GoalEditorForm
                     title={name}
                     repeatDays={
                       (repeatPattern.type === "WEEKLY"
-                        ? repeatPattern.repeatDaysOfWeek?.join(" ")
+                        ? repeatPattern.repeatDaysOfWeek
+                            ?.map((weekDay) => DAY_OF_WEEK_STRING[weekDay])
+                            .join(" ")
                         : repeatPattern.repeatDaysOfMonth?.join(" ")) || "매일"
                     }
                     startDate={startDate}
