@@ -5,14 +5,17 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
 import { Button, ColorSheet, PrivacySheet, SelectUiDiv, TextInput } from "@/app/_components/client";
 import { ArrowRightIcon, GoalTodoListItem } from "@/app/_components/server";
+import { fetchCreateGoal, fetchEditGoal } from "@/app/_services/client/goalEditor";
 import useGoalFormStore from "@/app/_store/useGoalFormStore/useGoalFormStore";
 import { GoalPrivacyType, RepeatDdudusType } from "@/app/_types/response/goal/goal";
+import { useMutation } from "@tanstack/react-query";
 
 import { DAY_OF_WEEK_STRING } from "../../../../[id]/repeat/components/DDuDuRepeatForm/DDuDuRepeatForm.constants";
 import { PRIVACY_TYPE } from "./GoalEditorForm.constants";
 import { useColorToggle, useGoalPrivacyToggle } from "./hooks";
 
 import { debounce } from "lodash";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 interface GoalEditorFormInfo {
@@ -52,6 +55,7 @@ const GoalEditorForm = ({ goalId, goalFormData, isLoadTempData }: GoalEditorForm
     handleGoalPrivacyToggleOn,
     handleSelectGoalPrivacy,
   } = useGoalPrivacyToggle({ onSelectPrivacy: setGoalPrivacy, onSetIsEditing: setIsEditing });
+
   const { isColorToggle, handleColorToggleOff, handleColorToggleOn, handleSelectColor } =
     useColorToggle({ onSelectColor: setColor, onSetIsEditing: setIsEditing });
 
@@ -84,10 +88,30 @@ const GoalEditorForm = ({ goalId, goalFormData, isLoadTempData }: GoalEditorForm
     methods.setValue("goal", goalText);
   }, []);
 
-  const onValid: SubmitHandler<GoalEditorFormInfo> = (data) => {
-    console.log(data);
-    console.log(goalPrivacy);
-    console.log(color);
+  const { data: session } = useSession();
+  const createGoalMutation = useMutation({
+    mutationKey: ["goal", "create"],
+    mutationFn: fetchCreateGoal,
+  });
+
+  const editGoalMutation = useMutation({
+    mutationKey: ["goal", "edit", goalId],
+    mutationFn: fetchEditGoal,
+  });
+
+  const onValid: SubmitHandler<GoalEditorFormInfo> = ({ goal }) => {
+    const goalData = {
+      name: goal,
+      color: color.slice(1),
+      privacyType: goalPrivacy,
+    };
+
+    if (goalId) {
+      editGoalMutation.mutate({ accessToken: session?.sessionToken as string, goalData, goalId });
+    } else {
+      createGoalMutation.mutate({ accessToken: session?.sessionToken as string, goalData });
+    }
+
     reset();
     router.push("/feed");
   };

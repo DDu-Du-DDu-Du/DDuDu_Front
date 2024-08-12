@@ -64,7 +64,7 @@ const GoalEditor = ({ goalId }: GoalEditorProps) => {
         type: "EDIT",
         goalText: goalEditorData.name,
         goalPrivacy: goalEditorData.privacyType,
-        color: goalEditorData.color,
+        color: `#${goalEditorData.color}`,
         repeatDDuDu: goalEditorData.repeatDdudus,
       });
       setIsLoadTempData(true);
