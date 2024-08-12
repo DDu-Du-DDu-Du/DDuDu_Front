@@ -5,10 +5,10 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
 import { Button, ColorSheet, PrivacySheet, SelectUiDiv, TextInput } from "@/app/_components/client";
 import { ArrowRightIcon, GoalTodoListItem } from "@/app/_components/server";
-import useGoalFormStore, { RepeatDDuDuItem } from "@/app/_store/useGoalFormStore/useGoalFormStore";
+import useGoalFormStore from "@/app/_store/useGoalFormStore/useGoalFormStore";
+import { GoalPrivacyType, RepeatDdudusType } from "@/app/_types/response/goal/goal";
 
 import { PRIVACY_TYPE } from "./GoalEditorForm.constants";
-import { GoalPrivacyType } from "./GoalEditorForm.types";
 import { useColorToggle, useGoalPrivacyToggle } from "./hooks";
 
 import { debounce } from "lodash";
@@ -22,7 +22,7 @@ interface GoalFormDataType {
   goalText: string;
   goalPrivacy: GoalPrivacyType;
   color: string;
-  repeatDDuDu: RepeatDDuDuItem[];
+  repeatDDuDu: RepeatDdudusType[];
 }
 
 interface GoalEditorFormProps {
@@ -39,7 +39,11 @@ const GoalEditorForm = ({ goalId, goalFormData, isLoadTempData }: GoalEditorForm
   const { goalText, goalPrivacy, color, repeatDDuDu } = goalFormData;
   const { setIsEditing, setGoalText, setGoalPrivacy, setColor, reset } = useGoalFormStore();
 
-  const methods = useForm<GoalEditorFormInfo>();
+  const methods = useForm<GoalEditorFormInfo>({
+    defaultValues: {
+      goal: goalText,
+    },
+  });
 
   const {
     isGoalPrivacyToggle,
@@ -77,6 +81,7 @@ const GoalEditorForm = ({ goalId, goalFormData, isLoadTempData }: GoalEditorForm
     }
 
     methods.setValue("goal", goalText);
+    console.log("goalText", goalText);
   }, []);
 
   const onValid: SubmitHandler<GoalEditorFormInfo> = (data) => {
@@ -163,33 +168,22 @@ const GoalEditorForm = ({ goalId, goalFormData, isLoadTempData }: GoalEditorForm
               </div>
             </div>
             <ul className="flex flex-col max-h-[19rem] gap-[0.8rem] mt-[1rem] overflow-y-scroll">
-              {repeatDDuDu?.map(
-                ({
-                  repeatId,
-                  goalId,
-                  name,
-                  repeatType,
-                  repeatDaysOfWeek,
-                  repeatDatesOfMonth,
-                  startDate,
-                  endDate,
-                }) => (
-                  <Fragment key={repeatId}>
-                    <GoalTodoListItem
-                      id={repeatId}
-                      title={name}
-                      repeatDays={
-                        (repeatType === "WEEKLY"
-                          ? repeatDaysOfWeek?.join(" ")
-                          : repeatDatesOfMonth?.join(" ")) || "매일"
-                      }
-                      startDate={startDate}
-                      endDate={endDate}
-                      goalId={String(goalId)}
-                    />
-                  </Fragment>
-                ),
-              )}
+              {repeatDDuDu?.map(({ id, name, repeatPattern, startDate, endDate }) => (
+                <Fragment key={id}>
+                  <GoalTodoListItem
+                    id={id}
+                    title={name}
+                    repeatDays={
+                      (repeatPattern.type === "WEEKLY"
+                        ? repeatPattern.repeatDaysOfWeek?.join(" ")
+                        : repeatPattern.repeatDaysOfMonth?.join(" ")) || "매일"
+                    }
+                    startDate={startDate}
+                    endDate={endDate}
+                    goalId={String(goalId)}
+                  />
+                </Fragment>
+              ))}
             </ul>
           </li>
 

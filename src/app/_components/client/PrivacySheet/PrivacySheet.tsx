@@ -1,6 +1,6 @@
-import { GoalPrivacyType } from "@/app/(route)/goal/editor/components/GoalEditor/GoalEditor.types";
 import { BottomSheet, Button, SheetButton } from "@/app/_components/client";
 import { ExampleIcon } from "@/app/_components/server";
+import { GoalPrivacyType } from "@/app/_types/response/goal/goal";
 
 interface PrivacySheetProps {
   isShow: boolean;
