@@ -1,11 +1,33 @@
+import { DayOfWeek } from "@/app/_types/response/goal/goal";
+
+import { DayOfMonthString } from "./DDuDuRepeatForm.types";
+
 export const DATE_RADIO_LIST = [
   { id: "DAILY", name: "repeatType", label: "매일" },
   { id: "WEEKLY", name: "repeatType", label: "매주" },
   { id: "MONTHLY", name: "repeatType", label: "매월" },
 ];
 
-export const DAY_OF_WEEK = ["월", "화", "수", "목", "금", "토", "일"];
-export const DAY_OF_MONTH = [
+export const DAY_OF_WEEK_STRING = {
+  MONDAY: "월",
+  TUESDAY: "화",
+  WEDNESDAY: "수",
+  THURSDAY: "목",
+  FRIDAY: "금",
+  SATURDAY: "토",
+  SUNDAY: "일",
+};
+
+export const DAY_OF_WEEK: DayOfWeek[] = [
+  "MONDAY",
+  "TUESDAY",
+  "WEDNESDAY",
+  "THURSDAY",
+  "FRIDAY",
+  "SATURDAY",
+  "SUNDAY",
+];
+export const DAY_OF_MONTH: DayOfMonthString[] = [
   "1",
   "2",
   "3",

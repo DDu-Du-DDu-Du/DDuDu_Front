@@ -9,46 +9,62 @@ import { useGoalFormStore } from "@/app/_store";
 import {
   DayOfMonth,
   DayOfWeek,
-  RepeatDDuDuItem,
-} from "@/app/_store/useGoalFormStore/useGoalFormStore";
+  RepeatDdudusDateType,
+  RepeatDdudusType,
+} from "@/app/_types/response/goal/goal";
 
-import { DATE_RADIO_LIST, DAY_OF_MONTH, DAY_OF_WEEK } from "./DDuDuRepeatForm.constants";
-import { RepeatType } from "./DDuDuRepeatForm.types";
+import {
+  DATE_RADIO_LIST,
+  DAY_OF_MONTH,
+  DAY_OF_WEEK,
+  DAY_OF_WEEK_STRING,
+} from "./DDuDuRepeatForm.constants";
+import { DayOfMonthString } from "./DDuDuRepeatForm.types";
 
 import { useRouter } from "next/navigation";
 
 interface DDuDuRepeatFormDataType {
   name: string;
-  repeatType: RepeatType;
+  repeatType: RepeatDdudusDateType;
   repeatDaysOfWeek?: DayOfWeek[];
-  repeatDatesOfMonth?: DayOfMonth[];
+  repeatDaysOfMonth?: DayOfMonthString[];
+  lastDay: string[];
   startDate: string;
   endDate: string;
   time: string;
 }
 
 interface DDuDuRepeatFormProps {
-  goalId: string;
   repeatId: string;
-  currentRepeatDDuDu?: RepeatDDuDuItem;
+  currentRepeatDDuDu?: RepeatDdudusType;
+  currentRepeatMonthData: DayOfMonthString[];
 }
 
-const DDuDuRepeatForm = ({ repeatId, currentRepeatDDuDu }: DDuDuRepeatFormProps) => {
+const DDuDuRepeatForm = ({
+  repeatId,
+  currentRepeatDDuDu,
+  currentRepeatMonthData,
+}: DDuDuRepeatFormProps) => {
+  console.log("currentRepeat", currentRepeatDDuDu);
   const methods = useForm<DDuDuRepeatFormDataType>({
     defaultValues: {
       name: currentRepeatDDuDu?.name,
-      repeatType: currentRepeatDDuDu?.repeatType,
-      repeatDaysOfWeek: currentRepeatDDuDu?.repeatDaysOfWeek,
-      repeatDatesOfMonth: currentRepeatDDuDu?.repeatDatesOfMonth,
+      repeatType: currentRepeatDDuDu?.repeatPattern.type,
+      repeatDaysOfWeek: currentRepeatDDuDu?.repeatPattern.repeatDaysOfWeek || [],
+      repeatDaysOfMonth: currentRepeatMonthData,
+      lastDay: currentRepeatDDuDu?.repeatPattern.lastDay ? ["lastDay"] : [],
       startDate: currentRepeatDDuDu?.startDate,
       endDate: currentRepeatDDuDu?.endDate,
-      time: currentRepeatDDuDu?.time,
+      time: currentRepeatDDuDu?.beginAt,
     },
   });
   const { repeatDDuDu, setIsLoad, setRepeatDDuDu, setAddRepeatDDuDu } = useGoalFormStore();
   const router = useRouter();
 
   const selectedDateValue = methods.watch("repeatType");
+  const selectedDayOfWeekItems = methods.watch("repeatDaysOfWeek");
+  const selectedDayOfMonthItems = methods.watch("repeatDaysOfMonth");
+  const selectedLastDay = methods.watch("lastDay");
 
   useEffect(() => {
     setIsLoad(true);
@@ -57,20 +73,37 @@ const DDuDuRepeatForm = ({ repeatId, currentRepeatDDuDu }: DDuDuRepeatFormProps)
   }, []);
 
   const onValid: SubmitHandler<DDuDuRepeatFormDataType> = (data) => {
+    console.log("data", data);
     if (repeatId) {
-      const editRepeatDDuDu = repeatDDuDu.filter((ddudu) => String(ddudu.goalId) !== repeatId);
+      const editRepeatDDuDu = repeatDDuDu.filter((ddudu) => String(ddudu.id) !== repeatId);
+
       editRepeatDDuDu.push({
-        ...data,
-        repeatId: Number(repeatId),
-        goalId: Number(repeatId),
+        id: Number(repeatId),
+        name: data.name,
+        repeatPattern: {
+          type: data.repeatType,
+          repeatDaysOfWeek: data.repeatDaysOfWeek,
+          repeatDaysOfMonth: data.repeatDaysOfMonth?.map(Number) as DayOfMonth[],
+          lastDay: data.lastDay[0] ? true : false,
+        },
+        startDate: data.startDate,
+        endDate: data.endDate,
+        beginAt: data.time,
       });
       setRepeatDDuDu(editRepeatDDuDu);
     } else {
-      const tempId = Math.floor(Math.random() * 10000);
       const newRepeatDDuDu = {
-        ...data,
-        repeatId: tempId,
-        goalId: tempId,
+        id: Number(repeatId),
+        name: data.name,
+        repeatPattern: {
+          type: data.repeatType,
+          repeatDaysOfWeek: data.repeatDaysOfWeek,
+          repeatDaysOfMonth: data.repeatDaysOfMonth?.map(Number) as DayOfMonth[],
+          lastDay: data.lastDay[0] ? true : false,
+        },
+        startDate: data.startDate,
+        endDate: data.endDate,
+        beginAt: data.time,
       };
       setAddRepeatDDuDu(newRepeatDDuDu);
     }
@@ -113,8 +146,9 @@ const DDuDuRepeatForm = ({ repeatId, currentRepeatDDuDu }: DDuDuRepeatFormProps)
                       type="word"
                       name="repeatDaysOfWeek"
                       value={day}
+                      checked={selectedDayOfWeekItems?.includes(day) ? true : false}
                     >
-                      {day}
+                      {DAY_OF_WEEK_STRING[day]}
                     </CheckboxInput>
                   </li>
                 ))}
@@ -128,13 +162,25 @@ const DDuDuRepeatForm = ({ repeatId, currentRepeatDDuDu }: DDuDuRepeatFormProps)
                   <li key={index}>
                     <CheckboxInput
                       type="word"
-                      name="repeatDatesOfMonth"
+                      name="repeatDaysOfMonth"
                       value={day}
+                      checked={selectedDayOfMonthItems?.includes(day) ? true : false}
                     >
                       {day}
                     </CheckboxInput>
                   </li>
                 ))}
+                <li className="col-span-2 pr-0">
+                  <CheckboxInput
+                    className="w-auth"
+                    type="word"
+                    name="lastDay"
+                    value="lastDay"
+                    checked={selectedLastDay?.includes("lastDay") ? true : false}
+                  >
+                    마지막 날
+                  </CheckboxInput>
+                </li>
               </ul>
             </li>
           )}
@@ -150,10 +196,9 @@ const DDuDuRepeatForm = ({ repeatId, currentRepeatDDuDu }: DDuDuRepeatFormProps)
           </li>
           <li>
             <InputTime
-              id="1"
+              id="time"
               name="time"
-              label={currentRepeatDDuDu?.time ?? "시간추가"}
-              handleTimeChange={(time) => console.log(time)}
+              label={currentRepeatDDuDu?.beginAt ?? "시간추가"}
             />
           </li>
         </ul>

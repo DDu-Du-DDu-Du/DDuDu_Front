@@ -9,7 +9,7 @@ interface InputTimeProps {
   id: string;
   label: string;
   name: string;
-  handleTimeChange: (time: string) => void;
+  handleTimeChange?: (time: string) => void;
 }
 
 const InputTime = ({ id, name, handleTimeChange, label }: InputTimeProps) => {
@@ -18,7 +18,7 @@ const InputTime = ({ id, name, handleTimeChange, label }: InputTimeProps) => {
 
   const handleInputTimeChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     setTime(event.target.value);
-    handleTimeChange(event?.target.value);
+    handleTimeChange && handleTimeChange(event.target.value);
   };
 
   return (
