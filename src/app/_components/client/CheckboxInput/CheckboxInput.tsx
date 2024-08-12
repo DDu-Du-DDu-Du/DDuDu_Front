@@ -17,6 +17,7 @@ interface CheckboxInputProps extends Omit<HTMLAttributes<HTMLInputElement>, "typ
   type?: "icon" | "word";
   name: string;
   value: string;
+  checked: boolean;
   size?: number;
   id?: string;
   className?: string;
@@ -29,6 +30,7 @@ const CheckboxInput = ({
   className,
   name,
   value,
+  checked,
   size = 32,
   disabled,
   id,
@@ -41,7 +43,7 @@ const CheckboxInput = ({
   const inputId = useId();
   const { theme } = resolveConfig(tailwindConfig);
 
-  const { isChecked } = useCheckToggle({ isCheckedList, value });
+  const { isChecked } = useCheckToggle({ isCheckedList, value, checked });
 
   return (
     <>

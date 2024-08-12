@@ -3,17 +3,19 @@ import { useEffect, useState } from "react";
 interface UseCheckToggleProps {
   isCheckedList: string[];
   value: string;
+  checked: boolean;
 }
 
-const useCheckToggle = ({ isCheckedList, value }: UseCheckToggleProps) => {
-  const [isChecked, setIsChecked] = useState(false);
+const useCheckToggle = ({ isCheckedList, value, checked }: UseCheckToggleProps) => {
+  const [isChecked, setIsChecked] = useState(checked);
 
   useEffect(() => {
-    if (!isCheckedList) {
+    if (!isCheckedList || !Array.isArray(isCheckedList)) {
       return;
     }
 
     const isChecked = isCheckedList.includes(value);
+
     setIsChecked(isChecked);
   }, [isCheckedList, value]);
 
