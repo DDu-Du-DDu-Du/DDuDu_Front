@@ -1,4 +1,7 @@
 import { Header } from "@/app/_components/client";
+import { getGoalEditorData } from "@/app/_services/client/goalEditor";
+import { auth } from "@/auth";
+import { HydrationBoundary, QueryClient, dehydrate } from "@tanstack/react-query";
 
 import { GoalEditor } from "./components";
 
@@ -8,14 +11,25 @@ interface GoalEditorPageProps {
   };
 }
 
-const GoalEditorPage = ({ searchParams }: GoalEditorPageProps) => {
+const GoalEditorPage = async ({ searchParams }: GoalEditorPageProps) => {
   const { id } = searchParams;
 
+  const session = await auth();
+
+  const queryclient = new QueryClient();
+  await queryclient.prefetchQuery({
+    queryKey: ["goal", "editor", id],
+    queryFn: () => getGoalEditorData(session?.sessionToken as string, id),
+  });
+  const dehydratedState = dehydrate(queryclient);
+
   return (
-    <section>
-      <Header />
-      <GoalEditor goalId={id} />
-    </section>
+    <HydrationBoundary state={dehydratedState}>
+      <section>
+        <Header />
+        <GoalEditor goalId={id} />
+      </section>
+    </HydrationBoundary>
   );
 };
 

@@ -4,10 +4,14 @@ import { useEffect, useState } from "react";
 
 import { ConfirmModal } from "@/app/_components/client";
 import { useToggle } from "@/app/_hooks";
+import { getGoalEditorData } from "@/app/_services/client/goalEditor";
 import { useGoalFormStore } from "@/app/_store";
+import { GoalType } from "@/app/_types/response/goal/goal";
+import { useQuery } from "@tanstack/react-query";
 
-import { GOAL_API_DUMMY } from "../../goalEditor.constants";
 import { GoalEditorForm } from "./components";
+
+import { useSession } from "next-auth/react";
 
 interface GoalEditorProps {
   goalId: string;
@@ -17,7 +21,7 @@ const GoalEditor = ({ goalId }: GoalEditorProps) => {
   // id가 있는 경우는 수정 페이지임, id가 없는 경우는 생성 페이지임
   // id가 있다면 useQuery를 통해 데이터를 불러온 후 초깃값을 props로 전달
   // id가 없으면 생성이기 때문에 default 값으로 수정
-
+  const { data: session } = useSession();
   const {
     type,
     isLoad,
@@ -31,10 +35,18 @@ const GoalEditor = ({ goalId }: GoalEditorProps) => {
     initialize,
     reset,
   } = useGoalFormStore();
+  const { data: goalEditorData } = useQuery<GoalType>({
+    queryKey: ["goal", "editor", goalId],
+    queryFn: () => getGoalEditorData(session?.sessionToken as string, goalId),
+    enabled: !!goalId,
+  });
+
+  console.log("goalEditorData", goalEditorData);
 
   const { isToggle: isModal, handleToggleOn: openModal, handleToggleOff: closeModal } = useToggle();
 
   const [isLoadTempData, setIsLoadTempData] = useState<boolean | null>(null);
+  console.log("repeatDDuDu", repeatDDuDu);
   const [tempData] = useState({
     goalText,
     goalPrivacy,
@@ -50,13 +62,13 @@ const GoalEditor = ({ goalId }: GoalEditorProps) => {
       return;
     }
 
-    if (goalId) {
+    if (goalId && goalEditorData) {
       initialize({
         type: "EDIT",
-        goalText: GOAL_API_DUMMY.name,
-        goalPrivacy: GOAL_API_DUMMY.privacyType,
-        color: GOAL_API_DUMMY.color,
-        repeatDDuDu: GOAL_API_DUMMY.repeatDDuDu,
+        goalText: goalEditorData.name,
+        goalPrivacy: goalEditorData.privacyType,
+        color: goalEditorData.color,
+        repeatDDuDu: goalEditorData.repeatDdudus,
       });
       setIsLoadTempData(true);
 
