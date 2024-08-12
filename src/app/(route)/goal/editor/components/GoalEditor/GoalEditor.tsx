@@ -106,6 +106,7 @@ const GoalEditor = ({ goalId }: GoalEditorProps) => {
       <GoalEditorForm
         goalId={goalId}
         isLoadTempData={isLoadTempData}
+        goalStatus={goalEditorData?.status}
         goalFormData={{ goalText, goalPrivacy, color, repeatDDuDu }}
       />
       <ConfirmModal
