@@ -45,7 +45,6 @@ const DDuDuRepeatForm = ({
   currentRepeatDDuDu,
   currentRepeatMonthData,
 }: DDuDuRepeatFormProps) => {
-  console.log("currentRepeat", currentRepeatDDuDu);
   const methods = useForm<DDuDuRepeatFormDataType>({
     defaultValues: {
       name: currentRepeatDDuDu?.name,

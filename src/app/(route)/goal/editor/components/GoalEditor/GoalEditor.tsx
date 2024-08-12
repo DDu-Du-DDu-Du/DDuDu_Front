@@ -41,12 +41,9 @@ const GoalEditor = ({ goalId }: GoalEditorProps) => {
     enabled: !!goalId,
   });
 
-  console.log("goalEditorData", goalEditorData);
-
   const { isToggle: isModal, handleToggleOn: openModal, handleToggleOff: closeModal } = useToggle();
 
   const [isLoadTempData, setIsLoadTempData] = useState<boolean | null>(null);
-  console.log("repeatDDuDu", repeatDDuDu);
   const [tempData] = useState({
     goalText,
     goalPrivacy,
