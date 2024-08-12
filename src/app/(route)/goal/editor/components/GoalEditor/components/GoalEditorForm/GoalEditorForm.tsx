@@ -5,7 +5,12 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
 import { Button, ColorSheet, PrivacySheet, SelectUiDiv, TextInput } from "@/app/_components/client";
 import { ArrowRightIcon, GoalTodoListItem } from "@/app/_components/server";
-import { fetchCreateGoal, fetchDeleteGoal, fetchEditGoal } from "@/app/_services/client/goalEditor";
+import {
+  fetchCreateGoal,
+  fetchDeleteGoal,
+  fetchEditGoal,
+  fetchStatusChangeGoal,
+} from "@/app/_services/client/goalEditor";
 import useGoalFormStore from "@/app/_store/useGoalFormStore/useGoalFormStore";
 import { GoalPrivacyType, RepeatDdudusType } from "@/app/_types/response/goal/goal";
 import { useMutation } from "@tanstack/react-query";
@@ -31,11 +36,17 @@ interface GoalFormDataType {
 
 interface GoalEditorFormProps {
   goalId: string;
+  goalStatus?: "IN_PROGRESS" | "DONE";
   goalFormData: GoalFormDataType;
   isLoadTempData: boolean | null;
 }
 
-const GoalEditorForm = ({ goalId, goalFormData, isLoadTempData }: GoalEditorFormProps) => {
+const GoalEditorForm = ({
+  goalId,
+  goalStatus,
+  goalFormData,
+  isLoadTempData,
+}: GoalEditorFormProps) => {
   // id가 있는 경우는 수정 페이지임, id가 없는 경우는 생성 페이지임
   // id가 있다면 useQuery를 통해 데이터를 불러온 후 초깃값을 props로 전달
   // id가 없으면 생성이기 때문에 default 값으로 수정
@@ -95,6 +106,11 @@ const GoalEditorForm = ({ goalId, goalFormData, isLoadTempData }: GoalEditorForm
     mutationFn: fetchDeleteGoal,
   });
 
+  const statusChangeGoalMutation = useMutation({
+    mutationKey: ["goal", "status", goalId],
+    mutationFn: fetchStatusChangeGoal,
+  });
+
   const createGoalMutation = useMutation({
     mutationKey: ["goal", "create"],
     mutationFn: fetchCreateGoal,
@@ -131,9 +147,12 @@ const GoalEditorForm = ({ goalId, goalFormData, isLoadTempData }: GoalEditorForm
     router.push("/goal/editor/create/repeat");
   };
 
-  const handleGoalEnd = () => {
-    // 목표 종료 API 호출
-    console.log("목표 종료 !");
+  const handleGoalStatusChange = () => {
+    statusChangeGoalMutation.mutate({
+      accessToken: session?.sessionToken as string,
+      goalId,
+      status: goalStatus === "IN_PROGRESS" ? "DONE" : "IN_PROGRESS",
+    });
     router.replace("/goal");
   };
 
@@ -228,9 +247,9 @@ const GoalEditorForm = ({ goalId, goalFormData, isLoadTempData }: GoalEditorForm
             <li className="flex gap-[1rem]">
               <Button
                 className="w-full h-[4rem] text-size13 font-medium bg-example_gray_100 rounded-radius10"
-                onClick={handleGoalEnd}
+                onClick={handleGoalStatusChange}
               >
-                목표 종료하기
+                {goalStatus === "IN_PROGRESS" ? "목표 종료하기" : "목표 재개하기"}
               </Button>
               <Button
                 className="w-full h-[4rem] text-size13 font-medium bg-example_gray_100 rounded-radius10"

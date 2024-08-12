@@ -97,3 +97,33 @@ export const fetchDeleteGoal = async ({ accessToken, goalId }: FetchDeleteGoalPr
 
   return response.json();
 };
+
+interface FetchStatusChangeGoalProps {
+  accessToken: string;
+  goalId: string;
+  status: "IN_PROGRESS" | "DONE";
+}
+
+export const fetchStatusChangeGoal = async ({
+  accessToken,
+  goalId,
+  status,
+}: FetchStatusChangeGoalProps) => {
+  const response = await fetchApi(`${GOAL_EDITOR.DATA}/${goalId}`, {
+    method: "PATCH",
+    body: JSON.stringify({ status }),
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+    next: {
+      tags: ["goal", "status"],
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+
+  return response.json();
+};
