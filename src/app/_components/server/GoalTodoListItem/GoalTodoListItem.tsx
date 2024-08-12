@@ -20,7 +20,6 @@ const GoalTodoListItem = ({
   endDate,
   goalId,
 }: GoalTodoListItemProps) => {
-  console.log("repeatDate", repeatDays);
   return (
     <li className="list-none font-regular">
       <Link

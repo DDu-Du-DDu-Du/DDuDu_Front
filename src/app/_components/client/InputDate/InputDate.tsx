@@ -6,6 +6,7 @@ import getTodayFormatDate from "./utils/getTodayFormatDate";
 
 interface InputDateProps {
   type: "single" | "range";
+  mode?: "create" | "edit";
   labelStart: string;
   nameStart: string;
   labelEnd?: string;
@@ -14,6 +15,7 @@ interface InputDateProps {
 
 const InputDate = ({
   type = "single",
+  mode = "create",
   labelStart,
   nameStart,
   labelEnd,
@@ -32,6 +34,7 @@ const InputDate = ({
       )}
       {type === "range" && labelEnd && nameEnd && (
         <InputDateRange
+          mode={mode}
           labelStart={labelStart}
           nameStart={nameStart}
           labelEnd={labelEnd}

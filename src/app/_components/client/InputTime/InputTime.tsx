@@ -34,9 +34,7 @@ const InputTime = ({ id, name, handleTimeChange, label }: InputTimeProps) => {
           className="absolute top-0 left-0 w-full h-full opacity-0"
           type="time"
           id={id}
-          {...register(name, {
-            required: true,
-          })}
+          {...register(name, {})}
           onChange={handleInputTimeChange}
         />
       </div>
