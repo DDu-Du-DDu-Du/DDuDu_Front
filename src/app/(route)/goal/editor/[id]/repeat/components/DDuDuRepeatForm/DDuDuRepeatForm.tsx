@@ -187,6 +187,7 @@ const DDuDuRepeatForm = ({
           <li>
             <InputDate
               type="range"
+              mode={repeatId ? "edit" : "create"}
               labelStart={currentRepeatDDuDu?.startDate ?? "시작날짜"}
               nameStart="startDate"
               labelEnd={currentRepeatDDuDu?.endDate ?? "종료날짜"}

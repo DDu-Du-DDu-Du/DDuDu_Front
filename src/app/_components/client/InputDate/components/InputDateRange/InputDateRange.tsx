@@ -2,6 +2,7 @@ import InputDateSingle from "../InputDateSingle/InputDateSingle";
 import useDateRange from "./hooks/useDateRange/useDateRange";
 
 interface InputDateRangeProps {
+  mode: "create" | "edit";
   todayDate: string;
   labelStart: string;
   nameStart: string;
@@ -10,6 +11,7 @@ interface InputDateRangeProps {
 }
 
 const InputDateRange = ({
+  mode,
   todayDate,
   labelStart,
   nameStart,
@@ -25,14 +27,14 @@ const InputDateRange = ({
       <InputDateSingle
         label={labelStart}
         name={nameStart}
-        todayDate={todayDate}
-        maxDate={maxDate}
+        todayDate={mode === "create" ? todayDate : undefined}
+        maxDate={mode === "create" ? maxDate : undefined}
         onMinDateChange={handleMinDateChange}
       />
       <InputDateSingle
         label={labelEnd}
         name={nameEnd}
-        minDate={minDate}
+        minDate={mode === "create" ? minDate : undefined}
         onMaxDateChange={handleMaxDateChange}
       />
     </div>
