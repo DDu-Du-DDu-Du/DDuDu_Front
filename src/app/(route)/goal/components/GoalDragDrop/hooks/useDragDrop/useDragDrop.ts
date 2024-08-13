@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { GoalType } from "@/app/_types/response/goal/goal";
 import { DropResult } from "@hello-pangea/dnd";
@@ -8,7 +8,11 @@ interface UseDragDropProps {
 }
 
 const useDragDrop = ({ goal }: UseDragDropProps) => {
-  const [goalList, setGoalList] = useState(goal || []);
+  const [goalList, setGoalList] = useState(goal);
+
+  useEffect(() => {
+    setGoalList(goal);
+  }, [goal]);
 
   const onDragEnd = ({ source, destination }: DropResult) => {
     if (!destination) {
