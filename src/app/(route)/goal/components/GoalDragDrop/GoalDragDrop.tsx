@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect } from "react";
+
 import { GoalItem } from "@/app/_components/server";
 import { getGoalList } from "@/app/_services/client/goal/goal";
 import { GoalType } from "@/app/_types/response/goal/goal";
@@ -12,15 +14,20 @@ import { useSession } from "next-auth/react";
 
 const GoalDragDrop = () => {
   const { data: session } = useSession();
-  const { data: goal } = useQuery<GoalType[]>({
-    queryKey: ["goal", String(session?.user.userId)],
+  const { data: goal, refetch } = useQuery<GoalType[]>({
+    queryKey: ["goalList"],
     queryFn: () => getGoalList(session?.sessionToken as string, String(session?.user.userId)),
   });
 
   const { goalList, onDragEnd } = useDragDrop({ goal });
   const { checker } = useAnimationChecker();
 
-  if (!checker) {
+  useEffect(() => {
+    refetch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  if (!checker || !goalList) {
     return null;
   }
 

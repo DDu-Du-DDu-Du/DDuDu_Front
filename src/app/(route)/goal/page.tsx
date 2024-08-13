@@ -10,19 +10,22 @@ import Link from "next/link";
 const GoalPage = async () => {
   const session = await auth();
 
-  const queryclient = new QueryClient();
-  await queryclient.prefetchQuery({
-    queryKey: ["goal", String(session?.user.userId)],
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery({
+    queryKey: ["goalList"],
     queryFn: () => getGoalList(session?.sessionToken as string, String(session?.user.userId)),
   });
-  const dehydratedState = dehydrate(queryclient);
+
+  const dehydratedState = dehydrate(queryClient);
+
+  // const goalList = await getGoalList(session?.sessionToken as string, String(session?.user.userId));
 
   return (
     <HydrationBoundary state={dehydratedState}>
       <div className="relative pt-[2.6rem] px-[2.4rem]">
         <Link
           className="absolute -top-[3.4rem] right-[2.4rem] z-headerLink"
-          href="/goal/editor/create"
+          href="/goal/editor"
           title="목표 생성하기"
         >
           <PlusIcon />
