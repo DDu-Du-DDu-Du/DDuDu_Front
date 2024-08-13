@@ -5,13 +5,17 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
 import { Button, CheckboxInput, InputDate, InputRadio, TextInput } from "@/app/_components/client";
 import InputTime from "@/app/_components/client/InputTime/InputTime";
+import { fetchCreateRepeatDDudu } from "@/app/_services/client/repeatDdudu";
 import { useGoalFormStore } from "@/app/_store";
+import { RepeatDduduRequestType } from "@/app/_types/request/repeatDdudu/repeatDdudu";
 import {
   DayOfMonth,
   DayOfWeek,
   RepeatDdudusDateType,
+  RepeatDdudusPattern,
   RepeatDdudusType,
 } from "@/app/_types/response/goal/goal";
+import { useMutation } from "@tanstack/react-query";
 
 import {
   DATE_RADIO_LIST,
@@ -21,6 +25,7 @@ import {
 } from "./DDuDuRepeatForm.constants";
 import { DayOfMonthString } from "./DDuDuRepeatForm.types";
 
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 interface DDuDuRepeatFormDataType {
@@ -31,17 +36,20 @@ interface DDuDuRepeatFormDataType {
   lastDay: string[];
   startDate: string;
   endDate: string;
-  time: string;
+  beginAt: string;
+  endAt: string;
 }
 
 interface DDuDuRepeatFormProps {
   repeatId: string;
+  goalId: string;
   currentRepeatDDuDu?: RepeatDdudusType;
   currentRepeatMonthData: DayOfMonthString[];
 }
 
 const DDuDuRepeatForm = ({
   repeatId,
+  goalId,
   currentRepeatDDuDu,
   currentRepeatMonthData,
 }: DDuDuRepeatFormProps) => {
@@ -54,9 +62,12 @@ const DDuDuRepeatForm = ({
       lastDay: currentRepeatDDuDu?.repeatPattern.lastDay ? ["lastDay"] : [],
       startDate: currentRepeatDDuDu?.startDate,
       endDate: currentRepeatDDuDu?.endDate,
-      time: currentRepeatDDuDu?.beginAt,
+      beginAt: currentRepeatDDuDu?.beginAt,
+      endAt: currentRepeatDDuDu?.endAt,
     },
   });
+  const { errors } = methods.formState;
+
   const { repeatDDuDu, setIsLoad, setRepeatDDuDu, setAddRepeatDDuDu } = useGoalFormStore();
   const router = useRouter();
 
@@ -71,40 +82,74 @@ const DDuDuRepeatForm = ({
     /* eslint-disable react-hooks/exhaustive-deps */
   }, []);
 
-  const onValid: SubmitHandler<DDuDuRepeatFormDataType> = (data) => {
-    console.log("data", data);
+  const { data: session } = useSession();
+  const createRepeatDDuDuMutation = useMutation({
+    mutationKey: ["repeat", "ddudu"],
+    mutationFn: fetchCreateRepeatDDudu,
+  });
+
+  const onValid: SubmitHandler<DDuDuRepeatFormDataType> = ({
+    name,
+    repeatType,
+    repeatDaysOfMonth,
+    repeatDaysOfWeek,
+    startDate,
+    endDate,
+    lastDay,
+    beginAt,
+    endAt,
+  }) => {
+    let addRepeatDDuDuProperty = {};
+    let repeatPattern: RepeatDdudusPattern = { type: repeatType };
+    let repeatTime = {};
+
+    if (repeatType === "WEEKLY") {
+      addRepeatDDuDuProperty = { repeatDaysOfWeek };
+      repeatPattern = { type: repeatType, repeatDaysOfWeek };
+    } else if (repeatType === "MONTHLY") {
+      const daysOfMonth: DayOfMonth[] = repeatDaysOfMonth
+        ? repeatDaysOfMonth.map(Number).filter((day): day is DayOfMonth => day >= 1 && day <= 31)
+        : [];
+      addRepeatDDuDuProperty = { repeatDaysOfMonth, lastDayOfMonth: !!lastDay[0] };
+      repeatPattern = { type: repeatType, repeatDaysOfMonth: daysOfMonth, lastDay: !!lastDay[0] };
+    }
+
+    if (beginAt && endAt) {
+      repeatTime = { beginAt, endAt };
+    }
+
+    const repeatDDuDuData: RepeatDduduRequestType = {
+      name,
+      goalId: Number(goalId),
+      repeatType,
+      startDate,
+      endDate,
+      ...repeatTime,
+      ...addRepeatDDuDuProperty,
+    };
+
+    const newRepeatDDuDuData: RepeatDdudusType = {
+      name,
+      id: Number(repeatId),
+      startDate,
+      endDate,
+      repeatPattern,
+      ...repeatTime,
+    };
+
     if (repeatId) {
       const editRepeatDDuDu = repeatDDuDu.filter((ddudu) => String(ddudu.id) !== repeatId);
 
-      editRepeatDDuDu.push({
-        id: Number(repeatId),
-        name: data.name,
-        repeatPattern: {
-          type: data.repeatType,
-          repeatDaysOfWeek: data.repeatDaysOfWeek,
-          repeatDaysOfMonth: data.repeatDaysOfMonth?.map(Number) as DayOfMonth[],
-          lastDay: data.lastDay[0] ? true : false,
-        },
-        startDate: data.startDate,
-        endDate: data.endDate,
-        beginAt: data.time,
-      });
+      editRepeatDDuDu.push(newRepeatDDuDuData);
       setRepeatDDuDu(editRepeatDDuDu);
     } else {
-      const newRepeatDDuDu = {
-        id: Number(repeatId),
-        name: data.name,
-        repeatPattern: {
-          type: data.repeatType,
-          repeatDaysOfWeek: data.repeatDaysOfWeek,
-          repeatDaysOfMonth: data.repeatDaysOfMonth?.map(Number) as DayOfMonth[],
-          lastDay: data.lastDay[0] ? true : false,
-        },
-        startDate: data.startDate,
-        endDate: data.endDate,
-        beginAt: data.time,
-      };
-      setAddRepeatDDuDu(newRepeatDDuDu);
+      createRepeatDDuDuMutation.mutate({
+        accessToken: session?.sessionToken as string,
+        repeatDDuDuData,
+      });
+
+      // newRepeatDDuDuData.id = repeatDDuDuId;
+      setAddRepeatDDuDu(newRepeatDDuDuData);
     }
 
     router.back();
@@ -196,10 +241,16 @@ const DDuDuRepeatForm = ({
           </li>
           <li>
             <InputTime
-              id="time"
-              name="time"
-              label={currentRepeatDDuDu?.beginAt ?? "시간추가"}
+              type="range"
+              beginAt={currentRepeatDDuDu?.beginAt ?? ""}
+              nameStart="beginAt"
+              labelStart={currentRepeatDDuDu?.beginAt ?? "시작시간"}
+              nameEnd="endAt"
+              labelEnd={currentRepeatDDuDu?.endAt ?? "종료시간"}
             />
+            {errors.endAt && (
+              <p className="mt-[0.5rem] text-example_red_500">{errors.endAt.message}</p>
+            )}
           </li>
         </ul>
         <Button

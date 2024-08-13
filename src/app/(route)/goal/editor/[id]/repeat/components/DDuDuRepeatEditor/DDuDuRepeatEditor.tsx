@@ -13,7 +13,7 @@ interface DDuDuRepeatEditorProps {
   repeatId: string;
 }
 
-const DDuDuRepeatEditor = ({ repeatId }: DDuDuRepeatEditorProps) => {
+const DDuDuRepeatEditor = ({ goalId, repeatId }: DDuDuRepeatEditorProps) => {
   // goalId가 create라는 것은 처음 생성하는 목표이며, 만약 goalId가 create가 아니라면 이미 만드어진 목표를 수정하는 것임.
   // 이미 만들어진 목표를 수정할 경우 해당 목표를 useQuery로 불러와야함
   // repeatId가 있다는 것은 데이터가 있다는 거고 수정이라는 뜻임
@@ -36,6 +36,7 @@ const DDuDuRepeatEditor = ({ repeatId }: DDuDuRepeatEditorProps) => {
   return (
     <DDuDuRepeatForm
       repeatId={repeatId}
+      goalId={goalId}
       currentRepeatDDuDu={currentRepeatDDuDu}
       currentRepeatMonthData={currentRepeatMonthData}
     />

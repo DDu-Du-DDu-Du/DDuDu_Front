@@ -236,7 +236,7 @@ const GoalEditorForm = ({
                     }
                     startDate={startDate}
                     endDate={endDate}
-                    goalId={String(goalId)}
+                    goalId={goalId}
                   />
                 </Fragment>
               ))}

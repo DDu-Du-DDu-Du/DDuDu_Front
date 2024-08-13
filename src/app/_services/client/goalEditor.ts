@@ -27,8 +27,6 @@ interface FetchCreateGoalProps {
 }
 
 export const fetchCreateGoal = async ({ accessToken, goalData }: FetchCreateGoalProps) => {
-  console.log(goalData);
-
   const response = await fetchApi(`${GOAL_EDITOR.DATA}`, {
     method: "POST",
     body: JSON.stringify(goalData),

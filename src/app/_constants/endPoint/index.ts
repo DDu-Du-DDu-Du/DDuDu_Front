@@ -3,3 +3,4 @@ export { default as USER } from "./user/user";
 export { default as GOAL } from "./goal/goal";
 export { default as FEED } from "./feed/feed";
 export { default as GOAL_EDITOR } from "./goalEditor/goalEditor";
+export { default as REPEAT_DDUDU } from "./repeatDdudu/repeatDdudu";
