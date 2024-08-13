@@ -10,7 +10,7 @@ interface GoalEditorDDuDuRepeatPageProps {
 const GoalEditorDDuDuRepeatPage = ({ params, searchParams }: GoalEditorDDuDuRepeatPageProps) => {
   const { id: goalId } = params;
   const { id: repeatId } = searchParams;
-  console.log(goalId, repeatId);
+
   return (
     <section>
       <Header />

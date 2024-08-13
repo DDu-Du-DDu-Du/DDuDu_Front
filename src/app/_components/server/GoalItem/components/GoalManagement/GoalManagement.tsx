@@ -35,7 +35,7 @@ const GoalManagement = ({
       </span>
       <Link
         className="inline-block py-[0.9rem] px-[0.9rem] bg-example_gray_100 rounded-radius15 select-none cursor-pointer"
-        href={`/goal/editor/${id}`}
+        href={`/goal/editor?id=${id}`}
         title="목표 수정 페이지로 이동"
       >
         <strong className="pr-[0.8rem]">{goalName}</strong>

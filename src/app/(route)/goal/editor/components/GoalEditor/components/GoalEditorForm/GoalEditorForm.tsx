@@ -13,7 +13,7 @@ import {
 } from "@/app/_services/client/goalEditor";
 import useGoalFormStore from "@/app/_store/useGoalFormStore/useGoalFormStore";
 import { GoalPrivacyType, RepeatDdudusType } from "@/app/_types/response/goal/goal";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { DAY_OF_WEEK_STRING } from "../../../../[id]/repeat/components/DDuDuRepeatForm/DDuDuRepeatForm.constants";
 import { PRIVACY_TYPE } from "./GoalEditorForm.constants";
@@ -92,25 +92,47 @@ const GoalEditorForm = ({
   }, [isLoadTempData]);
 
   const { data: session } = useSession();
+  const queryClient = useQueryClient();
+
+  const handleSuccess = () => {
+    reset();
+    router.replace("/goal");
+  };
 
   const deleteGoalMutation = useMutation({
     mutationKey: ["goal", "delete", goalId],
     mutationFn: fetchDeleteGoal,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["goalList"] });
+      handleSuccess();
+    },
   });
 
   const statusChangeGoalMutation = useMutation({
     mutationKey: ["goal", "status", goalId],
     mutationFn: fetchStatusChangeGoal,
+    onSuccess: () => {
+      queryClient.invalidateQueries();
+      handleSuccess();
+    },
   });
 
   const createGoalMutation = useMutation({
     mutationKey: ["goal", "create"],
     mutationFn: fetchCreateGoal,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["goalList"] });
+      handleSuccess();
+    },
   });
 
   const editGoalMutation = useMutation({
     mutationKey: ["goal", "edit", goalId],
     mutationFn: fetchEditGoal,
+    onSuccess: () => {
+      queryClient.invalidateQueries();
+      handleSuccess();
+    },
   });
 
   const onValid: SubmitHandler<GoalEditorFormInfo> = ({ goal }) => {
@@ -125,9 +147,6 @@ const GoalEditorForm = ({
     } else {
       createGoalMutation.mutate({ accessToken: session?.sessionToken as string, goalData });
     }
-
-    reset();
-    router.push("/feed");
   };
 
   const handleMoveRepeatDDuDu = () => {
@@ -145,12 +164,10 @@ const GoalEditorForm = ({
       goalId,
       status: goalStatus === "IN_PROGRESS" ? "DONE" : "IN_PROGRESS",
     });
-    router.replace("/goal");
   };
 
   const handleGoalDelete = () => {
     deleteGoalMutation.mutate({ accessToken: session?.sessionToken as string, goalId });
-    router.replace("/goal");
   };
 
   return (
@@ -213,7 +230,7 @@ const GoalEditorForm = ({
                 />
               </div>
             </div>
-            <ul className="flex flex-col max-h-[19rem] gap-[0.8rem] mt-[1rem] overflow-y-scroll">
+            <ul className="flex flex-col max-h-[19rem] gap-[0.8rem] mt-[1rem] overflow-y-auto scrollbar-hide">
               {repeatDDuDu?.map(({ id, name, repeatPattern, startDate, endDate }) => (
                 <Fragment key={id}>
                   <GoalTodoListItem

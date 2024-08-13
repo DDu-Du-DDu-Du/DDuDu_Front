@@ -17,10 +17,14 @@ const GoalEditorPage = async ({ searchParams }: GoalEditorPageProps) => {
   const session = await auth();
 
   const queryclient = new QueryClient();
-  await queryclient.prefetchQuery({
-    queryKey: ["goal", "editor", id],
-    queryFn: () => getGoalEditorData(session?.sessionToken as string, id),
-  });
+
+  if (id) {
+    await queryclient.prefetchQuery({
+      queryKey: ["goal", "editor", id],
+      queryFn: () => getGoalEditorData(session?.sessionToken as string, id),
+    });
+  }
+
   const dehydratedState = dehydrate(queryclient);
 
   return (
