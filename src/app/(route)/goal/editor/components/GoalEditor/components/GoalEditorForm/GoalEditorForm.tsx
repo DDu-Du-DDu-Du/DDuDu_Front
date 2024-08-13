@@ -47,18 +47,11 @@ const GoalEditorForm = ({
   goalFormData,
   isLoadTempData,
 }: GoalEditorFormProps) => {
-  // id가 있는 경우는 수정 페이지임, id가 없는 경우는 생성 페이지임
-  // id가 있다면 useQuery를 통해 데이터를 불러온 후 초깃값을 props로 전달
-  // id가 없으면 생성이기 때문에 default 값으로 수정
   const router = useRouter();
   const { goalText, goalPrivacy, color, repeatDDuDu } = goalFormData;
   const { setIsEditing, setGoalText, setGoalPrivacy, setColor, reset } = useGoalFormStore();
 
-  const methods = useForm<GoalEditorFormInfo>({
-    defaultValues: {
-      goal: goalText,
-    },
-  });
+  const methods = useForm<GoalEditorFormInfo>();
 
   const {
     isGoalPrivacyToggle,
@@ -90,14 +83,13 @@ const GoalEditorForm = ({
     delayedGoalValueSave(goalValue);
   }, [goalValue]);
 
-  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (!isLoadTempData) {
       return;
     }
 
     methods.setValue("goal", goalText);
-  }, []);
+  }, [isLoadTempData]);
 
   const { data: session } = useSession();
 
