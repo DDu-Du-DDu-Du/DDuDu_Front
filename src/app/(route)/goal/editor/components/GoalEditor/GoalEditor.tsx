@@ -6,7 +6,7 @@ import { ConfirmModal } from "@/app/_components/client";
 import { useToggle } from "@/app/_hooks";
 import { getGoalEditorData } from "@/app/_services/client/goalEditor";
 import { useGoalFormStore } from "@/app/_store";
-import { GoalType } from "@/app/_types/response/goal/goal";
+import { GoalDetailType } from "@/app/_types/response/goal/goal";
 import { useQuery } from "@tanstack/react-query";
 
 import { GoalEditorForm } from "./components";
@@ -33,12 +33,10 @@ const GoalEditor = ({ goalId }: GoalEditorProps) => {
     reset,
   } = useGoalFormStore();
 
-  console.log("goalText", goalText);
-
-  const { data: goalEditorData } = useQuery<GoalType>({
+  const { data: goalEditorData } = useQuery<GoalDetailType>({
     queryKey: ["goal", "editor", goalId],
     queryFn: () => getGoalEditorData(session?.sessionToken as string, goalId),
-    enabled: !!goalId,
+    enabled: !!goalId && !!session,
   });
 
   const { isToggle: isModal, handleToggleOn: openModal, handleToggleOff: closeModal } = useToggle();
