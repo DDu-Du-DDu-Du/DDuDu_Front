@@ -1,14 +1,14 @@
 import { useState } from "react";
 
-import { GoalType } from "@/app/(route)/goal/goal.types";
+import { GoalType } from "@/app/_types/response/goal/goal";
 import { DropResult } from "@hello-pangea/dnd";
 
 interface UseDragDropProps {
-  goal: GoalType[];
+  goal?: GoalType[];
 }
 
 const useDragDrop = ({ goal }: UseDragDropProps) => {
-  const [goalList, setGoalList] = useState(goal);
+  const [goalList, setGoalList] = useState(goal || []);
 
   const onDragEnd = ({ source, destination }: DropResult) => {
     if (!destination) {
