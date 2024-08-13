@@ -18,9 +18,6 @@ interface GoalEditorProps {
 }
 
 const GoalEditor = ({ goalId }: GoalEditorProps) => {
-  // id가 있는 경우는 수정 페이지임, id가 없는 경우는 생성 페이지임
-  // id가 있다면 useQuery를 통해 데이터를 불러온 후 초깃값을 props로 전달
-  // id가 없으면 생성이기 때문에 default 값으로 수정
   const { data: session } = useSession();
   const {
     type,
@@ -35,6 +32,9 @@ const GoalEditor = ({ goalId }: GoalEditorProps) => {
     initialize,
     reset,
   } = useGoalFormStore();
+
+  console.log("goalText", goalText);
+
   const { data: goalEditorData } = useQuery<GoalType>({
     queryKey: ["goal", "editor", goalId],
     queryFn: () => getGoalEditorData(session?.sessionToken as string, goalId),
