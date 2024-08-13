@@ -89,6 +89,10 @@ export const fetchDeleteGoal = async ({ accessToken, goalId }: FetchDeleteGoalPr
     },
   });
 
+  if (response.status === 204) {
+    return;
+  }
+
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
