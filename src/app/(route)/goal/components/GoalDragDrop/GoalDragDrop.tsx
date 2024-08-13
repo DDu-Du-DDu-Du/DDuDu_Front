@@ -1,16 +1,22 @@
 "use client";
 
 import { GoalItem } from "@/app/_components/server";
+import { getGoalList } from "@/app/_services/client/goal/goal";
+import { GoalType } from "@/app/_types/response/goal/goal";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
+import { useQuery } from "@tanstack/react-query";
 
-import { GoalType } from "../../goal.types";
 import { useAnimationChecker, useDragDrop } from "./hooks";
 
-interface GoalDragDropProps {
-  goal: GoalType[];
-}
+import { useSession } from "next-auth/react";
 
-const GoalDragDrop = ({ goal }: GoalDragDropProps) => {
+const GoalDragDrop = () => {
+  const { data: session } = useSession();
+  const { data: goal } = useQuery<GoalType[]>({
+    queryKey: ["goal", String(session?.user.userId)],
+    queryFn: () => getGoalList(session?.sessionToken as string, String(session?.user.userId)),
+  });
+
   const { goalList, onDragEnd } = useDragDrop({ goal });
   const { checker } = useAnimationChecker();
 
