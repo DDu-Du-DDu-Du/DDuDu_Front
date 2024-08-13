@@ -1,44 +1,40 @@
-"use client";
-
-import styles from "./InputTime.module.css";
-
-import { ChangeEventHandler, useState } from "react";
-import { useFormContext } from "react-hook-form";
+import { InputTimeRange, InputTimeSingle } from "./components";
 
 interface InputTimeProps {
-  id: string;
-  label: string;
-  name: string;
-  handleTimeChange?: (time: string) => void;
+  type?: "single" | "range";
+  beginAt: string;
+  nameStart: string;
+  labelStart: string;
+  nameEnd?: string;
+  labelEnd?: string;
 }
 
-const InputTime = ({ id, name, handleTimeChange, label }: InputTimeProps) => {
-  const [time, setTime] = useState(label);
-  const { register } = useFormContext();
-
-  const handleInputTimeChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    setTime(event.target.value);
-    handleTimeChange && handleTimeChange(event.target.value);
-  };
-
+const InputTime = ({
+  type = "single",
+  beginAt,
+  nameStart,
+  labelStart,
+  nameEnd,
+  labelEnd,
+}: InputTimeProps) => {
   return (
-    <div className={`${styles.timePicker} relative w-[12rem]`}>
-      <div className="h-[4rem] rounded-radius10 cursor-pointer leading-[4rem] pl-[1.8rem] bg-example_gray_100">
-        <label
-          htmlFor={name}
-          className="text-size13"
-        >
-          {time}
-        </label>
-        <input
-          className="absolute top-0 left-0 w-full h-full opacity-0"
-          type="time"
-          id={id}
-          {...register(name, {})}
-          onChange={handleInputTimeChange}
+    <>
+      {type === "single" && (
+        <InputTimeSingle
+          name={nameStart}
+          label={labelStart}
         />
-      </div>
-    </div>
+      )}
+      {type === "range" && labelEnd && nameEnd && (
+        <InputTimeRange
+          beginAt={beginAt}
+          nameStart={nameStart}
+          labelStart={labelStart}
+          nameEnd={nameEnd}
+          labelEnd={labelEnd}
+        />
+      )}
+    </>
   );
 };
 
