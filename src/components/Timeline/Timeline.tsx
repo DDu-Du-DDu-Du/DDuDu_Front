@@ -14,10 +14,10 @@ const Timeline = ({ timeline }: TimelineProps) => {
       <S.TimelineContainer>
         <LineBox />
 
-        {timeline.map(({ time, ddudus }) => (
+        {timeline.map(({ beginAt, ddudus }) => (
           <TimeLineItem
-            key={`${time}`}
-            baseTime={time}
+            key={`${beginAt}`}
+            baseTime={beginAt}
             dduduList={ddudus}
           />
         ))}

@@ -22,7 +22,7 @@ const TimeItem = ({ ddudu, isLastItem }: TimeItemProps) => {
 
                 추후 상단에 생성될 전체 목표 목록 스토어에서 일치하는 컬러 매칭하기 
               */}
-              {status === "COMPLETED" && <S.TimeItemIconComplete />}
+              {status === "COMPLETE" && <S.TimeItemIconComplete />}
             </S.TimeItemIconInner>
           </S.TimeItemIconOutline>
         </S.TimeItemIconLayout>

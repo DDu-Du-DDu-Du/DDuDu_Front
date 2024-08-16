@@ -38,7 +38,7 @@ export const TimeItemIconLayout = styled.div`
   z-index: ${({ theme }) => theme.zIndex.timeline_icon};
 `;
 
-export const TimeItemIconOutline = styled.div<{ $status: "COMPLETED" | "UNCOMPLETED" }>`
+export const TimeItemIconOutline = styled.div<{ $status: "COMPLETE" | "UNCOMPLETED" }>`
   width: 2.2rem;
   height: 2.2rem;
 
@@ -48,7 +48,7 @@ export const TimeItemIconOutline = styled.div<{ $status: "COMPLETED" | "UNCOMPLE
 
   border-radius: ${({ theme }) => theme.borderRadius.circle};
   background-color: ${({ theme, $status }) =>
-    $status === "COMPLETED" ? theme.colors.example_gray_900 : theme.colors.example_gray_300};
+    $status === "COMPLETE" ? theme.colors.example_gray_900 : theme.colors.example_gray_300};
 `;
 
 export const TimeItemIconInner = styled.div`
@@ -73,7 +73,7 @@ export const TimeItemIconComplete = styled.div`
 
 // LastItem
 
-export const TimeLineDivider = styled.hr<{ $status: "COMPLETED" | "UNCOMPLETED" }>`
+export const TimeLineDivider = styled.hr<{ $status: "COMPLETE" | "UNCOMPLETED" }>`
   width: 0.3rem;
   height: 100%;
 
@@ -81,7 +81,7 @@ export const TimeLineDivider = styled.hr<{ $status: "COMPLETED" | "UNCOMPLETED" 
   top: 3rem;
 
   background-color: ${({ theme, $status }) =>
-    $status === "COMPLETED" ? theme.colors.example_gray_900 : theme.colors.example_gray_300};
+    $status === "COMPLETE" ? theme.colors.example_gray_900 : theme.colors.example_gray_300};
 
   z-index: ${({ theme }) => theme.zIndex.timeline_line};
 `;
