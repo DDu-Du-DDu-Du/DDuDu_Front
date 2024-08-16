@@ -5,12 +5,12 @@ import type { Meta, StoryObj } from "@storybook/react";
 const TEST_VALUE: TimelineListResponse = {
   timeline: [
     {
-      time: "12 :00",
+      beginAt: "12 :00",
       ddudus: [
         {
           id: 1,
           name: "테스트용 할일 목록 1",
-          status: "COMPLETED",
+          status: "COMPLETE",
           beginAt: "13:20:00",
           endAt: "16:20:00",
           goalId: 1001,
@@ -26,7 +26,7 @@ const TEST_VALUE: TimelineListResponse = {
         {
           id: 3,
           name: "테스트용 할일 목록 3 테스트용 할일 목록 3 테스트용 할일 목록 3 테스트용 할일 목록 3",
-          status: "COMPLETED",
+          status: "COMPLETE",
           beginAt: "13:20:00",
           endAt: "13:50:00",
           goalId: 1001,
@@ -34,7 +34,7 @@ const TEST_VALUE: TimelineListResponse = {
         {
           id: 4,
           name: "",
-          status: "COMPLETED",
+          status: "COMPLETE",
           beginAt: "13:20:00",
           endAt: "13:55:00",
           goalId: 1001,
@@ -42,12 +42,12 @@ const TEST_VALUE: TimelineListResponse = {
       ],
     },
     {
-      time: "13 :00",
+      beginAt: "13 :00",
       ddudus: [
         {
           id: 5,
           name: "전부다 할일을 안했다면? 1",
-          status: "UNCOMPLETED",
+          status: "COMPLETE",
           beginAt: "13:20:00",
           endAt: "16:20:00",
           goalId: 1001,
@@ -71,12 +71,12 @@ const TEST_VALUE: TimelineListResponse = {
       ],
     },
     {
-      time: "14 :00",
+      beginAt: "14 :00",
       ddudus: [
         {
           id: 8,
           name: "하나의 아이템 - 완료",
-          status: "COMPLETED",
+          status: "COMPLETE",
           beginAt: "13:20:00",
           endAt: "16:20:00",
           goalId: 1001,
@@ -84,12 +84,12 @@ const TEST_VALUE: TimelineListResponse = {
       ],
     },
     {
-      time: "15 :00",
+      beginAt: "15 :00",
       ddudus: [
         {
           id: 9,
           name: "할일을 전부 완료했다면? 1",
-          status: "COMPLETED",
+          status: "COMPLETE",
           beginAt: "13:20:00",
           endAt: "16:20:00",
           goalId: 1001,
@@ -97,7 +97,7 @@ const TEST_VALUE: TimelineListResponse = {
         {
           id: 10,
           name: "할일을 전부 완료했다면? 2 할일을 전부 완료했다면? 2 할일을 전부 완료했다면? 2 할일을 전부 완료했다면? 2 할일을 전부 완료했다면? 2 할일을 전부 완료했다면? 2",
-          status: "COMPLETED",
+          status: "COMPLETE",
           beginAt: "13:20:00",
           endAt: "14:20:00",
           goalId: 1001,
@@ -105,7 +105,7 @@ const TEST_VALUE: TimelineListResponse = {
         {
           id: 11,
           name: "할일을 전부 완료했다면? 3",
-          status: "COMPLETED",
+          status: "COMPLETE",
           beginAt: "13:20:00",
           endAt: "13:50:00",
           goalId: 1001,
@@ -113,11 +113,11 @@ const TEST_VALUE: TimelineListResponse = {
       ],
     },
     {
-      time: "16 :00",
+      beginAt: "16 :00",
       ddudus: [],
     },
     {
-      time: "17 :00",
+      beginAt: "17 :00",
       ddudus: [
         {
           id: 12,
@@ -130,27 +130,27 @@ const TEST_VALUE: TimelineListResponse = {
       ],
     },
     {
-      time: "18:00",
+      beginAt: "18:00",
       ddudus: [],
     },
     {
-      time: "19:00",
+      beginAt: "19:00",
       ddudus: [],
     },
     {
-      time: "20:00",
+      beginAt: "20:00",
       ddudus: [],
     },
     {
-      time: "21:00",
+      beginAt: "21:00",
       ddudus: [],
     },
     {
-      time: "22:00",
+      beginAt: "22:00",
       ddudus: [],
     },
     {
-      time: "23:00",
+      beginAt: "23:00",
       ddudus: [],
     },
   ],
@@ -170,12 +170,12 @@ const TEST_VALUE: TimelineListResponse = {
  * {
  *  timeline: [
  *    {
- *      time: "15 :00",
+ *      beginAt: "15 :00",
  *      ddudus: [
  *        {
  *          id: 9,
  *          name: "할일을 전부 완료했다면? 1",
- *          status: "COMPLETED",
+ *          status: "COMPLETE",
  *          beginAt: "13:20:00",
  *          endAt: "16:20:00",
  *          goalId: 1001,
@@ -183,7 +183,7 @@ const TEST_VALUE: TimelineListResponse = {
  *        {
  *          id: 10,
  *          name: "할일을 전부 완료했다면? 2",
- *          status: "COMPLETED",
+ *          status: "COMPLETE",
  *          beginAt: "13:20:00",
  *          endAt: "14:20:00",
  *          goalId: 1001,
@@ -191,7 +191,7 @@ const TEST_VALUE: TimelineListResponse = {
  *        {
  *          id: 11,
  *          name: "할일을 전부 완료했다면? 3",
- *          status: "COMPLETED",
+ *          status: "COMPLETE",
  *          beginAt: "13:20:00",
  *          endAt: "13:50:00",
  *          goalId: 1001,
