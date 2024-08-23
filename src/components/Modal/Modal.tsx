@@ -1,6 +1,7 @@
 import * as S from "./Modal.styles";
 
 import { ModalPortal } from "./components";
+import { useAwayClickModal } from "./hooks";
 
 import { AnimatePresence } from "framer-motion";
 
@@ -10,6 +11,7 @@ interface ModalProps {
   width?: string;
   height?: string;
   backgroundColor?: string;
+  onAwayClick?: () => void;
 }
 
 const Modal = ({
@@ -18,23 +20,32 @@ const Modal = ({
   width = "20rem",
   height = "30rem",
   backgroundColor,
+  onAwayClick,
 }: ModalProps) => {
+  const handleAwayClick = useAwayClickModal({ callback: onAwayClick });
+
   return (
     <AnimatePresence>
       {isToggle && (
         <ModalPortal>
           <S.ModalBackground
-            initial={{ opacity: 0, x: "-50%", y: "-40%" }}
-            animate={{ opacity: 1, x: "-50%", y: "-50%" }}
-            whileTap={{ scale: 0.95 }}
-            $width={width}
-            $height={height}
-            $backgroundColor={backgroundColor}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={handleAwayClick}
           >
-            {children}
+            <S.ModalLayout
+              initial={{ opacity: 0, y: "-10%" }}
+              animate={{ opacity: 1, y: "0%" }}
+              exit={{ opacity: 0, y: "-10%" }}
+              whileTap={{ scale: 0.95 }}
+              $width={width}
+              $height={height}
+              $backgroundColor={backgroundColor}
+            >
+              {children}
+            </S.ModalLayout>
           </S.ModalBackground>
-
-          {isToggle && <S.ModalSpacing className="fixed inset-0 z-10 size-[100%] opacity-0" />}
         </ModalPortal>
       )}
     </AnimatePresence>
