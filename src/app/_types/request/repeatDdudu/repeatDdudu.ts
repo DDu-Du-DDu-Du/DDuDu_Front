@@ -1,11 +1,10 @@
-import { RepeatDdudusDateType } from "../../response/goal/goal";
+import { DayOfMonth, DayOfWeek, RepeatDdudusDateType } from "../../response/goal/goal";
 
 export interface RepeatDduduRequestType {
   name: string;
-  goalId: number;
   repeatType: RepeatDdudusDateType;
-  repeatDaysOfWeek?: [];
-  repeatDaysOfMonth?: [];
+  repeatDaysOfWeek?: DayOfWeek[];
+  repeatDaysOfMonth?: DayOfMonth[];
   lastDayOfMonth?: boolean;
   startDate: string;
   endDate: string;
