@@ -25,7 +25,7 @@ const DDuDuRepeatEditor = ({ goalId, repeatId }: DDuDuRepeatEditorProps) => {
   }, [repeatDDuDu, repeatId]);
 
   const currentRepeatMonthData =
-    currentRepeatDDuDu && currentRepeatDDuDu.repeatPattern.type === "MONTHLY"
+    currentRepeatDDuDu && currentRepeatDDuDu.repeatPattern.repeatType === "MONTHLY"
       ? (currentRepeatDDuDu.repeatPattern.repeatDaysOfMonth?.map(String) as DayOfMonthString[])
       : [];
 

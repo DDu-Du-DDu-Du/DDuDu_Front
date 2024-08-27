@@ -25,7 +25,7 @@ export interface RepeatDdudusType {
 }
 
 export interface RepeatDdudusPattern {
-  type: RepeatDdudusDateType;
+  repeatType: RepeatDdudusDateType;
   repeatDaysOfWeek?: DayOfWeek[];
   repeatDaysOfMonth?: DayOfMonth[];
   lastDay?: boolean;
