@@ -5,7 +5,7 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
 import { Button, CheckboxInput, InputDate, InputRadio, TextInput } from "@/app/_components/client";
 import InputTime from "@/app/_components/client/InputTime/InputTime";
-import { fetchCreateRepeatDDudu } from "@/app/_services/client/repeatDdudu";
+import { fetchCreateRepeatDDudu, fetchEditRepeatDDudu } from "@/app/_services/client/repeatDdudu";
 import { useGoalFormStore } from "@/app/_store";
 import { RepeatDduduRequestType } from "@/app/_types/request/repeatDdudu/repeatDdudu";
 import {
@@ -41,22 +41,22 @@ interface DDuDuRepeatFormDataType {
 }
 
 interface DDuDuRepeatFormProps {
-  repeatId: string;
   goalId: string;
+  repeatId: string;
   currentRepeatDDuDu?: RepeatDdudusType;
   currentRepeatMonthData: DayOfMonthString[];
 }
 
 const DDuDuRepeatForm = ({
-  repeatId,
   goalId,
+  repeatId,
   currentRepeatDDuDu,
   currentRepeatMonthData,
 }: DDuDuRepeatFormProps) => {
   const methods = useForm<DDuDuRepeatFormDataType>({
     defaultValues: {
       name: currentRepeatDDuDu?.name,
-      repeatType: currentRepeatDDuDu?.repeatPattern.type,
+      repeatType: currentRepeatDDuDu?.repeatPattern.repeatType,
       repeatDaysOfWeek: currentRepeatDDuDu?.repeatPattern.repeatDaysOfWeek || [],
       repeatDaysOfMonth: currentRepeatMonthData,
       lastDay: currentRepeatDDuDu?.repeatPattern.lastDay ? ["lastDay"] : [],
@@ -83,9 +83,15 @@ const DDuDuRepeatForm = ({
   }, []);
 
   const { data: session } = useSession();
+
   const createRepeatDDuDuMutation = useMutation({
     mutationKey: ["repeat", "ddudu"],
     mutationFn: fetchCreateRepeatDDudu,
+  });
+
+  const editRepeatDDuDuMutation = useMutation({
+    mutationKey: ["repeat", "ddudu", repeatId],
+    mutationFn: fetchEditRepeatDDudu,
   });
 
   const onValid: SubmitHandler<DDuDuRepeatFormDataType> = ({
@@ -99,60 +105,81 @@ const DDuDuRepeatForm = ({
     beginAt,
     endAt,
   }) => {
-    let addRepeatDDuDuProperty = {};
-    let repeatPattern: RepeatDdudusPattern = { type: repeatType };
+    let repeatPattern: RepeatDdudusPattern = { repeatType };
     let repeatTime = {};
 
     if (repeatType === "WEEKLY") {
-      addRepeatDDuDuProperty = { repeatDaysOfWeek };
-      repeatPattern = { type: repeatType, repeatDaysOfWeek };
+      repeatPattern = { repeatType, repeatDaysOfWeek };
     } else if (repeatType === "MONTHLY") {
       const daysOfMonth: DayOfMonth[] = repeatDaysOfMonth
         ? repeatDaysOfMonth.map(Number).filter((day): day is DayOfMonth => day >= 1 && day <= 31)
         : [];
-      addRepeatDDuDuProperty = { repeatDaysOfMonth, lastDayOfMonth: !!lastDay[0] };
-      repeatPattern = { type: repeatType, repeatDaysOfMonth: daysOfMonth, lastDay: !!lastDay[0] };
+
+      repeatPattern = {
+        repeatType,
+        repeatDaysOfMonth: daysOfMonth,
+        lastDay: !!lastDay[0],
+      };
     }
 
     if (beginAt && endAt) {
       repeatTime = { beginAt, endAt };
     }
 
-    const repeatDDuDuData: RepeatDduduRequestType = {
-      name,
-      goalId: Number(goalId),
-      repeatType,
-      startDate,
-      endDate,
-      ...repeatTime,
-      ...addRepeatDDuDuProperty,
-    };
+    const newRepeatDDuDuId =
+      repeatDDuDu.length === 0 ? 1 : repeatDDuDu[repeatDDuDu.length - 1].id + 1;
 
-    const newRepeatDDuDuData: RepeatDdudusType = {
+    const newRepeatDDuDu: RepeatDdudusType = {
       name,
-      id: Number(repeatId),
+      id: newRepeatDDuDuId,
       startDate,
       endDate,
       repeatPattern,
       ...repeatTime,
     };
 
-    if (repeatId) {
-      const editRepeatDDuDu = repeatDDuDu.filter((ddudu) => String(ddudu.id) !== repeatId);
+    const requestRepeatDDuDu: RepeatDduduRequestType = {
+      name,
+      startDate,
+      endDate,
+      ...repeatPattern,
+      ...repeatTime,
+    };
 
-      editRepeatDDuDu.push(newRepeatDDuDuData);
-      setRepeatDDuDu(editRepeatDDuDu);
-    } else {
-      createRepeatDDuDuMutation.mutate({
-        accessToken: session?.sessionToken as string,
-        repeatDDuDuData,
+    if (repeatId) {
+      const editRepeatDDuDu = repeatDDuDu.map((ddudu) => {
+        if (ddudu.id === Number(repeatId)) {
+          return { ...newRepeatDDuDu, id: ddudu.id };
+        }
+
+        return ddudu;
       });
 
-      // newRepeatDDuDuData.id = repeatDDuDuId;
-      setAddRepeatDDuDu(newRepeatDDuDuData);
+      setRepeatDDuDu(editRepeatDDuDu);
+
+      if (goalId) {
+        // 즉시 수정
+        editRepeatDDuDuMutation.mutate({
+          accessToken: session?.sessionToken as string,
+          repeatDDuDuData: requestRepeatDDuDu,
+          repeatId,
+        });
+      }
+    } else {
+      setAddRepeatDDuDu(newRepeatDDuDu);
+
+      if (goalId) {
+        // 즉시 생성
+        createRepeatDDuDuMutation.mutate({
+          accessToken: session?.sessionToken as string,
+          repeatDDuDuData: { ...requestRepeatDDuDu, goalId },
+        });
+      }
     }
 
-    router.back();
+    if (!goalId) {
+      router.back();
+    }
   };
 
   return (
@@ -166,6 +193,7 @@ const DDuDuRepeatForm = ({
             <TextInput
               name="name"
               placeholder="뚜두입력"
+              options={{ required: true }}
             />
           </li>
           <li className="flex gap-[0.8rem]">
