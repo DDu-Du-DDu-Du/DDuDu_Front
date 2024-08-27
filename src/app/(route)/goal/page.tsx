@@ -18,8 +18,6 @@ const GoalPage = async () => {
 
   const dehydratedState = dehydrate(queryClient);
 
-  // const goalList = await getGoalList(session?.sessionToken as string, String(session?.user.userId));
-
   return (
     <HydrationBoundary state={dehydratedState}>
       <div className="relative pt-[2.6rem] px-[2.4rem]">

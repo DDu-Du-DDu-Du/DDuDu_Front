@@ -12,6 +12,7 @@ import {
   fetchStatusChangeGoal,
 } from "@/app/_services/client/goalEditor";
 import useGoalFormStore from "@/app/_store/useGoalFormStore/useGoalFormStore";
+import { RepeatDduduRequestType } from "@/app/_types/request/repeatDdudu/repeatDdudu";
 import { GoalPrivacyType, RepeatDdudusType } from "@/app/_types/response/goal/goal";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
@@ -21,6 +22,7 @@ import { useColorToggle, useGoalPrivacyToggle } from "./hooks";
 
 import { debounce } from "lodash";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 interface GoalEditorFormInfo {
@@ -145,7 +147,28 @@ const GoalEditorForm = ({
     if (goalId) {
       editGoalMutation.mutate({ accessToken: session?.sessionToken as string, goalData, goalId });
     } else {
-      createGoalMutation.mutate({ accessToken: session?.sessionToken as string, goalData });
+      const goalRepeatData = repeatDDuDu.map((ddudu) => {
+        const repeatDDuDu: RepeatDduduRequestType = {
+          name: ddudu.name,
+          startDate: ddudu.startDate,
+          endDate: ddudu.endDate,
+          repeatType: ddudu.repeatPattern.repeatType,
+        };
+
+        if (ddudu.repeatPattern.repeatType === "WEEKLY") {
+          repeatDDuDu.repeatDaysOfWeek = ddudu.repeatPattern.repeatDaysOfWeek;
+        } else if (ddudu.repeatPattern.repeatType === "MONTHLY") {
+          repeatDDuDu.repeatDaysOfMonth = ddudu.repeatPattern.repeatDaysOfMonth;
+          repeatDDuDu.lastDayOfMonth = ddudu.repeatPattern.lastDay;
+        }
+
+        return repeatDDuDu;
+      });
+
+      createGoalMutation.mutate({
+        accessToken: session?.sessionToken as string,
+        goalData: { ...goalData, repeatDdudus: [...goalRepeatData] },
+      });
     }
   };
 
@@ -216,57 +239,77 @@ const GoalEditorForm = ({
               pickedColor={color}
             />
           </li>
-          <li>
-            <div className="flex justify-between items-center">
-              <strong className="pl-[1.8rem] font-medium text-size13">반복 뚜두 만들기</strong>
-              <div
-                className="px-[1.4rem] py-[1rem] cursor-pointer"
-                onClick={handleMoveRepeatDDuDu}
-              >
-                <ArrowRightIcon
-                  size={16}
-                  fill="none"
-                  stroke="#D9D9D9"
-                />
-              </div>
-            </div>
-            <ul className="flex flex-col max-h-[19rem] gap-[0.8rem] mt-[1rem] overflow-y-auto scrollbar-hide">
-              {repeatDDuDu?.map(({ id, name, repeatPattern, startDate, endDate }) => (
-                <Fragment key={id}>
-                  <GoalTodoListItem
-                    id={id}
-                    title={name}
-                    repeatDays={
-                      (repeatPattern.type === "WEEKLY"
-                        ? repeatPattern.repeatDaysOfWeek
-                            ?.map((weekDay) => DAY_OF_WEEK_STRING[weekDay])
-                            .join(" ")
-                        : repeatPattern.repeatDaysOfMonth?.join(" ")) || "매일"
-                    }
-                    startDate={startDate}
-                    endDate={endDate}
-                    goalId={goalId}
+          {!goalId && (
+            <li>
+              <div className="flex justify-between items-center">
+                <strong className="pl-[1.8rem] font-medium text-size13">반복 뚜두 만들기</strong>
+                <div
+                  className="px-[1.4rem] py-[1rem] cursor-pointer"
+                  onClick={handleMoveRepeatDDuDu}
+                >
+                  <ArrowRightIcon
+                    size={16}
+                    fill="none"
+                    stroke="#D9D9D9"
                   />
-                </Fragment>
-              ))}
-            </ul>
-          </li>
+                </div>
+              </div>
+              <ul className="flex flex-col max-h-[19rem] gap-[0.8rem] mt-[1rem] overflow-y-auto scrollbar-hide">
+                {repeatDDuDu?.map(({ id, name, repeatPattern, startDate, endDate }) => (
+                  <Fragment key={id}>
+                    <GoalTodoListItem
+                      id={id}
+                      title={name}
+                      repeatDays={
+                        (repeatPattern.repeatType === "WEEKLY"
+                          ? repeatPattern.repeatDaysOfWeek
+                              ?.map((weekDay) => DAY_OF_WEEK_STRING[weekDay])
+                              .join(" ")
+                          : repeatPattern.repeatDaysOfMonth?.join(" ")) || "매일"
+                      }
+                      startDate={startDate}
+                      endDate={endDate}
+                      goalId={goalId}
+                    />
+                  </Fragment>
+                ))}
+              </ul>
+            </li>
+          )}
 
           {goalId && (
-            <li className="flex gap-[1rem]">
-              <Button
-                className="w-full h-[4rem] text-size13 font-medium bg-example_gray_100 rounded-radius10"
-                onClick={handleGoalStatusChange}
-              >
-                {goalStatus === "IN_PROGRESS" ? "목표 종료하기" : "목표 재개하기"}
-              </Button>
-              <Button
-                className="w-full h-[4rem] text-size13 font-medium bg-example_gray_100 rounded-radius10"
-                onClick={handleGoalDelete}
-              >
-                목표 삭제하기
-              </Button>
-            </li>
+            <>
+              <li>
+                <div className="flex justify-between items-center">
+                  <strong className="pl-[1.8rem] font-medium text-size13">반복</strong>
+                  <Link
+                    className="px-[1.4rem] py-[1rem] cursor-pointer"
+                    href={`/goal/editor/${goalId}/repeats`}
+                    title="반복 뚜두 관리 페이지 이동"
+                  >
+                    <ArrowRightIcon
+                      size={16}
+                      fill="none"
+                      stroke="#D9D9D9"
+                    />
+                  </Link>
+                </div>
+              </li>
+              <li className="flex gap-[1rem]">
+                <Button
+                  className="w-full h-[4rem] text-size13 font-medium bg-example_gray_100 rounded-radius10"
+                  onClick={handleGoalStatusChange}
+                >
+                  {goalStatus === "IN_PROGRESS" ? "목표 종료하기" : "목표 재개하기"}
+                </Button>
+                <Button
+                  className="w-full h-[4rem] text-size13 font-medium bg-example_gray_100 rounded-radius10"
+                  onClick={handleGoalDelete}
+                >
+                  목표 삭제하기
+                </Button>
+              </li>
+            </>
           )}
         </ul>
         <Button
