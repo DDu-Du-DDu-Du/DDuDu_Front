@@ -4,7 +4,7 @@ import { RepeatDduduRequestType } from "@/app/_types/request/repeatDdudu/repeatD
 
 interface FetchCreateRepeatDduduProps {
   accessToken: string;
-  repeatDDuDuData: RepeatDduduRequestType & { goalId: string };
+  repeatDDuDuData: RepeatDduduRequestType & { goalId: number };
 }
 
 export const fetchCreateRepeatDDudu = async ({
@@ -15,7 +15,7 @@ export const fetchCreateRepeatDDudu = async ({
     method: "POST",
     body: JSON.stringify(repeatDDuDuData),
     headers: {
-      accept: "application/json",
+      "Content-Type": "application/json",
       Authorization: `Bearer ${accessToken}`,
     },
     next: {
@@ -41,11 +41,11 @@ export const fetchEditRepeatDDudu = async ({
   repeatDDuDuData,
   repeatId,
 }: fetchEditRepeatDDuduProps) => {
-  const response = await fetchApi(`${REPEAT_DDUDU.CREATE}`, {
+  const response = await fetchApi(`${REPEAT_DDUDU.EDIT}/${repeatId}`, {
     method: "PUT",
     body: JSON.stringify(repeatDDuDuData),
     headers: {
-      accept: "application/json",
+      "Content-Type": "application/json",
       Authorization: `Bearer ${accessToken}`,
     },
     next: {
