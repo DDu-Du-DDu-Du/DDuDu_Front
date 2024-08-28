@@ -1,7 +1,7 @@
 "use client";
 
 import { HTMLAttributes, useId } from "react";
-import { useFormContext } from "react-hook-form";
+import { FieldValues, RegisterOptions, useFormContext } from "react-hook-form";
 
 import tailwindConfig from "@/../tailwind.config";
 
@@ -22,6 +22,7 @@ interface CheckboxInputProps extends Omit<HTMLAttributes<HTMLInputElement>, "typ
   id?: string;
   className?: string;
   disabled?: boolean;
+  options?: RegisterOptions<FieldValues, string>;
 }
 
 const CheckboxInput = ({
@@ -34,6 +35,7 @@ const CheckboxInput = ({
   size = 32,
   disabled,
   id,
+  options,
   ...rest
 }: CheckboxInputProps) => {
   const { register, watch } = useFormContext();
@@ -54,9 +56,7 @@ const CheckboxInput = ({
         checked={isChecked}
         className="hidden"
         disabled={disabled}
-        {...register(name, {
-          required: true,
-        })}
+        {...register(name, options)}
         {...rest}
       />
 
