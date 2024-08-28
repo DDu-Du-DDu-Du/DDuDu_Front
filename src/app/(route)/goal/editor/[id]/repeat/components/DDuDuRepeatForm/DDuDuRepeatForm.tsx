@@ -87,11 +87,17 @@ const DDuDuRepeatForm = ({
   const createRepeatDDuDuMutation = useMutation({
     mutationKey: ["repeat", "ddudu"],
     mutationFn: fetchCreateRepeatDDudu,
+    onSuccess: () => {
+      router.replace(`/goal/editor/${goalId}/repeats`);
+    },
   });
 
   const editRepeatDDuDuMutation = useMutation({
     mutationKey: ["repeat", "ddudu", repeatId],
     mutationFn: fetchEditRepeatDDudu,
+    onSuccess: () => {
+      router.replace(`/goal/editor/${goalId}/repeats`);
+    },
   });
 
   const onValid: SubmitHandler<DDuDuRepeatFormDataType> = ({
@@ -114,6 +120,11 @@ const DDuDuRepeatForm = ({
       const daysOfMonth: DayOfMonth[] = repeatDaysOfMonth
         ? repeatDaysOfMonth.map(Number).filter((day): day is DayOfMonth => day >= 1 && day <= 31)
         : [];
+
+      if (daysOfMonth.length === 0 && !!lastDay[0] === false) {
+        // 매월을 선택하고 일자 / 마지막 날을 아무 것도 선택하지 않은 경우
+        return;
+      }
 
       repeatPattern = {
         repeatType,
@@ -157,7 +168,7 @@ const DDuDuRepeatForm = ({
 
       setRepeatDDuDu(editRepeatDDuDu);
 
-      if (goalId) {
+      if (Number(goalId)) {
         // 즉시 수정
         editRepeatDDuDuMutation.mutate({
           accessToken: session?.sessionToken as string,
@@ -168,16 +179,16 @@ const DDuDuRepeatForm = ({
     } else {
       setAddRepeatDDuDu(newRepeatDDuDu);
 
-      if (goalId) {
+      if (Number(goalId)) {
         // 즉시 생성
         createRepeatDDuDuMutation.mutate({
           accessToken: session?.sessionToken as string,
-          repeatDDuDuData: { ...requestRepeatDDuDu, goalId },
+          repeatDDuDuData: { ...requestRepeatDDuDu, goalId: Number(goalId) },
         });
       }
     }
 
-    if (!goalId) {
+    if (!Number(goalId)) {
       router.back();
     }
   };
@@ -219,6 +230,7 @@ const DDuDuRepeatForm = ({
                       name="repeatDaysOfWeek"
                       value={day}
                       checked={selectedDayOfWeekItems?.includes(day) ? true : false}
+                      options={{ required: true }}
                     >
                       {DAY_OF_WEEK_STRING[day]}
                     </CheckboxInput>
