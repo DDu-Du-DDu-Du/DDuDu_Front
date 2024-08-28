@@ -1,10 +1,10 @@
 "use client";
 
-import { Fragment, useCallback, useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
 import { Button, ColorSheet, PrivacySheet, SelectUiDiv, TextInput } from "@/app/_components/client";
-import { ArrowRightIcon, GoalTodoListItem } from "@/app/_components/server";
+import { ArrowRightIcon } from "@/app/_components/server";
 import {
   fetchCreateGoal,
   fetchDeleteGoal,
@@ -16,7 +16,7 @@ import { RepeatDduduRequestType } from "@/app/_types/request/repeatDdudu/repeatD
 import { GoalPrivacyType, RepeatDdudusType } from "@/app/_types/response/goal/goal";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { DAY_OF_WEEK_STRING } from "../../../../[id]/repeat/components/DDuDuRepeatForm/DDuDuRepeatForm.constants";
+import DDuDuRepeatList from "../DDuDuRepeatList/DDuDuRepeatList";
 import { PRIVACY_TYPE } from "./GoalEditorForm.constants";
 import { useColorToggle, useGoalPrivacyToggle } from "./hooks";
 
@@ -254,26 +254,10 @@ const GoalEditorForm = ({
                   />
                 </div>
               </div>
-              <ul className="flex flex-col max-h-[19rem] gap-[0.8rem] mt-[1rem] overflow-y-auto scrollbar-hide">
-                {repeatDDuDu?.map(({ id, name, repeatPattern, startDate, endDate }) => (
-                  <Fragment key={id}>
-                    <GoalTodoListItem
-                      id={id}
-                      title={name}
-                      repeatDays={
-                        (repeatPattern.repeatType === "WEEKLY"
-                          ? repeatPattern.repeatDaysOfWeek
-                              ?.map((weekDay) => DAY_OF_WEEK_STRING[weekDay])
-                              .join(" ")
-                          : repeatPattern.repeatDaysOfMonth?.join(" ")) || "매일"
-                      }
-                      startDate={startDate}
-                      endDate={endDate}
-                      goalId={goalId}
-                    />
-                  </Fragment>
-                ))}
-              </ul>
+              <DDuDuRepeatList
+                repeatDDuDu={repeatDDuDu}
+                goalId={goalId}
+              />
             </li>
           )}
 
