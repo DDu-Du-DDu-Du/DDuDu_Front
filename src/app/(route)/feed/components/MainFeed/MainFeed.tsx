@@ -1,18 +1,34 @@
+"use client";
+
 import { Fragment } from "react";
 
 import { FeedCalender } from "@/app/_components/client/Calender";
 import { MonthlyGoalsType } from "@/app/_components/client/Calender/FeedCalender/FeedCalender";
+import { getDailyList } from "@/app/_services/client";
+import { useQuery } from "@tanstack/react-query";
 
 import { MainGoalItem } from "..";
 import { MainDailyListType } from "../../feed.types";
 
+import { useSession } from "next-auth/react";
+
 interface MainFeedProps {
-  dailyList: MainDailyListType[];
   monthlyGoals: MonthlyGoalsType[];
-  selectedDDuDu?: string;
+  selectedDDuDu: string;
 }
 
-const MainFeed = ({ dailyList, monthlyGoals, selectedDDuDu }: MainFeedProps) => {
+const MainFeed = ({ monthlyGoals, selectedDDuDu }: MainFeedProps) => {
+  const { data: session } = useSession();
+  const { data: dailyList } = useQuery<MainDailyListType[]>({
+    queryKey: ["dailyList", selectedDDuDu],
+    queryFn: () =>
+      getDailyList({
+        accessToken: session?.sessionToken as string,
+        userId: session?.user.userId as number,
+        date: selectedDDuDu,
+      }),
+  });
+
   return (
     <>
       <FeedCalender
