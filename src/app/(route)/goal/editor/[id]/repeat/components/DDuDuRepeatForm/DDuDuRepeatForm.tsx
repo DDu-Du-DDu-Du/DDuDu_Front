@@ -193,6 +193,16 @@ const DDuDuRepeatForm = ({
     }
   };
 
+  const handleRepeatDDuDuDelete = () => {
+    if (goalId === "create") {
+      const updateRepeatDDuDu = repeatDDuDu.filter((ddudu) => ddudu.id !== Number(repeatId));
+      setRepeatDDuDu(updateRepeatDDuDu);
+      router.replace("/goal/editor");
+    } else {
+      // repeatDDuDu DELETE API호출
+    }
+  };
+
   return (
     <FormProvider {...methods}>
       <form
@@ -292,6 +302,16 @@ const DDuDuRepeatForm = ({
               <p className="mt-[0.5rem] text-example_red_500">{errors.endAt.message}</p>
             )}
           </li>
+          {repeatId && (
+            <li>
+              <Button
+                className="w-full h-[4rem] text-size13 font-medium bg-example_gray_100 rounded-radius10"
+                onClick={handleRepeatDDuDuDelete}
+              >
+                반복 삭제하기
+              </Button>
+            </li>
+          )}
         </ul>
         <Button
           className="w-full h-[5.6rem] mb-[3rem] text-size15 font-medium bg-example_gray_700 rounded-radius15"
