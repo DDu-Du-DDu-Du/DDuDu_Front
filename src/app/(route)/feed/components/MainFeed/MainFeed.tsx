@@ -56,6 +56,7 @@ const MainFeed = ({ monthlyGoals, selectedDDuDu }: MainFeedProps) => {
             <MainGoalItem
               goal={goal}
               ddudus={ddudus}
+              selectedDDuDu={selectedDDuDu}
             />
           </Fragment>
         ))}

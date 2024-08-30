@@ -4,19 +4,18 @@ import { MainDDuDusType } from "@/app/(route)/feed/feed.types";
 import { OptionIcon } from "@/app/_components/server/icons";
 import { useClickAway } from "@/app/_hooks";
 import { fetchCreateDDuDu, fetchEditDDuDu } from "@/app/_services/client";
-import formatDateToYYYYMMDD from "@/app/_utils/formatDateToYYYYMMDD/formatDateToYYYYMMDD";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { useSession } from "next-auth/react";
 
-interface MainDDuDuInput {
+interface MainDDuDuInputProps {
   type?: "create" | "edit";
   goalId: number;
   color: string;
   dduduItem?: MainDDuDusType;
+  selectedDDuDu: string;
   onCloseDDuDuInput: (event?: MouseEvent | TouchEvent) => void;
-  onCreateDDuDu?: ({ id, ddudu }: { id: number; ddudu: string }) => void;
-  onEditDDuDu?: (ddudu: MainDDuDusType) => void;
+  onEditDDuDu?: () => void;
 }
 
 interface DDuDuInputType {
@@ -28,42 +27,43 @@ const MainDDuDuInput = ({
   goalId,
   color,
   dduduItem,
+  selectedDDuDu,
   onCloseDDuDuInput,
-  onCreateDDuDu,
   onEditDDuDu,
-}: MainDDuDuInput) => {
-  const { handleSubmit, register, reset, getValues } = useForm<DDuDuInputType>();
+}: MainDDuDuInputProps) => {
+  const { handleSubmit, register, reset } = useForm<DDuDuInputType>();
   const { data: session } = useSession();
 
-  const onCreateSuccess = ({ id }: { id: number }) => {
-    const ddudu = getValues("ddudu");
-    onCreateDDuDu && onCreateDDuDu({ id, ddudu });
+  const queryClient = useQueryClient();
+
+  const onUpdateSuccess = () => {
     reset();
+    queryClient.refetchQueries({ queryKey: ["dailyList", selectedDDuDu] });
+    queryClient.refetchQueries({ queryKey: ["monthlyDDuDus"] });
   };
 
   const createDDuDuMutation = useMutation({
     mutationKey: ["dduduCreate"],
     mutationFn: fetchCreateDDuDu,
-    onSuccess: onCreateSuccess,
+    onSuccess: onUpdateSuccess,
   });
 
   const editDDuDuMutation = useMutation({
     mutationKey: ["dduduEdit"],
     mutationFn: fetchEditDDuDu,
+    onSuccess: onUpdateSuccess,
   });
 
   const dduduRef = useClickAway<HTMLLIElement>(onCloseDDuDuInput);
 
   const onValid: SubmitHandler<DDuDuInputType> = ({ ddudu }) => {
-    const nowDate = formatDateToYYYYMMDD(new Date());
-
     if (type === "create") {
       createDDuDuMutation.mutate({
         accessToken: session?.sessionToken as string,
         requestDDuDu: {
           goalId,
           name: ddudu,
-          scheduledOn: nowDate,
+          scheduledOn: selectedDDuDu,
         },
       });
     } else if (type === "edit" && dduduItem) {
@@ -73,13 +73,7 @@ const MainDDuDuInput = ({
         name: ddudu,
       });
 
-      const dduduData = {
-        id: dduduItem.id,
-        name: ddudu,
-        status: dduduItem.status,
-      };
-
-      onEditDDuDu && onEditDDuDu(dduduData);
+      onEditDDuDu && onEditDDuDu();
     }
   };
 
