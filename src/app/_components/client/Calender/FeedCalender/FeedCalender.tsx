@@ -4,8 +4,9 @@ import { FeedCalenderStyles } from "../Calender.styles";
 
 import { CaptionProps, DayContentProps, DayPicker } from "react-day-picker";
 
+import { MonthlyDDuDuType } from "@/app/_types/response/feed/feed";
+
 import { FeedCalenderDayContent, FeedCalenderHeader } from "./components";
-import { DAILY_DDUDU_MOCK_DATA_TYPE } from "./components/DailyDDuDu/DailyDDuDu.constant";
 
 import { ko } from "date-fns/locale/ko";
 import { usePathname, useSearchParams } from "next/navigation";
@@ -18,7 +19,7 @@ export interface MonthlyGoalsType {
 
 export interface FeedCalenderProps {
   monthlyGoals?: MonthlyGoalsType[];
-  monthlyDDuDus: DAILY_DDUDU_MOCK_DATA_TYPE;
+  monthlyDDuDus: MonthlyDDuDuType[];
   selectedDDuDu?: string;
 }
 
