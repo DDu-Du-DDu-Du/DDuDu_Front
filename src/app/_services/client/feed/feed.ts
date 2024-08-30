@@ -1,8 +1,14 @@
 import { fetchApi } from "@/app/_api";
 import { FEED } from "@/app/_constants";
 
-export const getDailyList = async (accessToken: string, userId: number, date: string) => {
-  const selectedDate = date ? `&date=${date}` : "";
+interface GetDailyListProps {
+  accessToken: string;
+  userId: number;
+  date: string;
+}
+
+export const getDailyList = async ({ accessToken, userId, date }: GetDailyListProps) => {
+  const selectedDate = `&date=${date}`;
 
   const response = await fetchApi(`${FEED.DAILY_LIST}?userId=${userId}${selectedDate}`, {
     method: "GET",
@@ -19,7 +25,12 @@ export const getDailyList = async (accessToken: string, userId: number, date: st
   return response.json();
 };
 
-export const getDailyTimeTable = async (accessToken: string, userId: number) => {
+interface GetDailyTimeTableProps {
+  accessToken: string;
+  userId: string;
+}
+
+export const getDailyTimeTable = async ({ accessToken, userId }: GetDailyTimeTableProps) => {
   const response = await fetchApi(`${FEED.DAILY_TIMETABLE}?userId=${userId}`, {
     method: "GET",
     headers: {
@@ -45,7 +56,25 @@ export const getMonthlyGoals = async ({ accessToken, type }: GetMonthlyGoalsProp
     method: "GET",
     headers: {
       accept: "application/json",
-      header: `Bearer ${accessToken}`,
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`HHTP error! status: ${response.status}`);
+  }
+
+  return response.json();
+};
+
+export const getMonthlyDDuDus = async ({ accessToken, userId, date }: GetDailyListProps) => {
+  const selectedDate = `&date=${date}`;
+
+  const response = await fetchApi(`${FEED.MONTHLY_DDUDUS}?userId=${userId}${selectedDate}`, {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${accessToken}`,
     },
   });
 
