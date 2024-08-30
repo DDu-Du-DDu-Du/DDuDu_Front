@@ -7,15 +7,18 @@ import { BottomSingleCalender } from "@/app/_components/client/Calender";
 import { GoalItem } from "@/app/_components/server";
 import { useToggle } from "@/app/_hooks";
 import { fetchCompleteToggleDDuDu, fetchDeleteDDuDu } from "@/app/_services/client";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { MainDDuDusType, MainDailyListType } from "../../feed.types";
+import { MainDailyListType } from "../../feed.types";
 import { MainDDuDuInput, MainDDuDuItem } from "./components";
 
 import { useSession } from "next-auth/react";
 
-const MainGoalList = ({ goal, ddudus }: MainDailyListType) => {
-  const [dduduList, setDDuDuList] = useState(ddudus);
+interface MainGoalItemProps extends MainDailyListType {
+  selectedDDuDu: string;
+}
+
+const MainGoalItem = ({ goal, ddudus, selectedDDuDu }: MainGoalItemProps) => {
   const [isCreateDDuDu, setIsCreateDDuDu] = useState(false);
   const [currentDDuDuId, setCurrentDDuDuId] = useState(-1);
   const [isDDuDuEdit, setIsDDuDuEdit] = useState(-1);
@@ -24,11 +27,7 @@ const MainGoalList = ({ goal, ddudus }: MainDailyListType) => {
 
   const { isToggle, handleToggleOn, handleToggleOff } = useToggle();
 
-  const {
-    isToggle: isAlarmSheetToggle,
-    handleToggleOn: handleAlarmSheetToggleOn,
-    // handleToggleOff: handleAlarmSheetToggleOff,
-  } = useToggle();
+  const { isToggle: isAlarmSheetToggle, handleToggleOn: handleAlarmSheetToggleOn } = useToggle();
 
   const {
     isToggle: isCalendarSheetToggle,
@@ -36,22 +35,29 @@ const MainGoalList = ({ goal, ddudus }: MainDailyListType) => {
     handleToggleOff: handleCalendarSheetToggleOff,
   } = useToggle();
 
+  const queryClient = useQueryClient();
   const { data: session } = useSession();
 
   const deleteDDuDuMutation = useMutation({
     mutationKey: ["deleteDDuDu"],
     mutationFn: fetchDeleteDDuDu,
+    onSuccess: (status) => {
+      if (status === 204) {
+        queryClient.refetchQueries({ queryKey: ["monthlyDDuDus"] });
+        queryClient.refetchQueries({ queryKey: ["dailyList", selectedDDuDu] });
+        handleToggleOff();
+      }
+    },
   });
 
   const completeToggleDDuDuMutation = useMutation({
     mutationKey: ["completeToggle"],
     mutationFn: fetchCompleteToggleDDuDu,
+    onSuccess: () => {
+      queryClient.refetchQueries({ queryKey: ["monthlyDDuDus"] });
+      queryClient.refetchQueries({ queryKey: ["dailyList", selectedDDuDu] });
+    },
   });
-
-  // const { data } = useQuery({
-  //   queryKey: [""],
-  //   queryFn: () => getDDuDuDetail({accessToken: session?.sessionToken as string, id}),
-  // });
 
   const onOpenDDuDuInput = () => {
     setIsCreateDDuDu(true);
@@ -63,19 +69,7 @@ const MainGoalList = ({ goal, ddudus }: MainDailyListType) => {
     setCurrentDDuDuId(-1);
   };
 
-  const onCreateDDuDu = ({ id, ddudu }: { id: number; ddudu: string }) => {
-    // 뚜두 생성 API
-    const newDDuDu: MainDDuDusType = { id, name: ddudu, status: "UNCOMPLETED" };
-    setDDuDuList([...dduduList, newDDuDu]);
-  };
-
-  const onEditDDuDu = (editDDuDu: MainDDuDusType) => {
-    // 뚜두 수정 API
-    const editedDDuDuList = dduduList.map((ddudu) =>
-      ddudu.id === editDDuDu.id ? editDDuDu : ddudu,
-    );
-
-    setDDuDuList(editedDDuDuList);
+  const onEditDDuDu = () => {
     onCloseDDuDuInput();
   };
 
@@ -84,14 +78,6 @@ const MainGoalList = ({ goal, ddudus }: MainDailyListType) => {
       accessToken: session?.sessionToken as string,
       id,
     });
-
-    const changeDDuDuList: MainDDuDusType[] = dduduList.map((ddudu) =>
-      ddudu.id === id
-        ? { ...ddudu, status: ddudu.status === "COMPLETE" ? "UNCOMPLETED" : "COMPLETE" }
-        : ddudu,
-    );
-
-    setDDuDuList(changeDDuDuList);
   };
 
   const handleDDuDuSheetOpen = (id: number) => {
@@ -104,16 +90,10 @@ const MainGoalList = ({ goal, ddudus }: MainDailyListType) => {
   };
 
   const handleDeleteDDuDuId = (id: number) => {
-    // 삭제 API 동작
     deleteDDuDuMutation.mutate({
       accessToken: session?.sessionToken as string,
       id,
     });
-
-    const deleteDDuDuList = dduduList.filter((ddudu) => ddudu.id !== id);
-    setDDuDuList(deleteDDuDuList);
-
-    handleToggleOff();
   };
 
   const handleSelectDifferentDate = () => {
@@ -139,7 +119,7 @@ const MainGoalList = ({ goal, ddudus }: MainDailyListType) => {
         onOpenDDuDuInput={onOpenDDuDuInput}
       />
       <ul className="flex flex-col gap-[1rem]">
-        {dduduList.map(({ id, name, status }) => (
+        {ddudus.map(({ id, name, status }) => (
           <Fragment key={id}>
             {id === isDDuDuEdit ? (
               <MainDDuDuInput
@@ -147,6 +127,7 @@ const MainGoalList = ({ goal, ddudus }: MainDailyListType) => {
                 goalId={goal.id}
                 color={goal.color}
                 dduduItem={{ id, name, status }}
+                selectedDDuDu={selectedDDuDu}
                 onEditDDuDu={onEditDDuDu}
                 onCloseDDuDuInput={onCloseDDuDuInput}
               />
@@ -166,8 +147,8 @@ const MainGoalList = ({ goal, ddudus }: MainDailyListType) => {
           <MainDDuDuInput
             goalId={goal.id}
             color={goal.color}
+            selectedDDuDu={selectedDDuDu}
             onCloseDDuDuInput={onCloseDDuDuInput}
-            onCreateDDuDu={onCreateDDuDu}
           />
         )}
       </ul>
@@ -193,4 +174,4 @@ const MainGoalList = ({ goal, ddudus }: MainDailyListType) => {
   );
 };
 
-export default MainGoalList;
+export default MainGoalItem;

@@ -35,10 +35,11 @@ export const DDuDuMenu = ({
   handleAlarmSetting,
 }: DDuDuMenuProps) => {
   const { data: session } = useSession();
+
   const { data: dduduDetail } = useQuery<DDuDuDetailType>({
-    queryKey: ["dduduDetail"],
+    queryKey: ["dduduDetail", dduduId],
     queryFn: () => getDDuDuDetail({ accessToken: session?.sessionToken as string, id: dduduId }),
-    enabled: !!session?.sessionToken,
+    enabled: !!session?.sessionToken && dduduId > -1,
   });
 
   if (!dduduDetail) {

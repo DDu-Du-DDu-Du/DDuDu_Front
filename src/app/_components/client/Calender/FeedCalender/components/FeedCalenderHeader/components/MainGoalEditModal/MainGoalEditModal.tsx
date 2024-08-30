@@ -8,7 +8,7 @@ import { MonthlyGoalsType } from "../../../../FeedCalender";
 
 export interface AlertModalProps {
   isToggle: boolean;
-  monthlyGoal?: MonthlyGoalsType[];
+  monthlyGoals?: MonthlyGoalsType[];
   handleToggleOff: () => void;
 }
 
@@ -20,7 +20,7 @@ interface GoalListInputType {
   goalEdit5?: string;
 }
 
-const MainGoalEditModal = ({ isToggle, monthlyGoal, handleToggleOff }: AlertModalProps) => {
+const MainGoalEditModal = ({ isToggle, monthlyGoals, handleToggleOff }: AlertModalProps) => {
   const { handleSubmit, reset } = useForm<GoalListInputType>();
 
   const handleUpdateGoal: SubmitHandler<GoalListInputType> = (data) => {
@@ -41,7 +41,7 @@ const MainGoalEditModal = ({ isToggle, monthlyGoal, handleToggleOff }: AlertModa
       <h3 className="mb-[2rem] pt-[2.4rem] text-size15 font-medium">목표 수정하기</h3>
       <form onSubmit={handleSubmit(handleUpdateGoal)}>
         <ul>
-          {monthlyGoal?.map(({ id, contents }) => (
+          {monthlyGoals?.map(({ id, contents }) => (
             <li key={id}>
               <input
                 type="text"
@@ -50,7 +50,7 @@ const MainGoalEditModal = ({ isToggle, monthlyGoal, handleToggleOff }: AlertModa
             </li>
           ))}
         </ul>
-        {monthlyGoal && monthlyGoal.length < 5 && <button type="button">목표 추가하기</button>}
+        {monthlyGoals && monthlyGoals.length < 5 && <button type="button">목표 추가하기</button>}
         <div className="flex px-[0.9rem] gap-[0.9rem]">
           <button
             type="submit"
