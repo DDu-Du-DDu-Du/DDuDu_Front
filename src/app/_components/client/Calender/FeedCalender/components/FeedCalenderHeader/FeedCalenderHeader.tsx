@@ -14,7 +14,12 @@ import { MainGoalEditModal } from "./components";
 
 import { useSession } from "next-auth/react";
 
-const FeedCalenderHeader = (props: CaptionProps, monthlyGoal?: MonthlyGoalsType[]) => {
+interface FeedCalenderHeaderProps {
+  props: CaptionProps;
+  monthlyGoals: MonthlyGoalsType[];
+}
+
+const FeedCalenderHeader = ({ props, monthlyGoals }: FeedCalenderHeaderProps) => {
   const { goToMonth, nextMonth, previousMonth } = useNavigation();
   const currentYear = props.displayMonth.getFullYear();
   const currentMonth = props.displayMonth.getMonth() + 1;
@@ -40,14 +45,14 @@ const FeedCalenderHeader = (props: CaptionProps, monthlyGoal?: MonthlyGoalsType[
 
   const MonthlyDDuDUs = async (type: "next" | "prev") => {
     const { year, month } = convertCurrentDate(type);
-    const currentYYYYMM = `${year}-${month < 10 ? "0" : ""}${month}`;
+    const currentDate = `${year}-${month < 10 ? "0" : ""}${month}`;
     return await queryClient.fetchQuery<MonthlyDDuDuType[]>({
       queryKey: ["monthlyDDuDus", year, month],
       queryFn: () =>
         getMonthlyDDuDus({
           accessToken: session?.sessionToken as string,
           userId: session?.user.userId as number,
-          date: currentYYYYMM,
+          date: currentDate,
         }),
     });
   };
@@ -89,9 +94,9 @@ const FeedCalenderHeader = (props: CaptionProps, monthlyGoal?: MonthlyGoalsType[
         className="bg-example_gray_100 w-full rounded-radius10 flex justify-start items-start p-[1.6rem] text-size11 mb-[1.5rem] cursor-pointer"
         onClick={handleToggleOn}
       >
-        {monthlyGoal ? (
+        {monthlyGoals ? (
           <ul className="flex flex-col gap-[0.8rem]">
-            {monthlyGoal.map(({ id, contents }) => (
+            {monthlyGoals.map(({ id, contents }) => (
               <li key={id}>{contents}</li>
             ))}
           </ul>
@@ -102,7 +107,7 @@ const FeedCalenderHeader = (props: CaptionProps, monthlyGoal?: MonthlyGoalsType[
       </article>
       <MainGoalEditModal
         isToggle={isToggle}
-        monthlyGoal={monthlyGoal}
+        monthlyGoals={monthlyGoals}
         handleToggleOff={handleToggleOff}
       />
     </header>

@@ -164,11 +164,13 @@ export const fetchDeleteDDuDu = async ({ accessToken, id }: FetchUpdateDDuDuProp
     },
   });
 
+  if (response.status === 204) {
+    return response.status;
+  }
+
   if (!response.ok) {
     throw new Error(`HHTP error! status: ${response.status}`);
   }
-
-  return response.json();
 };
 
 export const fetchCompleteToggleDDuDu = async ({ accessToken, id }: FetchUpdateDDuDuProps) => {
