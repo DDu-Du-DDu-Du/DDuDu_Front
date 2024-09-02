@@ -49,10 +49,13 @@ export const getDailyTimeTable = async ({ accessToken, userId }: GetDailyTimeTab
 interface GetMonthlyGoalsProps {
   accessToken: string;
   type: "WEEK" | "MONTH";
+  date: string;
 }
 
-export const getMonthlyGoals = async ({ accessToken, type }: GetMonthlyGoalsProps) => {
-  const response = await fetchApi(`${FEED.MONTHLY_GOALS}?type=${type}`, {
+export const getMonthlyGoals = async ({ accessToken, type, date }: GetMonthlyGoalsProps) => {
+  const selectedDate = `&date=${date}`;
+
+  const response = await fetchApi(`${FEED.MONTHLY_GOALS}?type=${type}${selectedDate}`, {
     method: "GET",
     headers: {
       accept: "application/json",

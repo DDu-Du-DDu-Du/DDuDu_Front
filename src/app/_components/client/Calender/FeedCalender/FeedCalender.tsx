@@ -18,7 +18,7 @@ export interface MonthlyGoalsType {
 }
 
 export interface FeedCalenderProps {
-  monthlyGoals: MonthlyGoalsType[];
+  monthlyGoals?: MonthlyGoalsType;
   monthlyDDuDus: MonthlyDDuDuType[];
   selectedDDuDu?: string;
 }
