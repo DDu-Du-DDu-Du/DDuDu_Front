@@ -1,6 +1,10 @@
 import { fetchApi } from "@/app/_api";
 import { FEED } from "@/app/_constants";
-import { RequestDDuDu, RequestPeriodGoals } from "@/app/_types/request/feed/feed";
+import {
+  RequestDDuDu,
+  RequestDDuDuChangeDate,
+  RequestPeriodGoals,
+} from "@/app/_types/request/feed/feed";
 
 interface GetDailyListProps {
   accessToken: string;
@@ -142,7 +146,7 @@ export const getMonthlyDDuDus = async ({ accessToken, userId, date }: GetDailyLi
 };
 
 export const getDDuDuDetail = async ({ accessToken, id }: FetchUpdateDDuDuProps) => {
-  const response = await fetchApi(`${FEED.DDUDU_DETAIL}/${id}`, {
+  const response = await fetchApi(`${FEED.DDUDU}/${id}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -163,7 +167,7 @@ interface FetchCreateDDuDuProps {
 }
 
 export const fetchCreateDDuDu = async ({ accessToken, requestDDuDu }: FetchCreateDDuDuProps) => {
-  const response = await fetchApi(`${FEED.CREATE_DDUDU}`, {
+  const response = await fetchApi(`${FEED.DDUDU}`, {
     method: "POST",
     body: JSON.stringify(requestDDuDu),
     headers: {
@@ -186,7 +190,7 @@ interface FetchEditDDuDuProps {
 }
 
 export const fetchEditDDuDu = async ({ accessToken, id, name }: FetchEditDDuDuProps) => {
-  const response = await fetchApi(`${FEED.EDIT_DDUDU}/${id}`, {
+  const response = await fetchApi(`${FEED.DDUDU}/${id}`, {
     method: "PUT",
     body: JSON.stringify({ name }),
     headers: {
@@ -208,7 +212,7 @@ interface FetchUpdateDDuDuProps {
 }
 
 export const fetchDeleteDDuDu = async ({ accessToken, id }: FetchUpdateDDuDuProps) => {
-  const response = await fetchApi(`${FEED.DELETE_DDUDU}/${id}`, {
+  const response = await fetchApi(`${FEED.DDUDU}/${id}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -226,7 +230,7 @@ export const fetchDeleteDDuDu = async ({ accessToken, id }: FetchUpdateDDuDuProp
 };
 
 export const fetchCompleteToggleDDuDu = async ({ accessToken, id }: FetchUpdateDDuDuProps) => {
-  const response = await fetchApi(`${FEED.COMPLETE_TOGGLE_DDUDU}/${id}/status`, {
+  const response = await fetchApi(`${FEED.DDUDU}/${id}/status`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
@@ -234,7 +238,39 @@ export const fetchCompleteToggleDDuDu = async ({ accessToken, id }: FetchUpdateD
     },
   });
 
-  if (!response.ok) {
+  if (response.status !== 204) {
     throw new Error(`HHTP error! status: ${response.status}`);
   }
+};
+
+interface fetchDDuDuChangeDateProps {
+  accessToken: string;
+  id: number;
+  date: string;
+}
+
+export const fetchDDuDuChangeDate = async ({
+  accessToken,
+  id,
+  date,
+}: fetchDDuDuChangeDateProps) => {
+  const changedDate: RequestDDuDuChangeDate = {
+    newDate: date,
+    isPostponed: true,
+  };
+
+  const response = await fetchApi(`${FEED.DDUDU}/${id}/date`, {
+    method: "PUT",
+    body: JSON.stringify(changedDate),
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  if (response.status !== 204) {
+    throw new Error(`HHTP error! status: ${response.status}`);
+  }
+
+  return response.status;
 };
