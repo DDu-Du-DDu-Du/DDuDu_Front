@@ -13,15 +13,7 @@ const FeedPage = async ({ searchParams }: FeedPageProps) => {
   return (
     <div className="py-[2.4rem] px-[2.4rem]">
       <MainHeader />
-      {view === "ddudu" && (
-        <MainFeed
-          monthlyGoals={[
-            { id: 0, contents: "테스트 1", type: "WEEK" },
-            { id: 1, contents: "테스트 2", type: "WEEK" },
-          ]}
-          selectedDDuDu={date}
-        />
-      )}
+      {view === "ddudu" && <MainFeed selectedDDuDu={date} />}
       {view === "schedule" && <MainSchedule dailyTimeTable={TIMETABLE_DDUDU_LIST} />}
     </div>
   );
