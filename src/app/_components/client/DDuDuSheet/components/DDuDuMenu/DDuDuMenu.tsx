@@ -19,8 +19,8 @@ interface DDuDuDetailType {
 
 interface DDuDuMenuProps {
   dduduId: number;
-  handleEditDDuDuId: (id: number) => void;
-  handleDeleteDDuDuId: (id: number) => void;
+  handleEditDDuDu: (id: number) => void;
+  handleDeleteDDuDu: (id: number) => void;
   onClose: () => void;
   handleSelectDifferentDate: () => void;
   handleAlarmSetting: () => void;
@@ -28,8 +28,8 @@ interface DDuDuMenuProps {
 
 export const DDuDuMenu = ({
   dduduId,
-  handleEditDDuDuId,
-  handleDeleteDDuDuId,
+  handleEditDDuDu,
+  handleDeleteDDuDu,
   onClose,
   handleSelectDifferentDate,
   handleAlarmSetting,
@@ -56,8 +56,8 @@ export const DDuDuMenu = ({
         dduduId={dduduId}
         isDDuDuDateNow={isDDuDuDateNow}
         status={status}
-        handleEditDDuDuId={handleEditDDuDuId}
-        handleDeleteDDuDuId={handleDeleteDDuDuId}
+        handleEditDDuDu={handleEditDDuDu}
+        handleDeleteDDuDu={handleDeleteDDuDu}
         onClose={onClose}
       />
       <DDuDuSubMenu
