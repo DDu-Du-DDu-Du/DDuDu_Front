@@ -85,11 +85,11 @@ const MainGoalItem = ({ goal, ddudus, selectedDDuDu }: MainGoalItemProps) => {
     handleToggleOn();
   };
 
-  const handleEditDDuDuId = (id: number) => {
+  const handleEditDDuDu = (id: number) => {
     setIsDDuDuEdit(id);
   };
 
-  const handleDeleteDDuDuId = (id: number) => {
+  const handleDeleteDDuDu = (id: number) => {
     deleteDDuDuMutation.mutate({
       accessToken: session?.sessionToken as string,
       id,
@@ -152,11 +152,12 @@ const MainGoalItem = ({ goal, ddudus, selectedDDuDu }: MainGoalItemProps) => {
           />
         )}
       </ul>
+
       {isToggle && (
         <DDuDuSheet
           dduduId={currentDDuDuId}
-          handleEditDDuDuId={handleEditDDuDuId}
-          handleDeleteDDuDuId={handleDeleteDDuDuId}
+          handleEditDDuDu={handleEditDDuDu}
+          handleDeleteDDuDu={handleDeleteDDuDu}
           onClose={handleToggleOff}
           handleSelectDifferentDate={handleSelectDifferentDate}
           handleAlarmSetting={handleAlarmSetting}

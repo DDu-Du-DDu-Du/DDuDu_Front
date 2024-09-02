@@ -5,8 +5,8 @@ interface DDuDuMainMenuProps {
   dduduId: number;
   isDDuDuDateNow: boolean;
   status: "COMPLETE" | "UNCOMPLETED";
-  handleEditDDuDuId: (id: number) => void;
-  handleDeleteDDuDuId: (id: number) => void;
+  handleEditDDuDu: (id: number) => void;
+  handleDeleteDDuDu: (id: number) => void;
   onClose: () => void;
 }
 
@@ -14,17 +14,17 @@ const DDuDuMainMenu = ({
   dduduId,
   isDDuDuDateNow,
   status,
-  handleEditDDuDuId,
-  handleDeleteDDuDuId,
+  handleEditDDuDu,
+  handleDeleteDDuDu,
   onClose,
 }: DDuDuMainMenuProps) => {
   const handleCurrentDDuDuEdit = () => {
-    handleEditDDuDuId(dduduId);
+    handleEditDDuDu(dduduId);
     onClose();
   };
 
   const handleCurrentDDuDuDelete = () => {
-    handleDeleteDDuDuId(dduduId);
+    handleDeleteDDuDu(dduduId);
   };
 
   return (
