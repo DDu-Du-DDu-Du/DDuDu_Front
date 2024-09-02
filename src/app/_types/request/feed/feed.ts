@@ -9,3 +9,8 @@ export interface RequestDDuDu {
   name: string;
   scheduledOn: string;
 }
+
+export interface RequestDDuDuChangeDate {
+  newDate: string;
+  isPostponed: boolean;
+}
