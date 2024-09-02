@@ -1,5 +1,6 @@
 import { fetchApi } from "@/app/_api";
 import { FEED } from "@/app/_constants";
+import { RequestDDuDu, RequestPeriodGoals } from "@/app/_types/request/feed/feed";
 
 interface GetDailyListProps {
   accessToken: string;
@@ -46,19 +47,71 @@ export const getDailyTimeTable = async ({ accessToken, userId }: GetDailyTimeTab
   return response.json();
 };
 
-interface GetMonthlyGoalsProps {
+interface PeriodGoalsProps {
   accessToken: string;
   type: "WEEK" | "MONTH";
   date: string;
 }
 
-export const getMonthlyGoals = async ({ accessToken, type, date }: GetMonthlyGoalsProps) => {
+export const getMonthlyGoals = async ({ accessToken, type, date }: PeriodGoalsProps) => {
   const selectedDate = `&date=${date}`;
 
-  const response = await fetchApi(`${FEED.MONTHLY_GOALS}?type=${type}${selectedDate}`, {
+  const response = await fetchApi(`${FEED.PERIOD_GOALS}?type=${type}${selectedDate}`, {
     method: "GET",
     headers: {
       accept: "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`HHTP error! status: ${response.status}`);
+  }
+
+  return response.json();
+};
+
+interface FetchCreateMonthlyGoalsProps {
+  accessToken: string;
+  periodGoals: RequestPeriodGoals;
+}
+
+export const fetchCreateMonthlyGoals = async ({
+  accessToken,
+  periodGoals,
+}: FetchCreateMonthlyGoalsProps) => {
+  const response = await fetchApi(`${FEED.PERIOD_GOALS}`, {
+    method: "POST",
+    body: JSON.stringify(periodGoals),
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`HHTP error! status: ${response.status}`);
+  }
+
+  return response.json();
+};
+
+interface FetchEditMonthlyGoalsProps {
+  accessToken: string;
+  contents: string;
+  periodGoalsId: number;
+}
+
+export const fetchEditMonthlyGoals = async ({
+  accessToken,
+  contents,
+  periodGoalsId,
+}: FetchEditMonthlyGoalsProps) => {
+  const response = await fetchApi(`${FEED.PERIOD_GOALS}/${periodGoalsId}`, {
+    method: "PUT",
+    body: JSON.stringify({ contents }),
+    headers: {
+      "Content-Type": "application/json",
       Authorization: `Bearer ${accessToken}`,
     },
   });
@@ -106,11 +159,7 @@ export const getDDuDuDetail = async ({ accessToken, id }: FetchUpdateDDuDuProps)
 
 interface FetchCreateDDuDuProps {
   accessToken: string;
-  requestDDuDu: {
-    goalId: number;
-    name: string;
-    scheduledOn: string;
-  };
+  requestDDuDu: RequestDDuDu;
 }
 
 export const fetchCreateDDuDu = async ({ accessToken, requestDDuDu }: FetchCreateDDuDuProps) => {
