@@ -4,7 +4,7 @@ import { Fragment, useMemo } from "react";
 
 import { FeedCalender } from "@/app/_components/client/Calender";
 import { MonthlyGoalsType } from "@/app/_components/client/Calender/FeedCalender/FeedCalender";
-import { getDailyList, getMonthlyDDuDus } from "@/app/_services/client";
+import { getDailyList, getMonthlyDDuDus, getMonthlyGoals } from "@/app/_services/client";
 import { MonthlyDDuDuType } from "@/app/_types/response/feed/feed";
 import { useQuery } from "@tanstack/react-query";
 
@@ -14,11 +14,10 @@ import { MainDailyListType } from "../../feed.types";
 import { useSession } from "next-auth/react";
 
 interface MainFeedProps {
-  monthlyGoals: MonthlyGoalsType[];
   selectedDDuDu: string;
 }
 
-const MainFeed = ({ monthlyGoals, selectedDDuDu }: MainFeedProps) => {
+const MainFeed = ({ selectedDDuDu }: MainFeedProps) => {
   const selectedDate = useMemo(() => {
     return selectedDDuDu.slice(0, 7);
   }, [selectedDDuDu]);
@@ -40,6 +39,16 @@ const MainFeed = ({ monthlyGoals, selectedDDuDu }: MainFeedProps) => {
         accessToken: session?.sessionToken as string,
         userId: session?.user.userId as number,
         date: selectedDate,
+      }),
+  });
+
+  const { data: monthlyGoals } = useQuery<MonthlyGoalsType>({
+    queryKey: ["monthlyGoals"],
+    queryFn: () =>
+      getMonthlyGoals({
+        accessToken: session?.sessionToken as string,
+        type: "MONTH",
+        date: selectedDDuDu,
       }),
   });
 
