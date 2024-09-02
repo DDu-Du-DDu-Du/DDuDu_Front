@@ -1,19 +1,29 @@
 "use client";
 
+import { useMemo } from "react";
 import { CaptionProps, useNavigation } from "react-day-picker";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 import ChevronLeftIcon from "@/app/_components/server/icons/ChevronLeftIcon/ChevronLeftIcon";
 import ChevronRightIcon from "@/app/_components/server/icons/ChevronRightIcon/ChevronRightIcon";
-import { useToggle } from "@/app/_hooks";
-import { getMonthlyDDuDus, getMonthlyGoals } from "@/app/_services/client";
+import { useClickAway, useToggle } from "@/app/_hooks";
+import {
+  fetchCreateMonthlyGoals,
+  fetchEditMonthlyGoals,
+  getMonthlyDDuDus,
+  getMonthlyGoals,
+} from "@/app/_services/client";
+import { RequestPeriodGoals } from "@/app/_types/request/feed/feed";
 import { MonthlyDDuDuType } from "@/app/_types/response/feed/feed";
-import { useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { MonthlyGoalsType } from "../../FeedCalender";
 
-// import { MainGoalEditModal } from "./components";
 import { useSession } from "next-auth/react";
+
+interface MonthlyGoalsFormInfo {
+  contents: string;
+}
 
 interface FeedCalenderHeaderProps {
   props: CaptionProps;
@@ -22,6 +32,10 @@ interface FeedCalenderHeaderProps {
 
 const FeedCalenderHeader = ({ props, monthlyGoals }: FeedCalenderHeaderProps) => {
   const { goToMonth, nextMonth, previousMonth } = useNavigation();
+  const monthlyGoalList = useMemo(
+    () => monthlyGoals?.contents?.split("\n"),
+    [monthlyGoals?.contents],
+  );
   const currentYear = props.displayMonth.getFullYear();
   const currentMonth = props.displayMonth.getMonth() + 1;
 
@@ -40,14 +54,14 @@ const FeedCalenderHeader = ({ props, monthlyGoals }: FeedCalenderHeaderProps) =>
     return { year, month };
   };
 
-  const methods = useForm();
+  const methods = useForm<MonthlyGoalsFormInfo>();
 
   const { data: session } = useSession();
   const queryClient = useQueryClient();
-  const { isToggle, handleToggleOn } = useToggle();
+  const { isToggle, handleToggleOn, handleToggleOff } = useToggle();
+  const monthlyGoalsRef = useClickAway<HTMLSelectElement>(handleToggleOff);
 
-  const MonthlyDDuDUs = async (type: "next" | "prev") => {
-    const { year, month } = convertCurrentDate(type);
+  const MonthlyDDuDUs = async (year: number, month: number) => {
     const currentDate = `${year}-${month < 10 ? "0" : ""}${month}`;
     return await queryClient.fetchQuery<MonthlyDDuDuType[]>({
       queryKey: ["monthlyDDuDus", year, month],
@@ -60,10 +74,9 @@ const FeedCalenderHeader = ({ props, monthlyGoals }: FeedCalenderHeaderProps) =>
     });
   };
 
-  const MonthlyGoals = async (type: "next" | "prev") => {
-    const { year, month } = convertCurrentDate(type);
+  const MonthlyGoals = async (year: number, month: number) => {
     const currentDate = `${year}-${month < 10 ? "0" : ""}${month}-01`;
-    return await queryClient.fetchQuery<MonthlyGoalsType[]>({
+    return await queryClient.fetchQuery<MonthlyGoalsType>({
       queryKey: ["monthlyGoals", year, month],
       queryFn: () =>
         getMonthlyGoals({
@@ -74,21 +87,44 @@ const FeedCalenderHeader = ({ props, monthlyGoals }: FeedCalenderHeaderProps) =>
     });
   };
 
+  const onMonthlyGoalsSuccess = async () => {
+    queryClient.invalidateQueries({ queryKey: ["monthlyGoals", currentYear, currentMonth] });
+    const updateMonthlyGoals = await MonthlyGoals(currentYear, currentMonth);
+    queryClient.setQueryData(["monthlyGoals"], () => updateMonthlyGoals);
+    handleToggleOff();
+  };
+
+  const createMonthlyGoalsMutation = useMutation({
+    mutationKey: ["create", "monthlyGoals"],
+    mutationFn: fetchCreateMonthlyGoals,
+    onSuccess: onMonthlyGoalsSuccess,
+  });
+
+  const editMonthlyGoalsMutation = useMutation({
+    mutationKey: ["edit", "monthlyGoals"],
+    mutationFn: fetchEditMonthlyGoals,
+    onSuccess: onMonthlyGoalsSuccess,
+  });
+
   const handleNextToMonth = async () => {
+    const { year, month } = convertCurrentDate("next");
+
     nextMonth && goToMonth(nextMonth);
-    const newMonthlyDDuDus = await MonthlyDDuDUs("next");
+    const newMonthlyDDuDus = await MonthlyDDuDUs(year, month);
     queryClient.setQueryData(["monthlyDDuDus"], () => newMonthlyDDuDus);
 
-    const newMonthlyGoals = await MonthlyGoals("next");
+    const newMonthlyGoals = await MonthlyGoals(year, month);
     queryClient.setQueryData(["monthlyGoals"], () => newMonthlyGoals);
   };
 
   const handlePrevToMonth = async () => {
+    const { year, month } = convertCurrentDate("prev");
+
     previousMonth && goToMonth(previousMonth);
-    const newMonthlyDDuDus = await MonthlyDDuDUs("prev");
+    const newMonthlyDDuDus = await MonthlyDDuDUs(year, month);
     queryClient.setQueryData(["monthlyDDuDus"], () => newMonthlyDDuDus);
 
-    const newMonthlyGoals = await MonthlyGoals("prev");
+    const newMonthlyGoals = await MonthlyGoals(year, month);
     queryClient.setQueryData(["monthlyGoals"], () => newMonthlyGoals);
   };
 
@@ -96,7 +132,26 @@ const FeedCalenderHeader = ({ props, monthlyGoals }: FeedCalenderHeaderProps) =>
     handleToggleOn();
   };
 
-  const onValid = () => {};
+  const onValid: SubmitHandler<MonthlyGoalsFormInfo> = ({ contents }) => {
+    if (!monthlyGoalList) {
+      const periodGoals: RequestPeriodGoals = {
+        contents,
+        type: "MONTH",
+        planDate: `${currentYear}-${currentMonth < 10 ? "0" : ""}${currentMonth}-01`,
+      };
+
+      createMonthlyGoalsMutation.mutate({
+        accessToken: session?.sessionToken as string,
+        periodGoals,
+      });
+    } else if (monthlyGoals && monthlyGoals.id) {
+      editMonthlyGoalsMutation.mutate({
+        accessToken: session?.sessionToken as string,
+        contents,
+        periodGoalsId: monthlyGoals.id,
+      });
+    }
+  };
 
   return (
     <header className="flex flex-col items-center px-4 py-2">
@@ -119,43 +174,52 @@ const FeedCalenderHeader = ({ props, monthlyGoals }: FeedCalenderHeaderProps) =>
           </button>
         </article>
       </section>
-      {isToggle === false && (
-        <article
-          className="bg-example_gray_100 w-full rounded-radius10 flex justify-start items-start p-[1.6rem] text-size11 mb-[1.5rem] cursor-pointer"
-          onClick={handleMonthlyGoalUpdate}
-        >
-          {monthlyGoals?.contents ? (
-            <p className="w-full text-left text-example_black_500">{monthlyGoals.contents}</p>
-          ) : (
-            // TODO: 추후 디자인, 로직 수정
-            <p className="w-full text-left text-example_gray_700">월 별 목표를 설정해 보세요!</p>
-          )}
-        </article>
-      )}
-      {isToggle && (
-        <form
-          className="flex justify-end flex-wrap bg-example_gray_100 w-full rounded-radius10 p-[1.6rem] text-size11 mb-[1.5rem] cursor-pointer"
-          onSubmit={methods.handleSubmit(onValid)}
-        >
-          <textarea
-            className="w-[100%] bg-transparent outline-none resize-none"
-            defaultValue={monthlyGoals?.contents || ""}
-            {...methods.register("content", { required: true })}
-            autoFocus
-          />
-          <button
-            className="flex justify-end bg-example_gray_800 text-white_100 rounded-radius5 p-[0.5rem]"
-            type="submit"
+      <section
+        className="bg-example_gray_100 w-full rounded-radius10 text-size11 mb-[1.5rem] cursor-pointer"
+        ref={monthlyGoalsRef}
+      >
+        {isToggle === false && (
+          <article
+            className="size-[100%] p-[1.6rem]"
+            onClick={handleMonthlyGoalUpdate}
           >
-            목표 설정
-          </button>
-        </form>
-      )}
-      {/* <MainGoalEditModal
-        isToggle={isToggle}
-        monthlyGoals={monthlyGoals}
-        handleToggleOff={handleToggleOff}
-      /> */}
+            {monthlyGoalList?.length ? (
+              <ul>
+                {monthlyGoalList.map((goal) => (
+                  <li
+                    key={goal}
+                    className="w-full text-left text-example_black_500"
+                  >
+                    {goal}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              // TODO: 추후 디자인, 로직 수정
+              <p className="w-full text-left text-example_gray_700">월 별 목표를 설정해 보세요!</p>
+            )}
+          </article>
+        )}
+        {isToggle && (
+          <form
+            className="flex justify-end flex-wrap p-[1.6rem]"
+            onSubmit={methods.handleSubmit(onValid)}
+          >
+            <textarea
+              className="w-[100%] bg-transparent outline-none resize-none"
+              defaultValue={monthlyGoals?.contents || ""}
+              {...methods.register("contents", { required: true })}
+              autoFocus
+            />
+            <button
+              className="flex justify-end bg-example_gray_800 text-white_100 rounded-radius5 p-[0.5rem]"
+              type="submit"
+            >
+              목표 설정
+            </button>
+          </form>
+        )}
+      </section>
     </header>
   );
 };
