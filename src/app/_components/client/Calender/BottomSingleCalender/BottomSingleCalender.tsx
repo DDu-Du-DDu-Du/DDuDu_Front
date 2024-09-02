@@ -12,18 +12,25 @@ import { BottomSheet } from "../../BottomSheet";
 import { ko } from "date-fns/locale/ko";
 
 export interface BottomSingleCalenderProps {
-  selected: Date | undefined;
-  setSelected: (dates: Date | undefined) => void;
+  selectedDate: Date | undefined;
+  setSelected: (date: Date | undefined) => void;
+  onChangeDDuDuDate: (selectedDate: Date) => void;
   handleCalendarSheetToggleOff: () => void;
 }
 
 const BottomSingleCalender = ({
-  selected,
+  selectedDate,
   setSelected,
+  onChangeDDuDuDate,
   handleCalendarSheetToggleOff,
 }: BottomSingleCalenderProps) => {
   const handleSelectedDate = () => {
-    handleCalendarSheetToggleOff();
+    if (!selectedDate) {
+      handleCalendarSheetToggleOff();
+      return;
+    }
+
+    onChangeDDuDuDate(selectedDate);
   };
 
   return (
@@ -36,7 +43,7 @@ const BottomSingleCalender = ({
         locale={ko}
         fixedWeeks
         mode={"single"}
-        selected={selected}
+        selected={selectedDate}
         onSelect={setSelected}
         className="w-full pb-[1.5rem] px-[2.4rem]"
         classNames={BottomSheetCalenderStyles}

@@ -6,7 +6,12 @@ import { AlarmSheet, DDuDuSheet } from "@/app/_components/client";
 import { BottomSingleCalender } from "@/app/_components/client/Calender";
 import { GoalItem } from "@/app/_components/server";
 import { useToggle } from "@/app/_hooks";
-import { fetchCompleteToggleDDuDu, fetchDeleteDDuDu } from "@/app/_services/client";
+import {
+  fetchCompleteToggleDDuDu,
+  fetchDDuDuChangeDate,
+  fetchDeleteDDuDu,
+} from "@/app/_services/client";
+import { formatDateToYYYYMMDD } from "@/app/_utils";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { MainDailyListType } from "../../feed.types";
@@ -59,6 +64,25 @@ const MainGoalItem = ({ goal, ddudus, selectedDDuDu }: MainGoalItemProps) => {
     },
   });
 
+  const dduduChangeDateMutation = useMutation({
+    mutationKey: ["dduduChangeDate"],
+    mutationFn: fetchDDuDuChangeDate,
+    onSuccess: (status) => {
+      if (status === 204) {
+        queryClient.invalidateQueries({
+          queryKey: ["dailyList"],
+        });
+        queryClient.refetchQueries({
+          queryKey: ["dailyList"],
+        });
+        queryClient.refetchQueries({ queryKey: ["monthlyDDuDus"] });
+
+        setSelectedDate(undefined);
+        handleCalendarSheetToggleOff();
+      }
+    },
+  });
+
   const onOpenDDuDuInput = () => {
     setIsCreateDDuDu(true);
   };
@@ -108,6 +132,14 @@ const MainGoalItem = ({ goal, ddudus, selectedDDuDu }: MainGoalItemProps) => {
 
   const handleSelectedDate = (selectedDate: Date | undefined) => {
     setSelectedDate(selectedDate);
+  };
+
+  const onChangeDDuDuDate = (selectedDate: Date) => {
+    dduduChangeDateMutation.mutate({
+      accessToken: session?.sessionToken as string,
+      id: currentDDuDuId,
+      date: formatDateToYYYYMMDD(selectedDate),
+    });
   };
 
   return (
@@ -166,8 +198,9 @@ const MainGoalItem = ({ goal, ddudus, selectedDDuDu }: MainGoalItemProps) => {
       {isAlarmSheetToggle && <AlarmSheet />}
       {isCalendarSheetToggle && (
         <BottomSingleCalender
-          selected={selectedDate}
+          selectedDate={selectedDate}
           setSelected={handleSelectedDate}
+          onChangeDDuDuDate={onChangeDDuDuDate}
           handleCalendarSheetToggleOff={handleCalendarSheetToggleOff}
         />
       )}
