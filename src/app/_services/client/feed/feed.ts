@@ -1,3 +1,4 @@
+import { DDuDuTimeType } from "@/app/(route)/feed/feed.types";
 import { fetchApi } from "@/app/_api";
 import { FEED } from "@/app/_constants";
 import {
@@ -243,17 +244,13 @@ export const fetchCompleteToggleDDuDu = async ({ accessToken, id }: FetchUpdateD
   }
 };
 
-interface fetchDDuDuChangeDateProps {
+interface fetchDDuDuDateProps {
   accessToken: string;
   id: number;
   date: string;
 }
 
-export const fetchDDuDuChangeDate = async ({
-  accessToken,
-  id,
-  date,
-}: fetchDDuDuChangeDateProps) => {
+export const fetchDDuDuChangeDate = async ({ accessToken, id, date }: fetchDDuDuDateProps) => {
   const changedDate: RequestDDuDuChangeDate = {
     newDate: date,
     isPostponed: true,
@@ -262,6 +259,50 @@ export const fetchDDuDuChangeDate = async ({
   const response = await fetchApi(`${FEED.DDUDU}/${id}/date`, {
     method: "PUT",
     body: JSON.stringify(changedDate),
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  if (response.status !== 204) {
+    throw new Error(`HHTP error! status: ${response.status}`);
+  }
+
+  return response.status;
+};
+
+export const fetchDDuDuRepeatDate = async ({ accessToken, id, date }: fetchDDuDuDateProps) => {
+  const response = await fetchApi(`${FEED.DDUDU}/${id}/repeat`, {
+    method: "POST",
+    body: JSON.stringify({ repeatOn: date }),
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`HHTP error! status: ${response.status}`);
+  }
+
+  return response.json();
+};
+
+interface FetchDDuDUChangeTimeProps {
+  accessToken: string;
+  time: DDuDuTimeType;
+  id: number;
+}
+
+export const fetchDDuDuChangeTime = async ({
+  accessToken,
+  time,
+  id,
+}: FetchDDuDUChangeTimeProps) => {
+  const response = await fetchApi(`${FEED.DDUDU}/${id}/period`, {
+    method: "PUT",
+    body: JSON.stringify(time),
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${accessToken}`,
