@@ -11,11 +11,17 @@ import { BottomSheet } from "../BottomSheet";
 interface DDuDuTimeSheetProps {
   currentDDuDuTime: DDuDuTimeType;
   onChangeDDuDUTime: (selectedTime: DDuDUTimeRangeType) => void;
+  handleDDuDuTimeSheetToggleOff: () => void;
 }
 
-const DDuDuTimeSheet = ({ currentDDuDuTime, onChangeDDuDUTime }: DDuDuTimeSheetProps) => {
+const DDuDuTimeSheet = ({
+  currentDDuDuTime,
+  onChangeDDuDUTime,
+  handleDDuDuTimeSheetToggleOff,
+}: DDuDuTimeSheetProps) => {
   const { beginAt, endAt } = currentDDuDuTime;
 
+  const [isErrorMessage, setIsErrorMessage] = useState(false);
   const [beginHour, setBeginHour] = useState(0);
   const [beginMin, setBeginMin] = useState(0);
   const [endHour, setEndHour] = useState(0);
@@ -40,10 +46,11 @@ const DDuDuTimeSheet = ({ currentDDuDuTime, onChangeDDuDUTime }: DDuDuTimeSheetP
     const endTime = endHour * 60 + endMin;
 
     if (beginTime > endTime) {
-      console.log("시작 시간이 종료 시간 보다 작을 수 없습니다.");
+      setIsErrorMessage(true);
       return;
     }
 
+    setIsErrorMessage(false);
     onChangeDDuDUTime({ beginHour, beginMin, endHour, endMin });
   };
 
@@ -65,6 +72,7 @@ const DDuDuTimeSheet = ({ currentDDuDuTime, onChangeDDuDUTime }: DDuDuTimeSheetP
       isShow
       defaultHeight={"fit-content"}
       maxHeight={"fit-content"}
+      onClose={handleDDuDuTimeSheetToggleOff}
     >
       <div className="flex flex-col p-[2.4rem]">
         <div className="flex-1">
@@ -153,6 +161,9 @@ const DDuDuTimeSheet = ({ currentDDuDuTime, onChangeDDuDUTime }: DDuDuTimeSheetP
               </div>
             </div>
           </div>
+          {isErrorMessage && (
+            <p className="text-example_red_500">종료 시간이 시작 시간 보다 작을 수 없습니다.</p>
+          )}
           <button
             onClick={handleDDuDuTimeChange}
             className="w-full h-[5.6rem] bg-example_gray_700 rounded-radius15 mt-[2rem]"
