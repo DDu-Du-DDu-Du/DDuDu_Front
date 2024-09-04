@@ -29,3 +29,15 @@ export type MainTimeTableType = {
     goalId: number;
   }[];
 };
+
+export interface DDuDuTimeType {
+  beginAt: string;
+  endAt: string;
+}
+
+export interface DDuDUTimeRangeType {
+  beginHour: number;
+  beginMin: number;
+  endHour: number;
+  endMin: number;
+}
