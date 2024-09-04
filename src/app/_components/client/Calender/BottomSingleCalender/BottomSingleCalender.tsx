@@ -40,6 +40,7 @@ const BottomSingleCalender = ({
     <BottomSheet
       maxHeight={"fit-content"}
       defaultHeight={"fit-content"}
+      onClose={handleCalendarSheetToggleOff}
       isShow
     >
       <DayPicker
