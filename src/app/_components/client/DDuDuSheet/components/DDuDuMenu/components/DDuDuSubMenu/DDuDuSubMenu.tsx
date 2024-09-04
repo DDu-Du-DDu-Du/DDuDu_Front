@@ -1,19 +1,38 @@
 import { SheetButton } from "@/app/_components/client";
 import { ExampleIcon } from "@/app/_components/server";
+import { formatDateToYYYYMMDD } from "@/app/_utils";
+
+import { DDuDuDetailType } from "../../DDuDuMenu";
 
 interface DDuDuSubMenuProps {
-  isDDuDuDateNow: boolean;
-  status: "COMPLETE" | "UNCOMPLETED";
-  handleSelectDifferentDate: () => void;
+  dduduDetail: DDuDuDetailType;
+  handleSelectDifferentDate: (type: "change" | "repeat", currentDate: string) => void;
   handleAlarmSetting: () => void;
+  handleRepeatCurrentDate: () => void;
 }
 
 const DDuDuSubMenu = ({
-  isDDuDuDateNow,
-  status,
+  dduduDetail,
   handleSelectDifferentDate,
   handleAlarmSetting,
+  handleRepeatCurrentDate,
 }: DDuDuSubMenuProps) => {
+  const { scheduledOn, status } = dduduDetail;
+
+  const isDDuDuDateNow = formatDateToYYYYMMDD(new Date()) === scheduledOn;
+
+  const handleRepeatDDuDuCurrentDate = () => {
+    handleRepeatCurrentDate();
+  };
+
+  const handleChangeDDuDuDate = () => {
+    handleSelectDifferentDate("change", scheduledOn);
+  };
+
+  const handleRepeatDDuDuDate = () => {
+    handleSelectDifferentDate("repeat", scheduledOn);
+  };
+
   return (
     <div className="flex w-full max-w-[50rem] flex-col gap-[1.6rem]">
       {status === "COMPLETE" && (
@@ -23,18 +42,19 @@ const DDuDuSubMenu = ({
             title="오늘 또 하기"
             buttonType="sub"
             rightPlace={<p>5 일전</p>}
+            onClick={handleRepeatDDuDuCurrentDate}
           />
           <SheetButton
             Icon={<ExampleIcon />}
             title="다른날 또 하기"
             buttonType="sub"
-            onClick={handleSelectDifferentDate}
+            onClick={handleRepeatDDuDuDate}
           />
           <SheetButton
             Icon={<ExampleIcon />}
             title="날짜 바꾸기"
             buttonType="sub"
-            onClick={handleSelectDifferentDate}
+            onClick={handleChangeDDuDuDate}
           />
         </>
       )}
@@ -51,7 +71,7 @@ const DDuDuSubMenu = ({
             Icon={<ExampleIcon />}
             title="미루기"
             buttonType="sub"
-            onClick={handleSelectDifferentDate}
+            onClick={handleChangeDDuDuDate}
           />
         </>
       )}
@@ -61,6 +81,7 @@ const DDuDuSubMenu = ({
           title="오늘 다시 하기"
           buttonType="sub"
           rightPlace={<p>5 일전</p>}
+          onClick={handleRepeatDDuDuCurrentDate}
         />
       )}
       {status === "UNCOMPLETED" && (
@@ -68,7 +89,7 @@ const DDuDuSubMenu = ({
           Icon={<ExampleIcon />}
           title="다른날 반복하기"
           buttonType="sub"
-          onClick={handleSelectDifferentDate}
+          onClick={handleRepeatDDuDuDate}
         />
       )}
     </div>

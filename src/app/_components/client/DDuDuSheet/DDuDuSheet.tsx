@@ -6,8 +6,10 @@ interface DDuDuSheetProps {
   handleEditDDuDu: (id: number) => void;
   handleDeleteDDuDu: (id: number) => void;
   onClose: () => void;
-  handleSelectDifferentDate: () => void;
+  handleSelectDifferentDate: (type: "change" | "repeat", currentDate: string) => void;
   handleAlarmSetting: () => void;
+  handleDDuDuTimeSetting: (beginAt?: string, endAt?: string) => void;
+  handleRepeatCurrentDate: () => void;
 }
 
 const DDuDuSheet = ({
@@ -17,6 +19,8 @@ const DDuDuSheet = ({
   onClose,
   handleSelectDifferentDate,
   handleAlarmSetting,
+  handleDDuDuTimeSetting,
+  handleRepeatCurrentDate,
 }: DDuDuSheetProps) => {
   return (
     <BottomSheet
@@ -32,6 +36,8 @@ const DDuDuSheet = ({
         onClose={onClose}
         handleSelectDifferentDate={handleSelectDifferentDate}
         handleAlarmSetting={handleAlarmSetting}
+        handleDDuDuTimeSetting={handleDDuDuTimeSetting}
+        handleRepeatCurrentDate={handleRepeatCurrentDate}
       />
     </BottomSheet>
   );
