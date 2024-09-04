@@ -1,23 +1,29 @@
 import { SheetButton } from "@/app/_components/client";
 import { ExampleIcon } from "@/app/_components/server";
+import { formatDateToYYYYMMDD } from "@/app/_utils";
+
+import { DDuDuDetailType } from "../../DDuDuMenu";
 
 interface DDuDuMainMenuProps {
   dduduId: number;
-  isDDuDuDateNow: boolean;
-  status: "COMPLETE" | "UNCOMPLETED";
+  dduduDetail: DDuDuDetailType;
   handleEditDDuDu: (id: number) => void;
   handleDeleteDDuDu: (id: number) => void;
+  handleDDuDuTimeSetting: (beginAt?: string, endAt?: string) => void;
   onClose: () => void;
 }
 
 const DDuDuMainMenu = ({
   dduduId,
-  isDDuDuDateNow,
-  status,
+  dduduDetail,
   handleEditDDuDu,
   handleDeleteDDuDu,
+  handleDDuDuTimeSetting,
   onClose,
 }: DDuDuMainMenuProps) => {
+  const { beginAt, endAt, scheduledOn, status } = dduduDetail;
+  const isDDuDuDateNow = formatDateToYYYYMMDD(new Date()) === scheduledOn;
+
   const handleCurrentDDuDuEdit = () => {
     handleEditDDuDu(dduduId);
     onClose();
@@ -25,6 +31,14 @@ const DDuDuMainMenu = ({
 
   const handleCurrentDDuDuDelete = () => {
     handleDeleteDDuDu(dduduId);
+  };
+
+  const handleDDuDuTimeChange = () => {
+    if (beginAt && endAt) {
+      handleDDuDuTimeSetting(beginAt, endAt);
+    } else {
+      handleDDuDuTimeSetting();
+    }
   };
 
   return (
@@ -38,7 +52,7 @@ const DDuDuMainMenu = ({
         <SheetButton
           Icon={<ExampleIcon />}
           title="뚜두시간"
-          onClick={() => {}}
+          onClick={handleDDuDuTimeChange}
         />
       )}
       <SheetButton

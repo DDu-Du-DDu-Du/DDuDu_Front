@@ -1,12 +1,11 @@
 import { getDDuDuDetail } from "@/app/_services/client";
-import formatDateToYYYYMMDD from "@/app/_utils/formatDateToYYYYMMDD/formatDateToYYYYMMDD";
 import { useQuery } from "@tanstack/react-query";
 
 import { DDuDuMainMenu, DDuDuSubMenu } from "./components";
 
 import { useSession } from "next-auth/react";
 
-interface DDuDuDetailType {
+export interface DDuDuDetailType {
   id: number;
   name: string;
   status: "UNCOMPLETED" | "COMPLETE";
@@ -22,8 +21,10 @@ interface DDuDuMenuProps {
   handleEditDDuDu: (id: number) => void;
   handleDeleteDDuDu: (id: number) => void;
   onClose: () => void;
-  handleSelectDifferentDate: () => void;
+  handleSelectDifferentDate: (type: "change" | "repeat", currentDate: string) => void;
   handleAlarmSetting: () => void;
+  handleDDuDuTimeSetting: (beginAt?: string, endAt?: string) => void;
+  handleRepeatCurrentDate: () => void;
 }
 
 export const DDuDuMenu = ({
@@ -33,6 +34,8 @@ export const DDuDuMenu = ({
   onClose,
   handleSelectDifferentDate,
   handleAlarmSetting,
+  handleDDuDuTimeSetting,
+  handleRepeatCurrentDate,
 }: DDuDuMenuProps) => {
   const { data: session } = useSession();
 
@@ -46,25 +49,21 @@ export const DDuDuMenu = ({
     return;
   }
 
-  const { scheduledOn, status } = dduduDetail;
-
-  const isDDuDuDateNow = formatDateToYYYYMMDD(new Date()) === scheduledOn;
-
   return (
     <div className="w-ful flex flex-col items-center gap-[2.5rem] p-[2rem]">
       <DDuDuMainMenu
         dduduId={dduduId}
-        isDDuDuDateNow={isDDuDuDateNow}
-        status={status}
+        dduduDetail={dduduDetail}
         handleEditDDuDu={handleEditDDuDu}
         handleDeleteDDuDu={handleDeleteDDuDu}
+        handleDDuDuTimeSetting={handleDDuDuTimeSetting}
         onClose={onClose}
       />
       <DDuDuSubMenu
-        isDDuDuDateNow={isDDuDuDateNow}
-        status={status}
+        dduduDetail={dduduDetail}
         handleSelectDifferentDate={handleSelectDifferentDate}
         handleAlarmSetting={handleAlarmSetting}
+        handleRepeatCurrentDate={handleRepeatCurrentDate}
       />
     </div>
   );

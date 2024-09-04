@@ -1,8 +1,65 @@
+"use client";
+
 import styles from "./DDuDuTimeSheet.module.css";
+
+import { useEffect, useState } from "react";
+
+import { DDuDUTimeRangeType, DDuDuTimeType } from "@/app/(route)/feed/feed.types";
 
 import { BottomSheet } from "../BottomSheet";
 
-const DDuDuTimeSheet = () => {
+interface DDuDuTimeSheetProps {
+  currentDDuDuTime: DDuDuTimeType;
+  onChangeDDuDUTime: (selectedTime: DDuDUTimeRangeType) => void;
+}
+
+const DDuDuTimeSheet = ({ currentDDuDuTime, onChangeDDuDUTime }: DDuDuTimeSheetProps) => {
+  const { beginAt, endAt } = currentDDuDuTime;
+
+  const [beginHour, setBeginHour] = useState(0);
+  const [beginMin, setBeginMin] = useState(0);
+  const [endHour, setEndHour] = useState(0);
+  const [endMin, setEndMin] = useState(0);
+
+  useEffect(() => {
+    if (!beginAt || !endAt) {
+      return;
+    }
+
+    const [beginHour, beginMin] = beginAt.split(":").map(Number);
+    const [endHour, endMin] = endAt.split(":").map(Number);
+
+    setBeginHour(beginHour);
+    setBeginMin(beginMin);
+    setEndHour(endHour);
+    setEndMin(endMin);
+  }, [beginAt, endAt]);
+
+  const handleDDuDuTimeChange = () => {
+    const beginTime = beginHour * 60 + beginMin;
+    const endTime = endHour * 60 + endMin;
+
+    if (beginTime > endTime) {
+      console.log("시작 시간이 종료 시간 보다 작을 수 없습니다.");
+      return;
+    }
+
+    onChangeDDuDUTime({ beginHour, beginMin, endHour, endMin });
+  };
+
+  const handleChangeBeginHour = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setBeginHour(Number(event.target.value));
+  };
+  const handleChangeBeginMin = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setBeginMin(Number(event.target.value));
+  };
+  const handleChangeEndHour = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setEndHour(Number(event.target.value));
+  };
+  const handleChangeEndMin = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setEndMin(Number(event.target.value));
+  };
+
   return (
     <BottomSheet
       isShow
@@ -18,7 +75,11 @@ const DDuDuTimeSheet = () => {
               <strong className="block text-size13 font-regular mb-[0.5rem]">시작시간</strong>
               <div className="flex">
                 <div className="mr-[2.2rem]">
-                  <select className={styles.select}>
+                  <select
+                    className={styles.select}
+                    defaultValue={beginHour || 0}
+                    onChange={handleChangeBeginHour}
+                  >
                     <option value={0}>0</option>
                     {Array.from({ length: 23 }, (_, index) => (
                       <option
@@ -32,7 +93,11 @@ const DDuDuTimeSheet = () => {
                   <span className="pl-[0.5rem]">시</span>
                 </div>
                 <div>
-                  <select className={styles.select}>
+                  <select
+                    className={styles.select}
+                    defaultValue={beginMin || 0}
+                    onChange={handleChangeBeginMin}
+                  >
                     {Array.from({ length: 60 }, (_, index) => (
                       <option
                         key={index}
@@ -51,7 +116,11 @@ const DDuDuTimeSheet = () => {
               <strong className="block text-size13 font-regular mb-[0.5rem]">종료시간</strong>
               <div className="flex">
                 <div className="mr-[2.2rem]">
-                  <select className={styles.select}>
+                  <select
+                    className={styles.select}
+                    defaultValue={endHour || 0}
+                    onChange={handleChangeEndHour}
+                  >
                     <option value={0}>0</option>
                     {Array.from({ length: 23 }, (_, index) => (
                       <option
@@ -65,7 +134,11 @@ const DDuDuTimeSheet = () => {
                   <span className="pl-[0.5rem]">시</span>
                 </div>
                 <div>
-                  <select className={styles.select}>
+                  <select
+                    className={styles.select}
+                    defaultValue={endMin || 0}
+                    onChange={handleChangeEndMin}
+                  >
                     {Array.from({ length: 60 }, (_, index) => (
                       <option
                         key={index}
@@ -81,7 +154,7 @@ const DDuDuTimeSheet = () => {
             </div>
           </div>
           <button
-            // onClick={onClose}
+            onClick={handleDDuDuTimeChange}
             className="w-full h-[5.6rem] bg-example_gray_700 rounded-radius15 mt-[2rem]"
           >
             확인
