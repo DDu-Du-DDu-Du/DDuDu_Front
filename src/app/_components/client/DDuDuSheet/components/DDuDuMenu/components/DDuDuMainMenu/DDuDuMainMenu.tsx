@@ -10,7 +10,7 @@ interface DDuDuMainMenuProps {
   handleEditDDuDu: (id: number) => void;
   handleDeleteDDuDu: (id: number) => void;
   handleDDuDuTimeSetting: (beginAt?: string, endAt?: string) => void;
-  onClose: () => void;
+  handleDDuDuSheetToggleOff: () => void;
 }
 
 const DDuDuMainMenu = ({
@@ -19,14 +19,14 @@ const DDuDuMainMenu = ({
   handleEditDDuDu,
   handleDeleteDDuDu,
   handleDDuDuTimeSetting,
-  onClose,
+  handleDDuDuSheetToggleOff,
 }: DDuDuMainMenuProps) => {
   const { beginAt, endAt, scheduledOn, status } = dduduDetail;
   const isDDuDuDateNow = formatDateToYYYYMMDD(new Date()) === scheduledOn;
 
   const handleCurrentDDuDuEdit = () => {
     handleEditDDuDu(dduduId);
-    onClose();
+    handleDDuDuSheetToggleOff();
   };
 
   const handleCurrentDDuDuDelete = () => {

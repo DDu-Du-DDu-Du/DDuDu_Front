@@ -5,7 +5,7 @@ interface DDuDuSheetProps {
   dduduId: number;
   handleEditDDuDu: (id: number) => void;
   handleDeleteDDuDu: (id: number) => void;
-  onClose: () => void;
+  handleDDuDuSheetToggleOff: () => void;
   handleSelectDifferentDate: (type: "change" | "repeat", currentDate: string) => void;
   handleAlarmSetting: () => void;
   handleDDuDuTimeSetting: (beginAt?: string, endAt?: string) => void;
@@ -16,7 +16,7 @@ const DDuDuSheet = ({
   dduduId,
   handleEditDDuDu,
   handleDeleteDDuDu,
-  onClose,
+  handleDDuDuSheetToggleOff,
   handleSelectDifferentDate,
   handleAlarmSetting,
   handleDDuDuTimeSetting,
@@ -27,13 +27,13 @@ const DDuDuSheet = ({
       isShow
       defaultHeight={"fit-content"}
       maxHeight={"fit-content"}
-      onClose={onClose}
+      onClose={handleDDuDuSheetToggleOff}
     >
       <DDuDuMenu
         dduduId={dduduId}
         handleEditDDuDu={handleEditDDuDu}
         handleDeleteDDuDu={handleDeleteDDuDu}
-        onClose={onClose}
+        handleDDuDuSheetToggleOff={handleDDuDuSheetToggleOff}
         handleSelectDifferentDate={handleSelectDifferentDate}
         handleAlarmSetting={handleAlarmSetting}
         handleDDuDuTimeSetting={handleDDuDuTimeSetting}

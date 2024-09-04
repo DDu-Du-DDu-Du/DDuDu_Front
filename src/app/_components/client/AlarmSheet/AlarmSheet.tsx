@@ -8,7 +8,11 @@ import { BottomSheet } from "../BottomSheet";
 
 import { twJoin } from "tailwind-merge";
 
-const AlarmSheet = () => {
+interface AlarmSheetProps {
+  handleAlarmSheetToggleOff: () => void;
+}
+
+const AlarmSheet = ({ handleAlarmSheetToggleOff }: AlarmSheetProps) => {
   const [alarmState, setAlarmState] = useState(false);
 
   const handleAlarmStateToggle = () => {
@@ -30,6 +34,7 @@ const AlarmSheet = () => {
       isShow
       defaultHeight={"fit-content"}
       maxHeight={"fit-content"}
+      onClose={handleAlarmSheetToggleOff}
     >
       <div className="flex flex-col p-[2.4rem]">
         <div className="flex-1">
