@@ -6,12 +6,14 @@ import { CaptionLabelProps, DayPicker } from "react-day-picker";
 
 import ChevronLeftIcon from "@/app/_components/server/icons/ChevronLeftIcon/ChevronLeftIcon";
 import ChevronRightIcon from "@/app/_components/server/icons/ChevronRightIcon/ChevronRightIcon";
+import { formatDateToYYYYMMDD } from "@/app/_utils";
 
 import { BottomSheet } from "../../BottomSheet";
 
 import { ko } from "date-fns/locale/ko";
 
 export interface BottomSingleCalenderProps {
+  currentDate: string;
   selectedDate: Date | undefined;
   setSelected: (date: Date | undefined) => void;
   onChangeDDuDuDate: (selectedDate: Date) => void;
@@ -19,13 +21,14 @@ export interface BottomSingleCalenderProps {
 }
 
 const BottomSingleCalender = ({
+  currentDate,
   selectedDate,
   setSelected,
   onChangeDDuDuDate,
   handleCalendarSheetToggleOff,
 }: BottomSingleCalenderProps) => {
   const handleSelectedDate = () => {
-    if (!selectedDate) {
+    if (!selectedDate || currentDate === formatDateToYYYYMMDD(selectedDate)) {
       handleCalendarSheetToggleOff();
       return;
     }
