@@ -41,7 +41,6 @@ const DDuDuSubMenu = ({
             Icon={<ExampleIcon />}
             title="오늘 또 하기"
             buttonType="sub"
-            rightPlace={<p>5 일전</p>}
             onClick={handleRepeatDDuDuCurrentDate}
           />
           <SheetButton
@@ -64,7 +63,7 @@ const DDuDuSubMenu = ({
             Icon={<ExampleIcon />}
             title="알림 설정하기"
             buttonType="sub"
-            rightPlace={<p>5 일전</p>}
+            rightPlace={<p>없음</p>}
             onClick={handleAlarmSetting}
           />
           <SheetButton
@@ -80,7 +79,6 @@ const DDuDuSubMenu = ({
           Icon={<ExampleIcon />}
           title="오늘 다시 하기"
           buttonType="sub"
-          rightPlace={<p>5 일전</p>}
           onClick={handleRepeatDDuDuCurrentDate}
         />
       )}

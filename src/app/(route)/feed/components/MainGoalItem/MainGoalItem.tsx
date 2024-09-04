@@ -45,7 +45,11 @@ const MainGoalItem = ({ goal, ddudus, selectedDDuDu }: MainGoalItemProps) => {
     handleToggleOff: handleDDuDuSheetToggleOff,
   } = useToggle();
 
-  const { isToggle: isAlarmSheetToggle, handleToggleOn: handleAlarmSheetToggleOn } = useToggle();
+  const {
+    isToggle: isAlarmSheetToggle,
+    handleToggleOn: handleAlarmSheetToggleOn,
+    handleToggleOff: handleAlarmSheetToggleOff,
+  } = useToggle();
 
   const {
     isToggle: isCalendarSheetToggle,
@@ -297,14 +301,14 @@ const MainGoalItem = ({ goal, ddudus, selectedDDuDu }: MainGoalItemProps) => {
           dduduId={currentDDuDuId}
           handleEditDDuDu={handleEditDDuDu}
           handleDeleteDDuDu={handleDeleteDDuDu}
-          onClose={handleDDuDuSheetToggleOff}
+          handleDDuDuSheetToggleOff={handleDDuDuSheetToggleOff}
           handleSelectDifferentDate={handleSelectDifferentDate}
           handleAlarmSetting={handleAlarmSetting}
           handleDDuDuTimeSetting={handleDDuDuTimeSetting}
           handleRepeatCurrentDate={handleRepeatCurrentDate}
         />
       )}
-      {isAlarmSheetToggle && <AlarmSheet />}
+      {isAlarmSheetToggle && <AlarmSheet handleAlarmSheetToggleOff={handleAlarmSheetToggleOff} />}
       {isCalendarSheetToggle && (
         <BottomSingleCalender
           currentDate={currentDate}
@@ -318,6 +322,7 @@ const MainGoalItem = ({ goal, ddudus, selectedDDuDu }: MainGoalItemProps) => {
         <DDuDuTimeSheet
           currentDDuDuTime={currentDDuDuTime}
           onChangeDDuDUTime={onChangeDDuDUTime}
+          handleDDuDuTimeSheetToggleOff={handleDDuDuTimeSheetToggleOff}
         />
       )}
     </li>
