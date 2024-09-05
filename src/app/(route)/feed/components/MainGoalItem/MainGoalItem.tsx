@@ -5,6 +5,7 @@ import { Fragment, useState } from "react";
 import { AlarmSheet, DDuDuSheet, DDuDuTimeSheet } from "@/app/_components/client";
 import { BottomSingleCalender } from "@/app/_components/client/Calender";
 import { GoalItem } from "@/app/_components/server";
+import { FEED_KEY } from "@/app/_constants/queryKey/queryKey";
 import { useToggle } from "@/app/_hooks";
 import {
   fetchCompleteToggleDDuDu,
@@ -68,38 +69,38 @@ const MainGoalItem = ({ goal, ddudus, selectedDDuDuDate }: MainGoalItemProps) =>
   const { data: session } = useSession();
 
   const deleteDDuDuMutation = useMutation({
-    mutationKey: ["deleteDDuDu"],
+    mutationKey: [FEED_KEY.DELETE_DDUDU],
     mutationFn: fetchDeleteDDuDu,
     onSuccess: (status) => {
       if (status === 204) {
-        queryClient.refetchQueries({ queryKey: ["monthlyDDuDus"] });
-        queryClient.refetchQueries({ queryKey: ["dailyList", selectedDDuDuDate] });
+        queryClient.refetchQueries({ queryKey: [FEED_KEY.MONTHLY_DDUDUS] });
+        queryClient.refetchQueries({ queryKey: [FEED_KEY.DAILY_LIST, selectedDDuDuDate] });
         handleDDuDuSheetToggleOff();
       }
     },
   });
 
   const completeToggleDDuDuMutation = useMutation({
-    mutationKey: ["completeToggle"],
+    mutationKey: [FEED_KEY.COMPLETE_TOGGLE],
     mutationFn: fetchCompleteToggleDDuDu,
     onSuccess: () => {
-      queryClient.refetchQueries({ queryKey: ["monthlyDDuDus"] });
-      queryClient.refetchQueries({ queryKey: ["dailyList", selectedDDuDuDate] });
+      queryClient.refetchQueries({ queryKey: [FEED_KEY.MONTHLY_DDUDUS] });
+      queryClient.refetchQueries({ queryKey: [FEED_KEY.DAILY_LIST, selectedDDuDuDate] });
     },
   });
 
   const dduduChangeDateMutation = useMutation({
-    mutationKey: ["dduduChangeDate"],
+    mutationKey: [FEED_KEY.DDUDU_CHANGE_DATE],
     mutationFn: fetchDDuDuChangeDate,
     onSuccess: (status) => {
       if (status === 204) {
         queryClient.invalidateQueries({
-          queryKey: ["dailyList"],
+          queryKey: [FEED_KEY.DAILY_LIST],
         });
         queryClient.refetchQueries({
-          queryKey: ["dailyList"],
+          queryKey: [FEED_KEY.DAILY_LIST],
         });
-        queryClient.refetchQueries({ queryKey: ["monthlyDDuDus"] });
+        queryClient.refetchQueries({ queryKey: [FEED_KEY.MONTHLY_DDUDUS] });
 
         setSelectedDate(undefined);
         handleCalendarSheetToggleOff();
@@ -108,16 +109,16 @@ const MainGoalItem = ({ goal, ddudus, selectedDDuDuDate }: MainGoalItemProps) =>
   });
 
   const dduduRepeatDateMutation = useMutation({
-    mutationKey: ["dduduRepeatDate"],
+    mutationKey: [FEED_KEY.DDUDU_REPEAT_DATE],
     mutationFn: fetchDDuDuRepeatDate,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["dailyList"],
+        queryKey: [FEED_KEY.DAILY_LIST],
       });
       queryClient.refetchQueries({
-        queryKey: ["dailyList"],
+        queryKey: [FEED_KEY.DAILY_LIST],
       });
-      queryClient.refetchQueries({ queryKey: ["monthlyDDuDus"] });
+      queryClient.refetchQueries({ queryKey: [FEED_KEY.MONTHLY_DDUDUS] });
 
       setSelectedDate(undefined);
       handleDDuDuSheetToggleOff();
@@ -126,11 +127,11 @@ const MainGoalItem = ({ goal, ddudus, selectedDDuDuDate }: MainGoalItemProps) =>
   });
 
   const dduduChangeTimeMutation = useMutation({
-    mutationKey: ["dduduChangeTime"],
+    mutationKey: [FEED_KEY.DDUDU_CHANGE_TIME],
     mutationFn: fetchDDuDuChangeTime,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["dduduDetail"] });
-      queryClient.refetchQueries({ queryKey: ["dduduDetail"] });
+      queryClient.invalidateQueries({ queryKey: [FEED_KEY.DDUDU_DETAIL] });
+      queryClient.refetchQueries({ queryKey: [FEED_KEY.DDUDU_DETAIL] });
       setCurrentDDuDUTime({ beginAt: "", endAt: "" });
       handleDDuDuTimeSheetToggleOff();
     },
