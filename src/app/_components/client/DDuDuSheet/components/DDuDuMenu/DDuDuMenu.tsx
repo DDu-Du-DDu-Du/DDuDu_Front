@@ -1,3 +1,4 @@
+import { FEED_KEY } from "@/app/_constants/queryKey/queryKey";
 import { getDDuDuDetail } from "@/app/_services/client";
 import { useQuery } from "@tanstack/react-query";
 
@@ -40,7 +41,7 @@ export const DDuDuMenu = ({
   const { data: session } = useSession();
 
   const { data: dduduDetail } = useQuery<DDuDuDetailType>({
-    queryKey: ["dduduDetail", dduduId],
+    queryKey: [FEED_KEY.DDUDU_DETAIL, dduduId],
     queryFn: () => getDDuDuDetail({ accessToken: session?.sessionToken as string, id: dduduId }),
     enabled: !!session?.sessionToken && dduduId > -1,
   });

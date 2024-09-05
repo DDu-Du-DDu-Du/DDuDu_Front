@@ -1,6 +1,7 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import { OptionIcon } from "@/app/_components/server/icons";
+import { FEED_KEY } from "@/app/_constants/queryKey/queryKey";
 import { useClickAway } from "@/app/_hooks";
 import { fetchCreateDDuDu, fetchEditDDuDu } from "@/app/_services/client";
 import { MainDDuDusType } from "@/app/_types/response/feed/feed";
@@ -38,18 +39,18 @@ const MainDDuDuInput = ({
 
   const onUpdateSuccess = () => {
     reset();
-    queryClient.refetchQueries({ queryKey: ["dailyList", selectedDDuDuDate] });
-    queryClient.refetchQueries({ queryKey: ["monthlyDDuDus"] });
+    queryClient.refetchQueries({ queryKey: [FEED_KEY.DAILY_LIST, selectedDDuDuDate] });
+    queryClient.refetchQueries({ queryKey: [FEED_KEY.MONTHLY_DDUDUS] });
   };
 
   const createDDuDuMutation = useMutation({
-    mutationKey: ["dduduCreate"],
+    mutationKey: [FEED_KEY.CREATE_DDUDU],
     mutationFn: fetchCreateDDuDu,
     onSuccess: onUpdateSuccess,
   });
 
   const editDDuDuMutation = useMutation({
-    mutationKey: ["dduduEdit"],
+    mutationKey: [FEED_KEY.EDIT_DDUDU],
     mutationFn: fetchEditDDuDu,
     onSuccess: onUpdateSuccess,
   });
