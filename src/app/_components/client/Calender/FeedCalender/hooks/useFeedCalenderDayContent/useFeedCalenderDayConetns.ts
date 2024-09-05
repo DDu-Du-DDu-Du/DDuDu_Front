@@ -1,6 +1,6 @@
 import { DayContentProps } from "react-day-picker";
 
-import formatDateToYYYYMMDD from "@/app/_utils/formatDateToYYYYMMDD/formatDateToYYYYMMDD";
+import { formatDateToYYYYMMDD } from "@/app/_utils";
 
 const useFeedCalenderDayConetent = (selectedDay: DayContentProps) => {
   const formattedDate = formatDateToYYYYMMDD(selectedDay.date);
