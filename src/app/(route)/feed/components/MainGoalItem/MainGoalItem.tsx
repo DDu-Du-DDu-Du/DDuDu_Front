@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 
 import { AlarmSheet, DDuDuSheet, DDuDuTimeSheet } from "@/app/_components/client";
 import { BottomSingleCalender } from "@/app/_components/client/Calender";
@@ -18,8 +18,9 @@ import { MainDailyListType } from "@/app/_types/response/feed/feed";
 import { formatDateToYYYYMMDD } from "@/app/_utils";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { DDuDuTimeRangeType, DDuDuTimeType } from "../../feed.types";
+import { DDuDuTimeRangeType } from "../../feed.types";
 import { MainDDuDuInput, MainDDuDuItem } from "./components";
+import { useDDuDuCreate, useDDuDuDate, useDDuDuEdit, useDDuDuTime } from "./hooks";
 
 import { useSession } from "next-auth/react";
 
@@ -28,19 +29,6 @@ interface MainGoalItemProps extends MainDailyListType {
 }
 
 const MainGoalItem = ({ goal, ddudus, selectedDDuDuDate }: MainGoalItemProps) => {
-  const [isCreateDDuDu, setIsCreateDDuDu] = useState(false);
-  const [currentDDuDuId, setCurrentDDuDuId] = useState(-1);
-  const [isDDuDuEdit, setIsDDuDuEdit] = useState(-1);
-
-  const [selectedDate, setSelectedDate] = useState<Date>();
-
-  const [currentDate, setCurrentDate] = useState("");
-  const [currentDDuDuTime, setCurrentDDuDUTime] = useState<DDuDuTimeType>({
-    beginAt: "",
-    endAt: "",
-  });
-  const [currentCalendarType, setCurrentCalendarType] = useState<"repeat" | "change">("change");
-
   const {
     isToggle: isDDuDuSheetToggle,
     handleToggleOn: handleDDuDUSheetToggleOn,
@@ -64,6 +52,28 @@ const MainGoalItem = ({ goal, ddudus, selectedDDuDuDate }: MainGoalItemProps) =>
     handleToggleOn: handleDDuDuTimeSheetToggleOn,
     handleToggleOff: handleDDuDuTimeSheetToggleOff,
   } = useToggle();
+
+  const { isCreateDDuDu, setIsCreateDDuDu, handleOpenDDuDuInput } = useDDuDuCreate();
+  const {
+    currentDDuDuId,
+    editDDuDuId,
+    setCurrentDDuDuId,
+    handleCloseDDuDuInput,
+    handleUpdateEditDDuDuId,
+  } = useDDuDuEdit({ setIsCreateDDuDu });
+
+  const {
+    selectedDate,
+    currentDate,
+    currentCalendarType,
+    handleSelectedDate,
+    handleSelectDifferentDate,
+  } = useDDuDuDate({ handleCalendarSheetToggleOn, handleDDuDuSheetToggleOff });
+
+  const { currentDDuDuTime, handleDDuDuTimeSetting, handleUpdateDDuDuTime } = useDDuDuTime({
+    handleDDuDuTimeSheetToggleOn,
+    handleDDuDuSheetToggleOff,
+  });
 
   const queryClient = useQueryClient();
   const { data: session } = useSession();
@@ -102,7 +112,7 @@ const MainGoalItem = ({ goal, ddudus, selectedDDuDuDate }: MainGoalItemProps) =>
         });
         queryClient.refetchQueries({ queryKey: [FEED_KEY.MONTHLY_DDUDUS] });
 
-        setSelectedDate(undefined);
+        handleSelectedDate(undefined);
         handleCalendarSheetToggleOff();
       }
     },
@@ -120,7 +130,7 @@ const MainGoalItem = ({ goal, ddudus, selectedDDuDuDate }: MainGoalItemProps) =>
       });
       queryClient.refetchQueries({ queryKey: [FEED_KEY.MONTHLY_DDUDUS] });
 
-      setSelectedDate(undefined);
+      handleSelectedDate(undefined);
       handleDDuDuSheetToggleOff();
       handleCalendarSheetToggleOff();
     },
@@ -132,24 +142,10 @@ const MainGoalItem = ({ goal, ddudus, selectedDDuDuDate }: MainGoalItemProps) =>
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [FEED_KEY.DDUDU_DETAIL] });
       queryClient.refetchQueries({ queryKey: [FEED_KEY.DDUDU_DETAIL] });
-      setCurrentDDuDUTime({ beginAt: "", endAt: "" });
+      handleUpdateDDuDuTime({ beginAt: "", endAt: "" });
       handleDDuDuTimeSheetToggleOff();
     },
   });
-
-  const onOpenDDuDuInput = () => {
-    setIsCreateDDuDu(true);
-  };
-
-  const onCloseDDuDuInput = () => {
-    setIsCreateDDuDu(false);
-    setIsDDuDuEdit(-1);
-    setCurrentDDuDuId(-1);
-  };
-
-  const onEditDDuDu = () => {
-    onCloseDDuDuInput();
-  };
 
   const onDDuDuCheckToggle = (id: number) => {
     completeToggleDDuDuMutation.mutate({
@@ -163,10 +159,6 @@ const MainGoalItem = ({ goal, ddudus, selectedDDuDuDate }: MainGoalItemProps) =>
     handleDDuDUSheetToggleOn();
   };
 
-  const handleEditDDuDu = (id: number) => {
-    setIsDDuDuEdit(id);
-  };
-
   const handleDeleteDDuDu = (id: number) => {
     deleteDDuDuMutation.mutate({
       accessToken: session?.sessionToken as string,
@@ -174,26 +166,9 @@ const MainGoalItem = ({ goal, ddudus, selectedDDuDuDate }: MainGoalItemProps) =>
     });
   };
 
-  const handleSelectDifferentDate = (type: "change" | "repeat", currentDate: string) => {
-    setCurrentCalendarType(type);
-    setCurrentDate(currentDate);
-    handleCalendarSheetToggleOn();
-    handleDDuDuSheetToggleOff();
-  };
-
   const handleAlarmSetting = () => {
     handleAlarmSheetToggleOn();
     handleDDuDuSheetToggleOff();
-  };
-
-  const handleDDuDuTimeSetting = (beginAt: string = "", endAt: string = "") => {
-    setCurrentDDuDUTime({ beginAt, endAt });
-    handleDDuDuTimeSheetToggleOn();
-    handleDDuDuSheetToggleOff();
-  };
-
-  const handleSelectedDate = (selectedDate: Date | undefined) => {
-    setSelectedDate(selectedDate);
   };
 
   const onChangeDDuDuDate = (selectedDate: Date) => {
@@ -210,6 +185,14 @@ const MainGoalItem = ({ goal, ddudus, selectedDDuDuDate }: MainGoalItemProps) =>
         date: formatDateToYYYYMMDD(selectedDate),
       });
     }
+  };
+
+  const handleRepeatCurrentDate = () => {
+    dduduRepeatDateMutation.mutate({
+      accessToken: session?.sessionToken as string,
+      id: currentDDuDuId,
+      date: formatDateToYYYYMMDD(new Date()),
+    });
   };
 
   const onChangeDDuDUTime = (selectedTime: DDuDuTimeRangeType) => {
@@ -247,34 +230,25 @@ const MainGoalItem = ({ goal, ddudus, selectedDDuDuDate }: MainGoalItemProps) =>
     });
   };
 
-  const handleRepeatCurrentDate = () => {
-    dduduRepeatDateMutation.mutate({
-      accessToken: session?.sessionToken as string,
-      id: currentDDuDuId,
-      date: formatDateToYYYYMMDD(new Date()),
-    });
-  };
-
   return (
     <li className="mb-[2.5rem]">
       <GoalItem
         type="create"
         id={goal.id}
         goalName={goal.name}
-        onOpenDDuDuInput={onOpenDDuDuInput}
+        onOpenDDuDuInput={handleOpenDDuDuInput}
       />
       <ul className="flex flex-col gap-[1rem]">
         {ddudus.map(({ id, name, status }) => (
           <Fragment key={id}>
-            {id === isDDuDuEdit ? (
+            {id === editDDuDuId ? (
               <MainDDuDuInput
                 type="edit"
                 goalId={goal.id}
                 color={goal.color}
                 dduduItem={{ id, name, status }}
                 selectedDDuDuDate={selectedDDuDuDate}
-                onEditDDuDu={onEditDDuDu}
-                onCloseDDuDuInput={onCloseDDuDuInput}
+                onCloseDDuDuInput={handleCloseDDuDuInput}
               />
             ) : (
               <MainDDuDuItem
@@ -293,7 +267,7 @@ const MainGoalItem = ({ goal, ddudus, selectedDDuDuDate }: MainGoalItemProps) =>
             goalId={goal.id}
             color={goal.color}
             selectedDDuDuDate={selectedDDuDuDate}
-            onCloseDDuDuInput={onCloseDDuDuInput}
+            onCloseDDuDuInput={handleCloseDDuDuInput}
           />
         )}
       </ul>
@@ -301,7 +275,7 @@ const MainGoalItem = ({ goal, ddudus, selectedDDuDuDate }: MainGoalItemProps) =>
       {isDDuDuSheetToggle && (
         <DDuDuSheet
           dduduId={currentDDuDuId}
-          handleEditDDuDu={handleEditDDuDu}
+          handleEditDDuDu={handleUpdateEditDDuDuId}
           handleDeleteDDuDu={handleDeleteDDuDu}
           handleDDuDuSheetToggleOff={handleDDuDuSheetToggleOff}
           handleSelectDifferentDate={handleSelectDifferentDate}

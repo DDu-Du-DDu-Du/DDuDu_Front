@@ -16,7 +16,6 @@ interface MainDDuDuInputProps {
   dduduItem?: MainDDuDusType;
   selectedDDuDuDate: string;
   onCloseDDuDuInput: (event?: MouseEvent | TouchEvent) => void;
-  onEditDDuDu?: () => void;
 }
 
 interface DDuDuInputType {
@@ -30,7 +29,6 @@ const MainDDuDuInput = ({
   dduduItem,
   selectedDDuDuDate,
   onCloseDDuDuInput,
-  onEditDDuDu,
 }: MainDDuDuInputProps) => {
   const { handleSubmit, register, reset } = useForm<DDuDuInputType>();
   const { data: session } = useSession();
@@ -39,6 +37,7 @@ const MainDDuDuInput = ({
 
   const onUpdateSuccess = () => {
     reset();
+    onCloseDDuDuInput();
     queryClient.refetchQueries({ queryKey: [FEED_KEY.DAILY_LIST, selectedDDuDuDate] });
     queryClient.refetchQueries({ queryKey: [FEED_KEY.MONTHLY_DDUDUS] });
   };
@@ -73,8 +72,6 @@ const MainDDuDuInput = ({
         id: dduduItem.id,
         name: ddudu,
       });
-
-      onEditDDuDu && onEditDDuDu();
     }
   };
 
