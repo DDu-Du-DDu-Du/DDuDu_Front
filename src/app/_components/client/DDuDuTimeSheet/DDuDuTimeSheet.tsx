@@ -4,13 +4,13 @@ import styles from "./DDuDuTimeSheet.module.css";
 
 import { useEffect, useState } from "react";
 
-import { DDuDUTimeRangeType, DDuDuTimeType } from "@/app/(route)/feed/feed.types";
+import { DDuDuTimeRangeType, DDuDuTimeType } from "@/app/(route)/feed/feed.types";
 
 import { BottomSheet } from "../BottomSheet";
 
 interface DDuDuTimeSheetProps {
   currentDDuDuTime: DDuDuTimeType;
-  onChangeDDuDUTime: (selectedTime: DDuDUTimeRangeType) => void;
+  onChangeDDuDUTime: (selectedTime: DDuDuTimeRangeType) => void;
   handleDDuDuTimeSheetToggleOff: () => void;
 }
 

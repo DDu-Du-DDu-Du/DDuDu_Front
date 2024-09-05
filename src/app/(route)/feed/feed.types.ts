@@ -35,7 +35,7 @@ export interface DDuDuTimeType {
   endAt: string;
 }
 
-export interface DDuDUTimeRangeType {
+export interface DDuDuTimeRangeType {
   beginHour: number;
   beginMin: number;
   endHour: number;
