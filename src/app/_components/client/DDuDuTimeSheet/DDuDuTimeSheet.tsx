@@ -10,13 +10,13 @@ import { BottomSheet } from "../BottomSheet";
 
 interface DDuDuTimeSheetProps {
   currentDDuDuTime: DDuDuTimeType;
-  onChangeDDuDUTime: (selectedTime: DDuDuTimeRangeType) => void;
+  onChangeDDuDuTime: (selectedTime: DDuDuTimeRangeType) => void;
   handleDDuDuTimeSheetToggleOff: () => void;
 }
 
 const DDuDuTimeSheet = ({
   currentDDuDuTime,
-  onChangeDDuDUTime,
+  onChangeDDuDuTime,
   handleDDuDuTimeSheetToggleOff,
 }: DDuDuTimeSheetProps) => {
   const { beginAt, endAt } = currentDDuDuTime;
@@ -51,7 +51,7 @@ const DDuDuTimeSheet = ({
     }
 
     setIsErrorMessage(false);
-    onChangeDDuDUTime({ beginHour, beginMin, endHour, endMin });
+    onChangeDDuDuTime({ beginHour, beginMin, endHour, endMin });
   };
 
   const handleChangeBeginHour = (event: React.ChangeEvent<HTMLSelectElement>) => {
