@@ -7,7 +7,7 @@ interface MainDDuDuItemProps {
   ddudu: string;
   status: "UNCOMPLETED" | "COMPLETE";
   color: string;
-  onDDuDuCheckToggle: (id: number) => void;
+  onDDuDuCompleteToggle: (id: number) => void;
   handleToggleOn: () => void;
 }
 
@@ -16,11 +16,11 @@ const MainDDuDuItem = ({
   ddudu,
   status,
   color,
-  onDDuDuCheckToggle,
+  onDDuDuCompleteToggle,
   handleToggleOn,
 }: MainDDuDuItemProps) => {
   const handleDDuDuCheckToggle = () => {
-    onDDuDuCheckToggle(id);
+    onDDuDuCompleteToggle(id);
   };
 
   return (
