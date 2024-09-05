@@ -19,7 +19,7 @@ const MainDDuDuItem = ({
   onDDuDuCompleteToggle,
   handleToggleOn,
 }: MainDDuDuItemProps) => {
-  const handleDDuDuCheckToggle = () => {
+  const handleDDuDuCompleteToggle = () => {
     onDDuDuCompleteToggle(id);
   };
 
@@ -34,7 +34,7 @@ const MainDDuDuItem = ({
           className="hidden"
           type="checkbox"
           id={`${ddudu}${id}`}
-          onChange={handleDDuDuCheckToggle}
+          onChange={handleDDuDuCompleteToggle}
         />
         {status === "COMPLETE" && (
           <div
