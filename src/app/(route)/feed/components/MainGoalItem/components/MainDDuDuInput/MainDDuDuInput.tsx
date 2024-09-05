@@ -1,13 +1,16 @@
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 import { OptionIcon } from "@/app/_components/server/icons";
-import { FEED_KEY } from "@/app/_constants/queryKey/queryKey";
 import { useClickAway } from "@/app/_hooks";
-import { fetchCreateDDuDu, fetchEditDDuDu } from "@/app/_services/client";
 import { MainDDuDusType } from "@/app/_types/response/feed/feed";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+
+import { useUpdateDDuDuMutation } from "./hooks";
 
 import { useSession } from "next-auth/react";
+
+export interface DDuDuInputType {
+  ddudu: string;
+}
 
 interface MainDDuDuInputProps {
   type?: "create" | "edit";
@@ -16,10 +19,6 @@ interface MainDDuDuInputProps {
   dduduItem?: MainDDuDusType;
   selectedDDuDuDate: string;
   onCloseDDuDuInput: (event?: MouseEvent | TouchEvent) => void;
-}
-
-interface DDuDuInputType {
-  ddudu: string;
 }
 
 const MainDDuDuInput = ({
@@ -31,49 +30,20 @@ const MainDDuDuInput = ({
   onCloseDDuDuInput,
 }: MainDDuDuInputProps) => {
   const { handleSubmit, register, reset } = useForm<DDuDuInputType>();
+
   const { data: session } = useSession();
 
-  const queryClient = useQueryClient();
-
-  const onUpdateSuccess = () => {
-    reset();
-    onCloseDDuDuInput();
-    queryClient.refetchQueries({ queryKey: [FEED_KEY.DAILY_LIST, selectedDDuDuDate] });
-    queryClient.refetchQueries({ queryKey: [FEED_KEY.MONTHLY_DDUDUS] });
-  };
-
-  const createDDuDuMutation = useMutation({
-    mutationKey: [FEED_KEY.CREATE_DDUDU],
-    mutationFn: fetchCreateDDuDu,
-    onSuccess: onUpdateSuccess,
-  });
-
-  const editDDuDuMutation = useMutation({
-    mutationKey: [FEED_KEY.EDIT_DDUDU],
-    mutationFn: fetchEditDDuDu,
-    onSuccess: onUpdateSuccess,
+  const { onValid } = useUpdateDDuDuMutation({
+    type,
+    goalId,
+    dduduItem,
+    selectedDDuDuDate,
+    sessionToken: session?.sessionToken as string,
+    reset,
+    onCloseDDuDuInput,
   });
 
   const dduduRef = useClickAway<HTMLLIElement>(onCloseDDuDuInput);
-
-  const onValid: SubmitHandler<DDuDuInputType> = ({ ddudu }) => {
-    if (type === "create") {
-      createDDuDuMutation.mutate({
-        accessToken: session?.sessionToken as string,
-        requestDDuDu: {
-          goalId,
-          name: ddudu,
-          scheduledOn: selectedDDuDuDate,
-        },
-      });
-    } else if (type === "edit" && dduduItem) {
-      editDDuDuMutation.mutate({
-        accessToken: session?.sessionToken as string,
-        id: dduduItem.id,
-        name: ddudu,
-      });
-    }
-  };
 
   return (
     <li
