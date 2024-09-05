@@ -2,11 +2,11 @@
 
 import styles from "./DDuDuTimeSheet.module.css";
 
-import { useEffect, useState } from "react";
-
 import { DDuDuTimeRangeType, DDuDuTimeType } from "@/app/(route)/feed/feed.types";
 
 import { BottomSheet } from "../BottomSheet";
+import { DDUDU_TIME_SHEET } from "./DDuDuTimeSheet.constants";
+import { useTimeUpdate } from "./hooks";
 
 interface DDuDuTimeSheetProps {
   currentDDuDuTime: DDuDuTimeType;
@@ -19,53 +19,18 @@ const DDuDuTimeSheet = ({
   onChangeDDuDuTime,
   handleDDuDuTimeSheetToggleOff,
 }: DDuDuTimeSheetProps) => {
-  const { beginAt, endAt } = currentDDuDuTime;
-
-  const [isErrorMessage, setIsErrorMessage] = useState(false);
-  const [beginHour, setBeginHour] = useState(0);
-  const [beginMin, setBeginMin] = useState(0);
-  const [endHour, setEndHour] = useState(0);
-  const [endMin, setEndMin] = useState(0);
-
-  useEffect(() => {
-    if (!beginAt || !endAt) {
-      return;
-    }
-
-    const [beginHour, beginMin] = beginAt.split(":").map(Number);
-    const [endHour, endMin] = endAt.split(":").map(Number);
-
-    setBeginHour(beginHour);
-    setBeginMin(beginMin);
-    setEndHour(endHour);
-    setEndMin(endMin);
-  }, [beginAt, endAt]);
-
-  const handleDDuDuTimeChange = () => {
-    const beginTime = beginHour * 60 + beginMin;
-    const endTime = endHour * 60 + endMin;
-
-    if (beginTime > endTime) {
-      setIsErrorMessage(true);
-      return;
-    }
-
-    setIsErrorMessage(false);
-    onChangeDDuDuTime({ beginHour, beginMin, endHour, endMin });
-  };
-
-  const handleChangeBeginHour = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setBeginHour(Number(event.target.value));
-  };
-  const handleChangeBeginMin = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setBeginMin(Number(event.target.value));
-  };
-  const handleChangeEndHour = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setEndHour(Number(event.target.value));
-  };
-  const handleChangeEndMin = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setEndMin(Number(event.target.value));
-  };
+  const {
+    beginHour,
+    beginMin,
+    endHour,
+    endMin,
+    isErrorMessage,
+    handleDDuDuTimeChange,
+    handleChangeBeginHour,
+    handleChangeBeginMin,
+    handleChangeEndHour,
+    handleChangeEndMin,
+  } = useTimeUpdate({ currentDDuDuTime, onChangeDDuDuTime });
 
   return (
     <BottomSheet
@@ -162,7 +127,7 @@ const DDuDuTimeSheet = ({
             </div>
           </div>
           {isErrorMessage && (
-            <p className="text-example_red_500">종료 시간이 시작 시간 보다 작을 수 없습니다.</p>
+            <p className="text-example_red_500">{DDUDU_TIME_SHEET.TIME_RANGE_ERROR_MESSAGE}</p>
           )}
           <button
             onClick={handleDDuDuTimeChange}
