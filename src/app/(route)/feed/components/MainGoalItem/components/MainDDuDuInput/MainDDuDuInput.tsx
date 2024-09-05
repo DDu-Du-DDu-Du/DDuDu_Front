@@ -1,9 +1,9 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 
-import { MainDDuDusType } from "@/app/(route)/feed/feed.types";
 import { OptionIcon } from "@/app/_components/server/icons";
 import { useClickAway } from "@/app/_hooks";
 import { fetchCreateDDuDu, fetchEditDDuDu } from "@/app/_services/client";
+import { MainDDuDusType } from "@/app/_types/response/feed/feed";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { useSession } from "next-auth/react";

@@ -13,10 +13,11 @@ import {
   fetchDDuDuRepeatDate,
   fetchDeleteDDuDu,
 } from "@/app/_services/client";
+import { MainDailyListType } from "@/app/_types/response/feed/feed";
 import { formatDateToYYYYMMDD } from "@/app/_utils";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { DDuDuTimeRangeType, DDuDuTimeType, MainDailyListType } from "../../feed.types";
+import { DDuDuTimeRangeType, DDuDuTimeType } from "../../feed.types";
 import { MainDDuDuInput, MainDDuDuItem } from "./components";
 
 import { useSession } from "next-auth/react";
