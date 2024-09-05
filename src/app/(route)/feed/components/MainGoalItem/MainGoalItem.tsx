@@ -23,10 +23,10 @@ import { MainDDuDuInput, MainDDuDuItem } from "./components";
 import { useSession } from "next-auth/react";
 
 interface MainGoalItemProps extends MainDailyListType {
-  selectedDDuDu: string;
+  selectedDDuDuDate: string;
 }
 
-const MainGoalItem = ({ goal, ddudus, selectedDDuDu }: MainGoalItemProps) => {
+const MainGoalItem = ({ goal, ddudus, selectedDDuDuDate }: MainGoalItemProps) => {
   const [isCreateDDuDu, setIsCreateDDuDu] = useState(false);
   const [currentDDuDuId, setCurrentDDuDuId] = useState(-1);
   const [isDDuDuEdit, setIsDDuDuEdit] = useState(-1);
@@ -73,7 +73,7 @@ const MainGoalItem = ({ goal, ddudus, selectedDDuDu }: MainGoalItemProps) => {
     onSuccess: (status) => {
       if (status === 204) {
         queryClient.refetchQueries({ queryKey: ["monthlyDDuDus"] });
-        queryClient.refetchQueries({ queryKey: ["dailyList", selectedDDuDu] });
+        queryClient.refetchQueries({ queryKey: ["dailyList", selectedDDuDuDate] });
         handleDDuDuSheetToggleOff();
       }
     },
@@ -84,7 +84,7 @@ const MainGoalItem = ({ goal, ddudus, selectedDDuDu }: MainGoalItemProps) => {
     mutationFn: fetchCompleteToggleDDuDu,
     onSuccess: () => {
       queryClient.refetchQueries({ queryKey: ["monthlyDDuDus"] });
-      queryClient.refetchQueries({ queryKey: ["dailyList", selectedDDuDu] });
+      queryClient.refetchQueries({ queryKey: ["dailyList", selectedDDuDuDate] });
     },
   });
 
@@ -271,7 +271,7 @@ const MainGoalItem = ({ goal, ddudus, selectedDDuDu }: MainGoalItemProps) => {
                 goalId={goal.id}
                 color={goal.color}
                 dduduItem={{ id, name, status }}
-                selectedDDuDu={selectedDDuDu}
+                selectedDDuDuDate={selectedDDuDuDate}
                 onEditDDuDu={onEditDDuDu}
                 onCloseDDuDuInput={onCloseDDuDuInput}
               />
@@ -291,7 +291,7 @@ const MainGoalItem = ({ goal, ddudus, selectedDDuDu }: MainGoalItemProps) => {
           <MainDDuDuInput
             goalId={goal.id}
             color={goal.color}
-            selectedDDuDu={selectedDDuDu}
+            selectedDDuDuDate={selectedDDuDuDate}
             onCloseDDuDuInput={onCloseDDuDuInput}
           />
         )}

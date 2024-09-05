@@ -20,10 +20,10 @@ export interface MonthlyGoalsType {
 export interface FeedCalenderProps {
   monthlyGoals?: MonthlyGoalsType;
   monthlyDDuDus: MonthlyDDuDuType[];
-  selectedDDuDu?: string;
+  selectedDDuDuDate?: string;
 }
 
-const FeedCalender = ({ monthlyGoals, monthlyDDuDus, selectedDDuDu }: FeedCalenderProps) => {
+const FeedCalender = ({ monthlyGoals, monthlyDDuDus, selectedDDuDuDate }: FeedCalenderProps) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   let queryString = searchParams.toString();
@@ -45,7 +45,7 @@ const FeedCalender = ({ monthlyGoals, monthlyDDuDus, selectedDDuDu }: FeedCalend
       components={{
         Caption: (props: CaptionProps) => FeedCalenderHeader({ props, monthlyGoals }),
         DayContent: (props: DayContentProps) =>
-          FeedCalenderDayContent({ props, monthlyDDuDus, currentURL, selectedDDuDu }),
+          FeedCalenderDayContent({ props, monthlyDDuDus, currentURL, selectedDDuDuDate }),
       }}
     />
   );

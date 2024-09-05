@@ -14,14 +14,14 @@ interface FeedCalenderDayContentProps {
   props: DayContentProps;
   monthlyDDuDus: MonthlyDDuDuType[];
   currentURL: string;
-  selectedDDuDu?: string;
+  selectedDDuDuDate?: string;
 }
 
 const FeedCalenderDayContent = ({
   props,
   monthlyDDuDus,
   currentURL,
-  selectedDDuDu,
+  selectedDDuDuDate,
 }: FeedCalenderDayContentProps) => {
   const { isToday, selectedDate, formattedDate } = useFeedCalenderDayConetent(props);
 
@@ -33,7 +33,7 @@ const FeedCalenderDayContent = ({
     <div
       className={twMerge(
         "flex flex-col items-center justify-center gap-2 w-[4.2rem] h-[5.4rem] text-size11",
-        (selectedDDuDu === formattedDate || (!selectedDDuDu && isToday)) &&
+        (selectedDDuDuDate === formattedDate || (!selectedDDuDuDate && isToday)) &&
           "font-bold bg-example_gray_300 rounded-radius5",
       )}
       onClick={() => router.replace(`${currentURL}&date=${formattedDate}`)}
