@@ -25,7 +25,7 @@ interface DDuDuMenuProps {
   handleSelectDifferentDate: (type: "change" | "repeat", currentDate: string) => void;
   handleAlarmSetting: () => void;
   handleDDuDuTimeSetting: (beginAt?: string, endAt?: string) => void;
-  handleRepeatCurrentDate: () => void;
+  onRepeatCurrentDate: () => void;
 }
 
 export const DDuDuMenu = ({
@@ -36,7 +36,7 @@ export const DDuDuMenu = ({
   handleSelectDifferentDate,
   handleAlarmSetting,
   handleDDuDuTimeSetting,
-  handleRepeatCurrentDate,
+  onRepeatCurrentDate,
 }: DDuDuMenuProps) => {
   const { data: session } = useSession();
 
@@ -64,7 +64,7 @@ export const DDuDuMenu = ({
         dduduDetail={dduduDetail}
         handleSelectDifferentDate={handleSelectDifferentDate}
         handleAlarmSetting={handleAlarmSetting}
-        handleRepeatCurrentDate={handleRepeatCurrentDate}
+        onRepeatCurrentDate={onRepeatCurrentDate}
       />
     </div>
   );
