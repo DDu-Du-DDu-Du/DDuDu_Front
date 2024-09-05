@@ -4,7 +4,7 @@ import { DDuDuMenu } from "./components";
 interface DDuDuSheetProps {
   dduduId: number;
   handleEditDDuDu: (id: number) => void;
-  handleDeleteDDuDu: (id: number) => void;
+  onDeleteDDuDu: (id: number) => void;
   handleDDuDuSheetToggleOff: () => void;
   handleSelectDifferentDate: (type: "change" | "repeat", currentDate: string) => void;
   handleAlarmSetting: () => void;
@@ -15,7 +15,7 @@ interface DDuDuSheetProps {
 const DDuDuSheet = ({
   dduduId,
   handleEditDDuDu,
-  handleDeleteDDuDu,
+  onDeleteDDuDu,
   handleDDuDuSheetToggleOff,
   handleSelectDifferentDate,
   handleAlarmSetting,
@@ -32,7 +32,7 @@ const DDuDuSheet = ({
       <DDuDuMenu
         dduduId={dduduId}
         handleEditDDuDu={handleEditDDuDu}
-        handleDeleteDDuDu={handleDeleteDDuDu}
+        onDeleteDDuDu={onDeleteDDuDu}
         handleDDuDuSheetToggleOff={handleDDuDuSheetToggleOff}
         handleSelectDifferentDate={handleSelectDifferentDate}
         handleAlarmSetting={handleAlarmSetting}
