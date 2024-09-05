@@ -8,21 +8,21 @@ interface DDuDuSubMenuProps {
   dduduDetail: DDuDuDetailType;
   handleSelectDifferentDate: (type: "change" | "repeat", currentDate: string) => void;
   handleAlarmSetting: () => void;
-  handleRepeatCurrentDate: () => void;
+  onRepeatCurrentDate: () => void;
 }
 
 const DDuDuSubMenu = ({
   dduduDetail,
   handleSelectDifferentDate,
   handleAlarmSetting,
-  handleRepeatCurrentDate,
+  onRepeatCurrentDate,
 }: DDuDuSubMenuProps) => {
   const { scheduledOn, status } = dduduDetail;
 
   const isDDuDuDateNow = formatDateToYYYYMMDD(new Date()) === scheduledOn;
 
   const handleRepeatDDuDuCurrentDate = () => {
-    handleRepeatCurrentDate();
+    onRepeatCurrentDate();
   };
 
   const handleChangeDDuDuDate = () => {
