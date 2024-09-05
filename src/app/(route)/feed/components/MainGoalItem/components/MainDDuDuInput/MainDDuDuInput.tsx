@@ -13,7 +13,7 @@ interface MainDDuDuInputProps {
   goalId: number;
   color: string;
   dduduItem?: MainDDuDusType;
-  selectedDDuDu: string;
+  selectedDDuDuDate: string;
   onCloseDDuDuInput: (event?: MouseEvent | TouchEvent) => void;
   onEditDDuDu?: () => void;
 }
@@ -27,7 +27,7 @@ const MainDDuDuInput = ({
   goalId,
   color,
   dduduItem,
-  selectedDDuDu,
+  selectedDDuDuDate,
   onCloseDDuDuInput,
   onEditDDuDu,
 }: MainDDuDuInputProps) => {
@@ -38,7 +38,7 @@ const MainDDuDuInput = ({
 
   const onUpdateSuccess = () => {
     reset();
-    queryClient.refetchQueries({ queryKey: ["dailyList", selectedDDuDu] });
+    queryClient.refetchQueries({ queryKey: ["dailyList", selectedDDuDuDate] });
     queryClient.refetchQueries({ queryKey: ["monthlyDDuDus"] });
   };
 
@@ -63,7 +63,7 @@ const MainDDuDuInput = ({
         requestDDuDu: {
           goalId,
           name: ddudu,
-          scheduledOn: selectedDDuDu,
+          scheduledOn: selectedDDuDuDate,
         },
       });
     } else if (type === "edit" && dduduItem) {

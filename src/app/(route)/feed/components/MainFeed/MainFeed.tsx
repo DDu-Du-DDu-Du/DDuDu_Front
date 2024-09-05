@@ -13,21 +13,23 @@ import { MainGoalItem } from "..";
 import { useSession } from "next-auth/react";
 
 interface MainFeedProps {
-  selectedDDuDu: string;
+  selectedDDuDuDate: string;
 }
 
-const MainFeed = ({ selectedDDuDu }: MainFeedProps) => {
-  const selectedDate = useMemo(() => {
-    return selectedDDuDu.slice(0, 7);
-  }, [selectedDDuDu]);
+const MainFeed = ({ selectedDDuDuDate }: MainFeedProps) => {
+  const convertSelectedDateYYYYMM = useMemo(() => {
+    return selectedDDuDuDate.slice(0, 7);
+  }, [selectedDDuDuDate]);
+
   const { data: session } = useSession();
+
   const { data: dailyList } = useQuery<MainDailyListType[]>({
-    queryKey: ["dailyList", selectedDDuDu],
+    queryKey: ["dailyList", selectedDDuDuDate],
     queryFn: () =>
       getDailyList({
         accessToken: session?.sessionToken as string,
         userId: session?.user.userId as number,
-        date: selectedDDuDu,
+        date: selectedDDuDuDate,
       }),
   });
 
@@ -37,7 +39,7 @@ const MainFeed = ({ selectedDDuDu }: MainFeedProps) => {
       getMonthlyDDuDus({
         accessToken: session?.sessionToken as string,
         userId: session?.user.userId as number,
-        date: selectedDate,
+        date: convertSelectedDateYYYYMM,
       }),
   });
 
@@ -47,7 +49,7 @@ const MainFeed = ({ selectedDDuDu }: MainFeedProps) => {
       getMonthlyGoals({
         accessToken: session?.sessionToken as string,
         type: "MONTH",
-        date: selectedDDuDu,
+        date: selectedDDuDuDate,
       }),
   });
 
@@ -56,7 +58,7 @@ const MainFeed = ({ selectedDDuDu }: MainFeedProps) => {
       <FeedCalender
         monthlyDDuDus={monthlyDDuDus || []}
         monthlyGoals={monthlyGoals}
-        selectedDDuDu={selectedDDuDu}
+        selectedDDuDuDate={selectedDDuDuDate}
       />
       <ul className="mt-[2rem]">
         {dailyList?.map(({ goal, ddudus }, index) => (
@@ -64,7 +66,7 @@ const MainFeed = ({ selectedDDuDu }: MainFeedProps) => {
             <MainGoalItem
               goal={goal}
               ddudus={ddudus}
-              selectedDDuDu={selectedDDuDu}
+              selectedDDuDuDate={selectedDDuDuDate}
             />
           </Fragment>
         ))}
