@@ -16,7 +16,7 @@ import {
 import { formatDateToYYYYMMDD } from "@/app/_utils";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { DDuDUTimeRangeType, DDuDuTimeType, MainDailyListType } from "../../feed.types";
+import { DDuDuTimeRangeType, DDuDuTimeType, MainDailyListType } from "../../feed.types";
 import { MainDDuDuInput, MainDDuDuItem } from "./components";
 
 import { useSession } from "next-auth/react";
@@ -210,7 +210,7 @@ const MainGoalItem = ({ goal, ddudus, selectedDDuDu }: MainGoalItemProps) => {
     }
   };
 
-  const onChangeDDuDUTime = (selectedTime: DDuDUTimeRangeType) => {
+  const onChangeDDuDUTime = (selectedTime: DDuDuTimeRangeType) => {
     const { beginHour, beginMin, endHour, endMin } = selectedTime;
     const time = {
       beginAt: `${beginHour < 10 ? `0${beginHour}` : beginHour}:${beginMin < 10 ? `0${beginMin}` : beginMin}:00`,
