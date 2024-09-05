@@ -8,7 +8,7 @@ interface DDuDuMainMenuProps {
   dduduId: number;
   dduduDetail: DDuDuDetailType;
   handleEditDDuDu: (id: number) => void;
-  handleDeleteDDuDu: (id: number) => void;
+  onDeleteDDuDu: (id: number) => void;
   handleDDuDuTimeSetting: (beginAt?: string, endAt?: string) => void;
   handleDDuDuSheetToggleOff: () => void;
 }
@@ -17,7 +17,7 @@ const DDuDuMainMenu = ({
   dduduId,
   dduduDetail,
   handleEditDDuDu,
-  handleDeleteDDuDu,
+  onDeleteDDuDu,
   handleDDuDuTimeSetting,
   handleDDuDuSheetToggleOff,
 }: DDuDuMainMenuProps) => {
@@ -30,7 +30,7 @@ const DDuDuMainMenu = ({
   };
 
   const handleCurrentDDuDuDelete = () => {
-    handleDeleteDDuDu(dduduId);
+    onDeleteDDuDu(dduduId);
   };
 
   const handleDDuDuTimeChange = () => {

@@ -20,7 +20,7 @@ export interface DDuDuDetailType {
 interface DDuDuMenuProps {
   dduduId: number;
   handleEditDDuDu: (id: number) => void;
-  handleDeleteDDuDu: (id: number) => void;
+  onDeleteDDuDu: (id: number) => void;
   handleDDuDuSheetToggleOff: () => void;
   handleSelectDifferentDate: (type: "change" | "repeat", currentDate: string) => void;
   handleAlarmSetting: () => void;
@@ -31,7 +31,7 @@ interface DDuDuMenuProps {
 export const DDuDuMenu = ({
   dduduId,
   handleEditDDuDu,
-  handleDeleteDDuDu,
+  onDeleteDDuDu,
   handleDDuDuSheetToggleOff,
   handleSelectDifferentDate,
   handleAlarmSetting,
@@ -56,7 +56,7 @@ export const DDuDuMenu = ({
         dduduId={dduduId}
         dduduDetail={dduduDetail}
         handleEditDDuDu={handleEditDDuDu}
-        handleDeleteDDuDu={handleDeleteDDuDu}
+        onDeleteDDuDu={onDeleteDDuDu}
         handleDDuDuTimeSetting={handleDDuDuTimeSetting}
         handleDDuDuSheetToggleOff={handleDDuDuSheetToggleOff}
       />
