@@ -187,7 +187,7 @@ const MainGoalItem = ({ goal, ddudus, selectedDDuDuDate }: MainGoalItemProps) =>
     }
   };
 
-  const handleRepeatCurrentDate = () => {
+  const onRepeatCurrentDate = () => {
     dduduRepeatDateMutation.mutate({
       accessToken: session?.sessionToken as string,
       id: currentDDuDuId,
@@ -281,7 +281,7 @@ const MainGoalItem = ({ goal, ddudus, selectedDDuDuDate }: MainGoalItemProps) =>
           handleSelectDifferentDate={handleSelectDifferentDate}
           handleAlarmSetting={handleAlarmSetting}
           handleDDuDuTimeSetting={handleDDuDuTimeSetting}
-          handleRepeatCurrentDate={handleRepeatCurrentDate}
+          onRepeatCurrentDate={onRepeatCurrentDate}
         />
       )}
       {isAlarmSheetToggle && <AlarmSheet handleAlarmSheetToggleOff={handleAlarmSheetToggleOff} />}
