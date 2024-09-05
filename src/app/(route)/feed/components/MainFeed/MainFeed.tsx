@@ -5,11 +5,10 @@ import { Fragment, useMemo } from "react";
 import { FeedCalender } from "@/app/_components/client/Calender";
 import { MonthlyGoalsType } from "@/app/_components/client/Calender/FeedCalender/FeedCalender";
 import { getDailyList, getMonthlyDDuDus, getMonthlyGoals } from "@/app/_services/client";
-import { MonthlyDDuDuType } from "@/app/_types/response/feed/feed";
+import { MainDailyListType, MonthlyDDuDuType } from "@/app/_types/response/feed/feed";
 import { useQuery } from "@tanstack/react-query";
 
 import { MainGoalItem } from "..";
-import { MainDailyListType } from "../../feed.types";
 
 import { useSession } from "next-auth/react";
 

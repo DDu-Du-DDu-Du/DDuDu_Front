@@ -1,4 +1,4 @@
-import { MainDailyTimeTableType } from "./feed.types";
+import { MainDailyTimeTableType } from "@/app/_types/response/feed/feed";
 
 export const TIMETABLE_DDUDU_LIST: MainDailyTimeTableType = {
   timetable: [
