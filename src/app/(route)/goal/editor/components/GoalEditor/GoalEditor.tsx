@@ -1,16 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
 import { ConfirmModal } from "@/app/_components/client";
 import { GOAL_KEY } from "@/app/_constants/queryKey/queryKey";
 import { useToggle } from "@/app/_hooks";
 import { getGoalEditorData } from "@/app/_services/client/goalEditor";
-import { useGoalFormStore } from "@/app/_store";
 import { GoalDetailType } from "@/app/_types/response/goal/goal";
 import { useQuery } from "@tanstack/react-query";
 
 import { GoalEditorForm } from "./components";
+import { useTempData } from "./hooks";
 
 import { useSession } from "next-auth/react";
 
@@ -20,19 +18,6 @@ interface GoalEditorProps {
 
 const GoalEditor = ({ goalId }: GoalEditorProps) => {
   const { data: session } = useSession();
-  const {
-    type,
-    isLoad,
-    isEditing,
-    goalText,
-    goalPrivacy,
-    color,
-    repeatDDuDu,
-    setIsLoad,
-    setIsEditing,
-    initialize,
-    reset,
-  } = useGoalFormStore();
 
   const { data: goalEditorData } = useQuery<GoalDetailType>({
     queryKey: [GOAL_KEY.GOAL_EDITOR, goalId],
@@ -42,59 +27,12 @@ const GoalEditor = ({ goalId }: GoalEditorProps) => {
 
   const { isToggle: isModal, handleToggleOn: openModal, handleToggleOff: closeModal } = useToggle();
 
-  const [isLoadTempData, setIsLoadTempData] = useState<boolean | null>(null);
-  const [tempData] = useState({
-    goalText,
-    goalPrivacy,
-    color,
-    repeatDDuDu: [...repeatDDuDu],
-  });
-
-  useEffect(() => {
-    if (isLoad) {
-      initialize(tempData);
-      setIsLoadTempData(true);
-      setIsLoad(false);
-      return;
-    }
-
-    if (goalId && goalEditorData) {
-      initialize({
-        type: "EDIT",
-        goalText: goalEditorData.name,
-        goalPrivacy: goalEditorData.privacyType,
-        color: `#${goalEditorData.color}`,
-        repeatDDuDu: goalEditorData.repeatDdudus,
-      });
-      setIsLoadTempData(true);
-
-      return;
-    }
-
-    if (type === "EDIT" || !isEditing) {
-      reset();
-      return;
-    }
-
-    if (isEditing) {
-      reset();
-      openModal();
-    }
-
-    /* eslint-disable react-hooks/exhaustive-deps */
-  }, []);
-
-  const handleLoadTempData = (isComplete: boolean) => {
-    if (!isComplete) {
-      reset();
-      setIsLoadTempData(false);
-      return;
-    }
-
-    initialize(tempData);
-    setIsLoadTempData(true);
-    setIsEditing(false);
-  };
+  const { type, isLoadTempData, goalText, goalPrivacy, color, repeatDDuDu, handleLoadTempData } =
+    useTempData({
+      goalId,
+      goalEditorData,
+      openModal,
+    });
 
   if ((goalId && !goalText) || (type === "EDIT" && !goalId)) {
     return;
