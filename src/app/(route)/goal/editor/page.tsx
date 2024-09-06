@@ -1,4 +1,5 @@
 import { Header } from "@/app/_components/client";
+import { GOAL_KEY } from "@/app/_constants/queryKey/queryKey";
 import { getGoalEditorData } from "@/app/_services/client/goalEditor";
 import { auth } from "@/auth";
 import { HydrationBoundary, QueryClient, dehydrate } from "@tanstack/react-query";
@@ -20,7 +21,7 @@ const GoalEditorPage = async ({ searchParams }: GoalEditorPageProps) => {
 
   if (id) {
     await queryclient.prefetchQuery({
-      queryKey: ["goal", "editor", id],
+      queryKey: [GOAL_KEY.GOAL_EDITOR, id],
       queryFn: () => getGoalEditorData(session?.sessionToken as string, id),
     });
   }

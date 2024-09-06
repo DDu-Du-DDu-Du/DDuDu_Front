@@ -5,6 +5,7 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
 import { Button, ColorSheet, PrivacySheet, SelectUiDiv, TextInput } from "@/app/_components/client";
 import { ArrowRightIcon } from "@/app/_components/server";
+import { GOAL_KEY } from "@/app/_constants/queryKey/queryKey";
 import {
   fetchCreateGoal,
   fetchDeleteGoal,
@@ -102,16 +103,16 @@ const GoalEditorForm = ({
   };
 
   const deleteGoalMutation = useMutation({
-    mutationKey: ["goal", "delete", goalId],
+    mutationKey: [GOAL_KEY.GOAL_DELETE, goalId],
     mutationFn: fetchDeleteGoal,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["goalList"] });
+      queryClient.invalidateQueries({ queryKey: [GOAL_KEY.GOAL_LIST] });
       handleSuccess();
     },
   });
 
   const statusChangeGoalMutation = useMutation({
-    mutationKey: ["goal", "status", goalId],
+    mutationKey: [GOAL_KEY.GOAL_STATUS, goalId],
     mutationFn: fetchStatusChangeGoal,
     onSuccess: () => {
       queryClient.invalidateQueries();
@@ -120,16 +121,16 @@ const GoalEditorForm = ({
   });
 
   const createGoalMutation = useMutation({
-    mutationKey: ["goal", "create"],
+    mutationKey: [GOAL_KEY.GOAL_CREATE],
     mutationFn: fetchCreateGoal,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["goalList"] });
+      queryClient.invalidateQueries({ queryKey: [GOAL_KEY.GOAL_LIST] });
       handleSuccess();
     },
   });
 
   const editGoalMutation = useMutation({
-    mutationKey: ["goal", "edit", goalId],
+    mutationKey: [GOAL_KEY.GOAL_EDIT, goalId],
     mutationFn: fetchEditGoal,
     onSuccess: () => {
       queryClient.invalidateQueries();

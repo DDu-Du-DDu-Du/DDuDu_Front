@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 
 import { GoalItem } from "@/app/_components/server";
+import { GOAL_KEY } from "@/app/_constants/queryKey/queryKey";
 import { getGoalList } from "@/app/_services/client/goal/goal";
 import { GoalType } from "@/app/_types/response/goal/goal";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
@@ -15,7 +16,7 @@ import { useSession } from "next-auth/react";
 const GoalDragDrop = () => {
   const { data: session } = useSession();
   const { data: goal, refetch } = useQuery<GoalType[]>({
-    queryKey: ["goalList"],
+    queryKey: [GOAL_KEY.GOAL_LIST],
     queryFn: () => getGoalList(session?.sessionToken as string, String(session?.user.userId)),
   });
 

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 
 import { ConfirmModal } from "@/app/_components/client";
+import { GOAL_KEY } from "@/app/_constants/queryKey/queryKey";
 import { useToggle } from "@/app/_hooks";
 import { getGoalEditorData } from "@/app/_services/client/goalEditor";
 import { useGoalFormStore } from "@/app/_store";
@@ -34,7 +35,7 @@ const GoalEditor = ({ goalId }: GoalEditorProps) => {
   } = useGoalFormStore();
 
   const { data: goalEditorData } = useQuery<GoalDetailType>({
-    queryKey: ["goal", "editor", goalId],
+    queryKey: [GOAL_KEY.GOAL_EDITOR, goalId],
     queryFn: () => getGoalEditorData(session?.sessionToken as string, goalId),
     enabled: !!goalId && !!session,
   });

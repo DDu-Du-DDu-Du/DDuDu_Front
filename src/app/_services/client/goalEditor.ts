@@ -1,5 +1,6 @@
 import { fetchApi } from "@/app/_api/";
 import { GOAL_EDITOR } from "@/app/_constants";
+import { GOAL_KEY } from "@/app/_constants/queryKey/queryKey";
 import { GoalRequestType } from "@/app/_types/request/goal/goal";
 
 export const getGoalEditorData = async (accessToken: string, goalId: string) => {
@@ -10,7 +11,7 @@ export const getGoalEditorData = async (accessToken: string, goalId: string) => 
       Authorization: `Bearer ${accessToken}`,
     },
     next: {
-      tags: ["goal", "editor", goalId],
+      tags: [GOAL_KEY.GOAL_EDITOR, goalId],
     },
   });
 
@@ -35,7 +36,7 @@ export const fetchCreateGoal = async ({ accessToken, goalData }: FetchCreateGoal
       Authorization: `Bearer ${accessToken}`,
     },
     next: {
-      tags: ["goal", "create"],
+      tags: [GOAL_KEY.GOAL_CREATE],
     },
   });
 
@@ -61,7 +62,7 @@ export const fetchEditGoal = async ({ accessToken, goalData, goalId }: FetchEdit
       Authorization: `Bearer ${accessToken}`,
     },
     next: {
-      tags: ["goal", "edit", goalId],
+      tags: [GOAL_KEY.GOAL_EDIT, goalId],
     },
   });
 
@@ -85,7 +86,7 @@ export const fetchDeleteGoal = async ({ accessToken, goalId }: FetchDeleteGoalPr
       Authorization: `Bearer ${accessToken}`,
     },
     next: {
-      tags: ["goal", "delete", goalId],
+      tags: [GOAL_KEY.GOAL_DELETE, goalId],
     },
   });
 
@@ -119,7 +120,7 @@ export const fetchStatusChangeGoal = async ({
       Authorization: `Bearer ${accessToken}`,
     },
     next: {
-      tags: ["goal", "status"],
+      tags: [GOAL_KEY.GOAL_STATUS],
     },
   });
 

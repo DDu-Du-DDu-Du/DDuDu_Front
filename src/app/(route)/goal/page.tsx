@@ -1,4 +1,5 @@
 import { PlusIcon } from "@/app/_components/server";
+import { GOAL_KEY } from "@/app/_constants/queryKey/queryKey";
 import { getGoalList } from "@/app/_services/client/goal/goal";
 import { auth } from "@/auth";
 import { HydrationBoundary, QueryClient, dehydrate } from "@tanstack/react-query";
@@ -12,7 +13,7 @@ const GoalPage = async () => {
 
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
-    queryKey: ["goalList"],
+    queryKey: [GOAL_KEY.GOAL_LIST],
     queryFn: () => getGoalList(session?.sessionToken as string, String(session?.user.userId)),
   });
 
