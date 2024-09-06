@@ -5,6 +5,7 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
 import { Button, CheckboxInput, InputDate, InputRadio, TextInput } from "@/app/_components/client";
 import InputTime from "@/app/_components/client/InputTime/InputTime";
+import { REPEAT_DDUDU_KEY } from "@/app/_constants/queryKey/queryKey";
 import { fetchCreateRepeatDDudu, fetchEditRepeatDDudu } from "@/app/_services/client/repeatDdudu";
 import { useGoalFormStore } from "@/app/_store";
 import { RepeatDduduRequestType } from "@/app/_types/request/repeatDdudu/repeatDdudu";
@@ -85,7 +86,7 @@ const DDuDuRepeatForm = ({
   const { data: session } = useSession();
 
   const createRepeatDDuDuMutation = useMutation({
-    mutationKey: ["repeat", "ddudu"],
+    mutationKey: [REPEAT_DDUDU_KEY.REPEAT_DDUDU],
     mutationFn: fetchCreateRepeatDDudu,
     onSuccess: () => {
       router.replace(`/goal/editor/${goalId}/repeats`);
@@ -93,7 +94,7 @@ const DDuDuRepeatForm = ({
   });
 
   const editRepeatDDuDuMutation = useMutation({
-    mutationKey: ["repeat", "ddudu", repeatId],
+    mutationKey: [REPEAT_DDUDU_KEY.REPEAT_DDUDU, repeatId],
     mutationFn: fetchEditRepeatDDudu,
     onSuccess: () => {
       router.replace(`/goal/editor/${goalId}/repeats`);

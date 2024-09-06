@@ -1,5 +1,6 @@
 import { fetchApi } from "@/app/_api/";
 import { REPEAT_DDUDU } from "@/app/_constants";
+import { REPEAT_DDUDU_KEY } from "@/app/_constants/queryKey/queryKey";
 import { RepeatDduduRequestType } from "@/app/_types/request/repeatDdudu/repeatDdudu";
 
 interface FetchCreateRepeatDduduProps {
@@ -19,7 +20,7 @@ export const fetchCreateRepeatDDudu = async ({
       Authorization: `Bearer ${accessToken}`,
     },
     next: {
-      tags: ["repeat", "ddudu"],
+      tags: [REPEAT_DDUDU_KEY.REPEAT_DDUDU],
     },
   });
 
@@ -49,7 +50,7 @@ export const fetchEditRepeatDDudu = async ({
       Authorization: `Bearer ${accessToken}`,
     },
     next: {
-      tags: ["repeat", "ddudu", repeatId],
+      tags: [REPEAT_DDUDU_KEY.REPEAT_DDUDU, repeatId],
     },
   });
 
