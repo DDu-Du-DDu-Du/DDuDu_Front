@@ -1,6 +1,5 @@
 import { useToggle } from "@/app/_hooks";
-
-import { GoalPrivacyType } from "../../GoalEditorForm.types";
+import { GoalPrivacyType } from "@/app/_types/response/goal/goal";
 
 interface UseGoalPrivacyToggleProps {
   onSelectPrivacy: (goalPrivacy: GoalPrivacyType) => void;
@@ -13,6 +12,7 @@ const useGoalPrivacyToggle = ({ onSelectPrivacy, onSetIsEditing }: UseGoalPrivac
     handleToggleOn: handleGoalPrivacyToggleOn,
     handleToggleOff: handleGoalPrivacyToggleOff,
   } = useToggle();
+
   const handleSelectGoalPrivacy = (goalPrivacy: GoalPrivacyType) => {
     onSelectPrivacy(goalPrivacy);
     onSetIsEditing(true);

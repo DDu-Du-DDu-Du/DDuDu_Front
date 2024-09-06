@@ -216,6 +216,7 @@ const GoalEditorForm = ({
               {PRIVACY_TYPE[goalPrivacy]}
             </SelectUiDiv>
             <PrivacySheet
+              goalPrivacy={goalPrivacy}
               isShow={isGoalPrivacyToggle}
               onClose={handleGoalPrivacyToggleOff}
               onClick={handleSelectGoalPrivacy}
