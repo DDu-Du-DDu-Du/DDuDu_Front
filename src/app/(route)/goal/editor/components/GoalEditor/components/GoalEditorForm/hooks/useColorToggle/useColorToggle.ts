@@ -1,19 +1,23 @@
 import { useToggle } from "@/app/_hooks";
 
 interface UseColorToggleProps {
-  onSelectColor: (color: string) => void;
-  onSetIsEditing: (isEdit: boolean) => void;
+  goalId: string;
+  setColor: (color: string) => void;
+  setIsEditing: (isEdit: boolean) => void;
 }
 
-const useColorToggle = ({ onSelectColor, onSetIsEditing }: UseColorToggleProps) => {
+const useColorToggle = ({ goalId, setColor, setIsEditing }: UseColorToggleProps) => {
   const {
     isToggle: isColorToggle,
     handleToggleOn: handleColorToggleOn,
     handleToggleOff: handleColorToggleOff,
   } = useToggle();
   const handleSelectColor = (color: string) => {
-    onSelectColor(color);
-    onSetIsEditing(true);
+    setColor(color);
+
+    if (!goalId) {
+      setIsEditing(true);
+    }
   };
 
   return {

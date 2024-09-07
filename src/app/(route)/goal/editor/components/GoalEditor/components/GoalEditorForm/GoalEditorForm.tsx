@@ -1,6 +1,6 @@
 "use client";
 
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider } from "react-hook-form";
 
 import { Button, ColorSheet, PrivacySheet, SelectUiDiv, TextInput } from "@/app/_components/client";
 import { ArrowRightIcon } from "@/app/_components/server";
@@ -46,28 +46,25 @@ const GoalEditorForm = ({
   isLoadTempData,
 }: GoalEditorFormProps) => {
   const { goalText, goalPrivacy, color, repeatDDuDu } = goalFormData;
-  const { setIsEditing, setGoalText, setGoalPrivacy, setColor, reset } = useGoalFormStore();
 
-  const methods = useForm<GoalEditorFormInfo>();
+  const { setIsEditing, setGoalText, setGoalPrivacy, setColor, reset } = useGoalFormStore();
 
   const {
     isGoalPrivacyToggle,
     handleGoalPrivacyToggleOff,
     handleGoalPrivacyToggleOn,
     handleSelectGoalPrivacy,
-  } = useGoalPrivacyToggle({ onSelectPrivacy: setGoalPrivacy, onSetIsEditing: setIsEditing });
+  } = useGoalPrivacyToggle({ goalId, setGoalPrivacy, setIsEditing });
 
   const { isColorToggle, handleColorToggleOff, handleColorToggleOn, handleSelectColor } =
-    useColorToggle({ onSelectColor: setColor, onSetIsEditing: setIsEditing });
+    useColorToggle({ goalId, setColor, setIsEditing });
 
-  const { handleMoveRepeatDDuDu } = useGoalEditor({
+  const { methods, handleMoveRepeatDDuDu } = useGoalEditor({
     goalId,
     goalText,
     isLoadTempData,
     setGoalText,
     setIsEditing,
-    watch: methods.watch,
-    setValue: methods.setValue,
   });
 
   const { data: session } = useSession();

@@ -2,11 +2,16 @@ import { useToggle } from "@/app/_hooks";
 import { GoalPrivacyType } from "@/app/_types/response/goal/goal";
 
 interface UseGoalPrivacyToggleProps {
-  onSelectPrivacy: (goalPrivacy: GoalPrivacyType) => void;
-  onSetIsEditing: (ieEdit: boolean) => void;
+  goalId: string;
+  setGoalPrivacy: (goalPrivacy: GoalPrivacyType) => void;
+  setIsEditing: (ieEdit: boolean) => void;
 }
 
-const useGoalPrivacyToggle = ({ onSelectPrivacy, onSetIsEditing }: UseGoalPrivacyToggleProps) => {
+const useGoalPrivacyToggle = ({
+  goalId,
+  setGoalPrivacy,
+  setIsEditing,
+}: UseGoalPrivacyToggleProps) => {
   const {
     isToggle: isGoalPrivacyToggle,
     handleToggleOn: handleGoalPrivacyToggleOn,
@@ -14,8 +19,11 @@ const useGoalPrivacyToggle = ({ onSelectPrivacy, onSetIsEditing }: UseGoalPrivac
   } = useToggle();
 
   const handleSelectGoalPrivacy = (goalPrivacy: GoalPrivacyType) => {
-    onSelectPrivacy(goalPrivacy);
-    onSetIsEditing(true);
+    setGoalPrivacy(goalPrivacy);
+
+    if (!goalId) {
+      setIsEditing(true);
+    }
   };
 
   return {
