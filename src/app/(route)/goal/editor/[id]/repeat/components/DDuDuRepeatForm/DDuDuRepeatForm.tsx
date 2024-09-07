@@ -1,22 +1,12 @@
 "use client";
 
-import { Fragment, useEffect } from "react";
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { Fragment } from "react";
+import { FormProvider } from "react-hook-form";
 
 import { Button, CheckboxInput, InputDate, InputRadio, TextInput } from "@/app/_components/client";
 import InputTime from "@/app/_components/client/InputTime/InputTime";
-import { REPEAT_DDUDU_KEY } from "@/app/_constants/queryKey/queryKey";
-import { fetchCreateRepeatDDudu, fetchEditRepeatDDudu } from "@/app/_services/client/repeatDdudu";
 import { useGoalFormStore } from "@/app/_store";
-import { RepeatDduduRequestType } from "@/app/_types/request/repeatDdudu/repeatDdudu";
-import {
-  DayOfMonth,
-  DayOfWeek,
-  RepeatDdudusDateType,
-  RepeatDdudusPattern,
-  RepeatDdudusType,
-} from "@/app/_types/response/goal/goal";
-import { useMutation } from "@tanstack/react-query";
+import { DayOfWeek, RepeatDdudusDateType, RepeatDdudusType } from "@/app/_types/response/goal/goal";
 
 import {
   DATE_RADIO_LIST,
@@ -25,11 +15,13 @@ import {
   DAY_OF_WEEK_STRING,
 } from "./DDuDuRepeatForm.constants";
 import { DayOfMonthString } from "./DDuDuRepeatForm.types";
+import {
+  useDeleteRepeatDDuDuMutation,
+  useRepeatDDuDuEditor,
+  useRepeatDDuDuMutation,
+} from "./hooks";
 
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-
-interface DDuDuRepeatFormDataType {
+export interface DDuDuRepeatFormDataType {
   name: string;
   repeatType: RepeatDdudusDateType;
   repeatDaysOfWeek?: DayOfWeek[];
@@ -54,155 +46,31 @@ const DDuDuRepeatForm = ({
   currentRepeatDDuDu,
   currentRepeatMonthData,
 }: DDuDuRepeatFormProps) => {
-  const methods = useForm<DDuDuRepeatFormDataType>({
-    defaultValues: {
-      name: currentRepeatDDuDu?.name,
-      repeatType: currentRepeatDDuDu?.repeatPattern.repeatType,
-      repeatDaysOfWeek: currentRepeatDDuDu?.repeatPattern.repeatDaysOfWeek || [],
-      repeatDaysOfMonth: currentRepeatMonthData,
-      lastDay: currentRepeatDDuDu?.repeatPattern.lastDay ? ["lastDay"] : [],
-      startDate: currentRepeatDDuDu?.startDate,
-      endDate: currentRepeatDDuDu?.endDate,
-      beginAt: currentRepeatDDuDu?.beginAt,
-      endAt: currentRepeatDDuDu?.endAt,
-    },
-  });
-  const { errors } = methods.formState;
-
   const { repeatDDuDu, setIsLoad, setRepeatDDuDu, setAddRepeatDDuDu } = useGoalFormStore();
-  const router = useRouter();
 
-  const selectedDateValue = methods.watch("repeatType");
-  const selectedDayOfWeekItems = methods.watch("repeatDaysOfWeek");
-  const selectedDayOfMonthItems = methods.watch("repeatDaysOfMonth");
-  const selectedLastDay = methods.watch("lastDay");
+  const {
+    methods,
+    errors,
+    selectedDateValue,
+    selectedDayOfWeekItems,
+    selectedDayOfMonthItems,
+    selectedLastDay,
+  } = useRepeatDDuDuEditor({ currentRepeatDDuDu, currentRepeatMonthData, setIsLoad });
 
-  useEffect(() => {
-    setIsLoad(true);
-
-    /* eslint-disable react-hooks/exhaustive-deps */
-  }, []);
-
-  const { data: session } = useSession();
-
-  const createRepeatDDuDuMutation = useMutation({
-    mutationKey: [REPEAT_DDUDU_KEY.REPEAT_DDUDU],
-    mutationFn: fetchCreateRepeatDDudu,
-    onSuccess: () => {
-      router.replace(`/goal/editor/${goalId}/repeats`);
-    },
+  const { onValid } = useRepeatDDuDuMutation({
+    goalId,
+    repeatId,
+    repeatDDuDu,
+    setRepeatDDuDu,
+    setAddRepeatDDuDu,
   });
 
-  const editRepeatDDuDuMutation = useMutation({
-    mutationKey: [REPEAT_DDUDU_KEY.REPEAT_DDUDU, repeatId],
-    mutationFn: fetchEditRepeatDDudu,
-    onSuccess: () => {
-      router.replace(`/goal/editor/${goalId}/repeats`);
-    },
+  const { handleRepeatDDuDuDelete } = useDeleteRepeatDDuDuMutation({
+    goalId,
+    repeatId,
+    repeatDDuDu,
+    setRepeatDDuDu,
   });
-
-  const onValid: SubmitHandler<DDuDuRepeatFormDataType> = ({
-    name,
-    repeatType,
-    repeatDaysOfMonth,
-    repeatDaysOfWeek,
-    startDate,
-    endDate,
-    lastDay,
-    beginAt,
-    endAt,
-  }) => {
-    let repeatPattern: RepeatDdudusPattern = { repeatType };
-    let repeatTime = {};
-
-    if (repeatType === "WEEKLY") {
-      repeatPattern = { repeatType, repeatDaysOfWeek };
-    } else if (repeatType === "MONTHLY") {
-      const daysOfMonth: DayOfMonth[] = repeatDaysOfMonth
-        ? repeatDaysOfMonth.map(Number).filter((day): day is DayOfMonth => day >= 1 && day <= 31)
-        : [];
-
-      if (daysOfMonth.length === 0 && !!lastDay[0] === false) {
-        // 매월을 선택하고 일자 / 마지막 날을 아무 것도 선택하지 않은 경우
-        return;
-      }
-
-      repeatPattern = {
-        repeatType,
-        repeatDaysOfMonth: daysOfMonth,
-        lastDay: !!lastDay[0],
-      };
-    }
-
-    if (beginAt && endAt) {
-      repeatTime = { beginAt, endAt };
-    }
-
-    const newRepeatDDuDuId =
-      repeatDDuDu.length === 0 ? 1 : repeatDDuDu[repeatDDuDu.length - 1].id + 1;
-
-    const newRepeatDDuDu: RepeatDdudusType = {
-      name,
-      id: newRepeatDDuDuId,
-      startDate,
-      endDate,
-      repeatPattern,
-      ...repeatTime,
-    };
-
-    const requestRepeatDDuDu: RepeatDduduRequestType = {
-      name,
-      startDate,
-      endDate,
-      ...repeatPattern,
-      ...repeatTime,
-    };
-
-    if (repeatId) {
-      const editRepeatDDuDu = repeatDDuDu.map((ddudu) => {
-        if (ddudu.id === Number(repeatId)) {
-          return { ...newRepeatDDuDu, id: ddudu.id };
-        }
-
-        return ddudu;
-      });
-
-      setRepeatDDuDu(editRepeatDDuDu);
-
-      if (Number(goalId)) {
-        // 즉시 수정
-        editRepeatDDuDuMutation.mutate({
-          accessToken: session?.sessionToken as string,
-          repeatDDuDuData: requestRepeatDDuDu,
-          repeatId,
-        });
-      }
-    } else {
-      setAddRepeatDDuDu(newRepeatDDuDu);
-
-      if (Number(goalId)) {
-        // 즉시 생성
-        createRepeatDDuDuMutation.mutate({
-          accessToken: session?.sessionToken as string,
-          repeatDDuDuData: { ...requestRepeatDDuDu, goalId: Number(goalId) },
-        });
-      }
-    }
-
-    if (!Number(goalId)) {
-      router.back();
-    }
-  };
-
-  const handleRepeatDDuDuDelete = () => {
-    if (goalId === "create") {
-      const updateRepeatDDuDu = repeatDDuDu.filter((ddudu) => ddudu.id !== Number(repeatId));
-      setRepeatDDuDu(updateRepeatDDuDu);
-      router.replace("/goal/editor");
-    } else {
-      // repeatDDuDu DELETE API호출
-    }
-  };
 
   return (
     <FormProvider {...methods}>
