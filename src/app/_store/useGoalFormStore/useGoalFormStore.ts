@@ -35,7 +35,7 @@ const useGoalFormStore = create<UseGoalFormStoreState>((set) => ({
   isEditing: false,
   goalText: "",
   goalPrivacy: "PUBLIC",
-  color: "#7f8c8d",
+  color: "#1D1D1B",
   repeatDDuDu: [],
   setIsLoad: (isLoad) => set({ isLoad }),
   setIsEditing: (isEditing) => set({ isEditing }),
