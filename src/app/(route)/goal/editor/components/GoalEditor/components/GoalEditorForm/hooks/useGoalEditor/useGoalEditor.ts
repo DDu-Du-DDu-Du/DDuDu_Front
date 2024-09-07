@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from "react";
-import { UseFormSetValue, UseFormWatch } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 import { GoalEditorFormInfo } from "../../GoalEditorForm";
 
@@ -12,8 +12,6 @@ interface UseGoalEditorProps {
   isLoadTempData: boolean | null;
   setGoalText: (goalText: string) => void;
   setIsEditing: (isEditing: boolean) => void;
-  watch: UseFormWatch<GoalEditorFormInfo>;
-  setValue: UseFormSetValue<GoalEditorFormInfo>;
 }
 
 const useGoalEditor = ({
@@ -22,18 +20,21 @@ const useGoalEditor = ({
   isLoadTempData,
   setGoalText,
   setIsEditing,
-  watch,
-  setValue,
 }: UseGoalEditorProps) => {
   const router = useRouter();
 
-  const goalValue = watch("goal");
+  const methods = useForm<GoalEditorFormInfo>();
+
+  const goalValue = methods.watch("goal");
 
   /* eslint-disable react-hooks/exhaustive-deps */
   const delayedGoalValueSave = useCallback(
     debounce((goalValue) => {
       setGoalText(goalValue);
-      setIsEditing(true);
+
+      if (!goalId) {
+        setIsEditing(true);
+      }
     }, 2000),
     [],
   );
@@ -52,7 +53,7 @@ const useGoalEditor = ({
       return;
     }
 
-    setValue("goal", goalText);
+    methods.setValue("goal", goalText);
   }, [isLoadTempData]);
 
   const handleMoveRepeatDDuDu = () => {
@@ -65,6 +66,7 @@ const useGoalEditor = ({
   };
 
   return {
+    methods,
     handleMoveRepeatDDuDu,
   };
 };
