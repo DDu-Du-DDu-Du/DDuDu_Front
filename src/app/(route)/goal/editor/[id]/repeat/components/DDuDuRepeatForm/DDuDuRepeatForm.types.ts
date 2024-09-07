@@ -1,3 +1,9 @@
+export interface RepeatFormDateRadioList {
+  id: "DAILY" | "WEEKLY" | "MONTHLY";
+  name: "repeatType";
+  label: "매일" | "매주" | "매월";
+}
+
 export type DayOfMonthString =
   | "1"
   | "2"

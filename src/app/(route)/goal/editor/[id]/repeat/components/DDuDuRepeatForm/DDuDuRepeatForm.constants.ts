@@ -1,22 +1,22 @@
 import { DayOfWeek } from "@/app/_types/response/goal/goal";
 
-import { DayOfMonthString } from "./DDuDuRepeatForm.types";
+import { DayOfMonthString, RepeatFormDateRadioList } from "./DDuDuRepeatForm.types";
 
-export const DATE_RADIO_LIST = [
+export const DATE_RADIO_LIST: RepeatFormDateRadioList[] = [
   { id: "DAILY", name: "repeatType", label: "매일" },
   { id: "WEEKLY", name: "repeatType", label: "매주" },
   { id: "MONTHLY", name: "repeatType", label: "매월" },
 ];
 
-export const DAY_OF_WEEK_STRING = {
-  MONDAY: "월",
-  TUESDAY: "화",
-  WEDNESDAY: "수",
-  THURSDAY: "목",
-  FRIDAY: "금",
-  SATURDAY: "토",
-  SUNDAY: "일",
-};
+export enum DAY_OF_WEEK_STRING {
+  MONDAY = "월",
+  TUESDAY = "화",
+  WEDNESDAY = "수",
+  THURSDAY = "목",
+  FRIDAY = "금",
+  SATURDAY = "토",
+  SUNDAY = "일",
+}
 
 export const DAY_OF_WEEK: DayOfWeek[] = [
   "MONDAY",
