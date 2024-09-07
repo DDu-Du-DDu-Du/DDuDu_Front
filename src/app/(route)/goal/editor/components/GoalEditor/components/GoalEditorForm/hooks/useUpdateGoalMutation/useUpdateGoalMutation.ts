@@ -44,7 +44,8 @@ const useUpdateGoalMutation = ({
     mutationKey: [GOAL_KEY.GOAL_EDIT, goalId],
     mutationFn: fetchEditGoal,
     onSuccess: () => {
-      queryClient.invalidateQueries();
+      queryClient.invalidateQueries({ queryKey: [GOAL_KEY.GOAL_EDITOR, goalId] });
+      queryClient.invalidateQueries({ queryKey: [GOAL_KEY.GOAL_LIST] });
       reset();
       router.replace("/goal");
     },
