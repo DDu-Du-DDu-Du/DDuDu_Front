@@ -1,32 +1,27 @@
 "use client";
 
-import { useCallback, useEffect } from "react";
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 
 import { Button, ColorSheet, PrivacySheet, SelectUiDiv, TextInput } from "@/app/_components/client";
 import { ArrowRightIcon } from "@/app/_components/server";
-import { GOAL_KEY } from "@/app/_constants/queryKey/queryKey";
-import {
-  fetchCreateGoal,
-  fetchDeleteGoal,
-  fetchEditGoal,
-  fetchStatusChangeGoal,
-} from "@/app/_services/client/goalEditor";
 import useGoalFormStore from "@/app/_store/useGoalFormStore/useGoalFormStore";
-import { RepeatDduduRequestType } from "@/app/_types/request/repeatDdudu/repeatDdudu";
 import { GoalPrivacyType, RepeatDdudusType } from "@/app/_types/response/goal/goal";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import DDuDuRepeatList from "../DDuDuRepeatList/DDuDuRepeatList";
 import { PRIVACY_TYPE } from "./GoalEditorForm.constants";
-import { useColorToggle, useGoalPrivacyToggle } from "./hooks";
+import {
+  useColorToggle,
+  useDeleteGoalMutation,
+  useGoalEditor,
+  useGoalPrivacyToggle,
+  useStatusChangeGoalMutation,
+  useUpdateGoalMutation,
+} from "./hooks";
 
-import { debounce } from "lodash";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
-interface GoalEditorFormInfo {
+export interface GoalEditorFormInfo {
   goal: string;
 }
 
@@ -50,7 +45,6 @@ const GoalEditorForm = ({
   goalFormData,
   isLoadTempData,
 }: GoalEditorFormProps) => {
-  const router = useRouter();
   const { goalText, goalPrivacy, color, repeatDDuDu } = goalFormData;
   const { setIsEditing, setGoalText, setGoalPrivacy, setColor, reset } = useGoalFormStore();
 
@@ -66,133 +60,39 @@ const GoalEditorForm = ({
   const { isColorToggle, handleColorToggleOff, handleColorToggleOn, handleSelectColor } =
     useColorToggle({ onSelectColor: setColor, onSetIsEditing: setIsEditing });
 
-  const goalValue = methods.watch("goal");
-
-  /* eslint-disable react-hooks/exhaustive-deps */
-  const delayedGoalValueSave = useCallback(
-    debounce((goalValue) => {
-      setGoalText(goalValue);
-      setIsEditing(true);
-    }, 2000),
-    [],
-  );
-
-  /* eslint-disable react-hooks/exhaustive-deps */
-  useEffect(() => {
-    if (!goalValue || goalText === goalValue) {
-      return;
-    }
-
-    delayedGoalValueSave(goalValue);
-  }, [goalValue]);
-
-  useEffect(() => {
-    if (!isLoadTempData) {
-      return;
-    }
-
-    methods.setValue("goal", goalText);
-  }, [isLoadTempData]);
+  const { handleMoveRepeatDDuDu } = useGoalEditor({
+    goalId,
+    goalText,
+    isLoadTempData,
+    setGoalText,
+    setIsEditing,
+    watch: methods.watch,
+    setValue: methods.setValue,
+  });
 
   const { data: session } = useSession();
-  const queryClient = useQueryClient();
 
-  const handleSuccess = () => {
-    reset();
-    router.replace("/goal");
-  };
-
-  const deleteGoalMutation = useMutation({
-    mutationKey: [GOAL_KEY.GOAL_DELETE, goalId],
-    mutationFn: fetchDeleteGoal,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [GOAL_KEY.GOAL_LIST] });
-      handleSuccess();
-    },
+  const { handleGoalDelete } = useDeleteGoalMutation({
+    sessionToken: session?.sessionToken as string,
+    goalId,
+    reset,
   });
 
-  const statusChangeGoalMutation = useMutation({
-    mutationKey: [GOAL_KEY.GOAL_STATUS, goalId],
-    mutationFn: fetchStatusChangeGoal,
-    onSuccess: () => {
-      queryClient.invalidateQueries();
-      handleSuccess();
-    },
+  const { handleGoalStatusChange } = useStatusChangeGoalMutation({
+    sessionToken: session?.sessionToken as string,
+    goalId,
+    goalStatus,
+    reset,
   });
 
-  const createGoalMutation = useMutation({
-    mutationKey: [GOAL_KEY.GOAL_CREATE],
-    mutationFn: fetchCreateGoal,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [GOAL_KEY.GOAL_LIST] });
-      handleSuccess();
-    },
+  const { onValid } = useUpdateGoalMutation({
+    sessionToken: session?.sessionToken as string,
+    goalId,
+    color,
+    goalPrivacy,
+    repeatDDuDu,
+    reset,
   });
-
-  const editGoalMutation = useMutation({
-    mutationKey: [GOAL_KEY.GOAL_EDIT, goalId],
-    mutationFn: fetchEditGoal,
-    onSuccess: () => {
-      queryClient.invalidateQueries();
-      handleSuccess();
-    },
-  });
-
-  const onValid: SubmitHandler<GoalEditorFormInfo> = ({ goal }) => {
-    const goalData = {
-      name: goal,
-      color: color.slice(1),
-      privacyType: goalPrivacy,
-    };
-
-    if (goalId) {
-      editGoalMutation.mutate({ accessToken: session?.sessionToken as string, goalData, goalId });
-    } else {
-      const goalRepeatData = repeatDDuDu.map((ddudu) => {
-        const repeatDDuDu: RepeatDduduRequestType = {
-          name: ddudu.name,
-          startDate: ddudu.startDate,
-          endDate: ddudu.endDate,
-          repeatType: ddudu.repeatPattern.repeatType,
-        };
-
-        if (ddudu.repeatPattern.repeatType === "WEEKLY") {
-          repeatDDuDu.repeatDaysOfWeek = ddudu.repeatPattern.repeatDaysOfWeek;
-        } else if (ddudu.repeatPattern.repeatType === "MONTHLY") {
-          repeatDDuDu.repeatDaysOfMonth = ddudu.repeatPattern.repeatDaysOfMonth;
-          repeatDDuDu.lastDayOfMonth = ddudu.repeatPattern.lastDay;
-        }
-
-        return repeatDDuDu;
-      });
-
-      createGoalMutation.mutate({
-        accessToken: session?.sessionToken as string,
-        goalData: { ...goalData, repeatDdudus: [...goalRepeatData] },
-      });
-    }
-  };
-
-  const handleMoveRepeatDDuDu = () => {
-    if (goalId) {
-      router.push(`/goal/editor/${goalId}/repeat`);
-      return;
-    }
-
-    router.push("/goal/editor/create/repeat");
-  };
-
-  const handleGoalStatusChange = () => {
-    statusChangeGoalMutation.mutate({
-      accessToken: session?.sessionToken as string,
-      goalId,
-      status: goalStatus === "IN_PROGRESS" ? "DONE" : "IN_PROGRESS",
-    });
-  };
-
-  const handleGoalDelete = () => {
-    deleteGoalMutation.mutate({ accessToken: session?.sessionToken as string, goalId });
-  };
 
   return (
     <FormProvider {...methods}>
