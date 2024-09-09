@@ -12,7 +12,7 @@ export type ButtonBorderType = "green" | "none";
 export type ButtonFontSizeType = "large" | "medium";
 export type ButtonFontWeightType = "regular" | "bold";
 export type ButtonFontColorType = "white" | "black";
-export type ButtonBackgroundColorType = "yellow" | "orange" | "red";
+export type ButtonBackgroundColorType = "yellow" | "orange" | "red" | "gray";
 
 export interface ButtonProps extends HTMLMotionProps<"button"> {
   children?: React.ReactNode;

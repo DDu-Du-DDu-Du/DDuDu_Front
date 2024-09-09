@@ -5,7 +5,7 @@ import {
   ButtonFontSizeType,
   ButtonFontWeightType,
   ButtonRadiusType,
-} from "../../Button.type";
+} from "../../Button";
 
 export interface UseConvertButtonStyleProps {
   radius: ButtonRadiusType;
