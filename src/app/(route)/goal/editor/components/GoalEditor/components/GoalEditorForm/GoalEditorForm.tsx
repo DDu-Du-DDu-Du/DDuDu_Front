@@ -5,8 +5,8 @@ import { FormProvider } from "react-hook-form";
 import { Button, ColorSheet, PrivacySheet, SelectUiDiv, TextInput } from "@/app/_components/client";
 import { ArrowRightIcon } from "@/app/_components/server";
 import useGoalFormStore from "@/app/_store/useGoalFormStore/useGoalFormStore";
-import { GoalPrivacyType, RepeatDdudusType } from "@/app/_types/response/goal/goal";
 
+import { GoalFormDataType } from "../../../../goalEditor.types";
 import DDuDuRepeatList from "../DDuDuRepeatList/DDuDuRepeatList";
 import { PRIVACY_TYPE } from "./GoalEditorForm.constants";
 import {
@@ -20,17 +20,6 @@ import {
 
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-
-export interface GoalEditorFormInfo {
-  goal: string;
-}
-
-interface GoalFormDataType {
-  goalText: string;
-  goalPrivacy: GoalPrivacyType;
-  color: string;
-  repeatDDuDu: RepeatDdudusType[];
-}
 
 interface GoalEditorFormProps {
   goalId: string;

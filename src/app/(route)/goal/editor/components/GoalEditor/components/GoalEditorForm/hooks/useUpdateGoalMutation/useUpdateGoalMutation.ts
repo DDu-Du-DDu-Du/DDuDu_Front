@@ -1,12 +1,11 @@
 import { SubmitHandler } from "react-hook-form";
 
+import { GoalEditorFormInfo } from "@/app/(route)/goal/editor/goalEditor.types";
 import { GOAL_KEY } from "@/app/_constants/queryKey/queryKey";
 import { fetchCreateGoal, fetchEditGoal } from "@/app/_services/client/goalEditor";
 import { RepeatDduduRequestType } from "@/app/_types/request/repeatDdudu/repeatDdudu";
 import { GoalPrivacyType, RepeatDdudusType } from "@/app/_types/response/goal/goal";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-
-import { GoalEditorFormInfo } from "../../GoalEditorForm";
 
 import { useRouter } from "next/navigation";
 
