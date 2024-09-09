@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
-import { GoalEditorFormInfo } from "../../GoalEditorForm";
+import { GoalEditorFormInfo } from "@/app/(route)/goal/editor/goalEditor.types";
 
 import { debounce } from "lodash";
 import { useRouter } from "next/navigation";
