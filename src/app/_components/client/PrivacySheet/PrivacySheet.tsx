@@ -1,17 +1,14 @@
 "use client";
 
 import { Fragment } from "react";
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { FormProvider } from "react-hook-form";
 
 import { BottomSheet, Button } from "@/app/_components/client";
 import { GoalPrivacyType } from "@/app/_types/response/goal/goal";
 
 import { SheetRadioItem } from "./components";
+import { usePrivacySheet } from "./hooks";
 import { PRIVACY_LIST } from "./privacySheet.constants";
-
-interface privacyFormType {
-  privacyType: GoalPrivacyType;
-}
 
 interface PrivacySheetProps {
   goalPrivacy: GoalPrivacyType;
@@ -21,22 +18,7 @@ interface PrivacySheetProps {
 }
 
 const PrivacySheet = ({ goalPrivacy, isShow, onClose, onClick }: PrivacySheetProps) => {
-  const methods = useForm<privacyFormType>({
-    defaultValues: {
-      privacyType: goalPrivacy,
-    },
-  });
-
-  const onValid: SubmitHandler<privacyFormType> = ({ privacyType }) => {
-    onClick(privacyType);
-    onClose();
-  };
-
-  const handlePrivacySubmit = (event: React.FormEvent) => {
-    event.stopPropagation();
-    event.preventDefault();
-    methods.handleSubmit(onValid)(event);
-  };
+  const { methods, handlePrivacySubmit } = usePrivacySheet({ goalPrivacy, onClose, onClick });
 
   return (
     <BottomSheet
@@ -66,7 +48,7 @@ const PrivacySheet = ({ goalPrivacy, isShow, onClose, onClick }: PrivacySheetPro
             className="w-full h-[5.6rem]"
             type="submit"
             fontSize="large"
-            backgroundColor="orange"
+            backgroundColor="gray"
           >
             확인
           </Button>
