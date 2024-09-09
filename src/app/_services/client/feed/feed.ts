@@ -251,10 +251,7 @@ interface fetchDDuDuDateProps {
 }
 
 export const fetchDDuDuChangeDate = async ({ accessToken, id, date }: fetchDDuDuDateProps) => {
-  const changedDate: RequestDDuDuChangeDate = {
-    newDate: date,
-    isPostponed: true,
-  };
+  const changedDate: RequestDDuDuChangeDate = { newDate: date };
 
   const response = await fetchApi(`${FEED.DDUDU}/${id}/date`, {
     method: "PUT",
