@@ -12,5 +12,4 @@ export interface RequestDDuDu {
 
 export interface RequestDDuDuChangeDate {
   newDate: string;
-  isPostponed: boolean;
 }
