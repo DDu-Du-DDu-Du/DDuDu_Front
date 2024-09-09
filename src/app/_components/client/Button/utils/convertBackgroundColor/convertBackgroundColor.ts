@@ -1,4 +1,4 @@
-import { ButtonBackgroundColorType } from "../../Button.type";
+import { ButtonBackgroundColorType } from "../../Button";
 
 const convertBackgroundColor = (colorValue: ButtonBackgroundColorType) => {
   switch (colorValue) {
@@ -10,6 +10,9 @@ const convertBackgroundColor = (colorValue: ButtonBackgroundColorType) => {
 
     case "red":
       return "bg-example_red_500";
+
+    case "gray":
+      return "bg-example_gray_500";
 
     default:
       return "bg-example_yellow_500";
