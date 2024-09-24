@@ -2,7 +2,7 @@
 
 import { DayContentProps } from "react-day-picker";
 
-import { MonthlyDDuDuType } from "@/app/_types/response/feed/feed";
+import { MonthlyWeeklyDDuDuType } from "@/app/_types/response/feed/feed";
 
 import useFeedCalenderDayConetent from "../../hooks/useFeedCalenderDayContent/useFeedCalenderDayConetns";
 import DailyDDuDu from "../DailyDDuDu/DailyDDuDu";
@@ -12,7 +12,7 @@ import { twMerge } from "tailwind-merge";
 
 interface FeedCalenderDayContentProps {
   props: DayContentProps;
-  monthlyDDuDus: MonthlyDDuDuType[];
+  monthlyDDuDus: MonthlyWeeklyDDuDuType[];
   currentURL: string;
   selectedDDuDuDate?: string;
 }

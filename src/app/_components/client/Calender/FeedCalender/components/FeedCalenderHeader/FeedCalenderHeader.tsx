@@ -10,14 +10,14 @@ import { useClickAway, useToggle } from "@/app/_hooks";
 import {
   fetchCreateMonthlyGoals,
   fetchEditMonthlyGoals,
+  getGoals,
   getMonthlyDDuDus,
-  getMonthlyGoals,
 } from "@/app/_services/client";
 import { RequestPeriodGoals } from "@/app/_types/request/feed/feed";
-import { MonthlyDDuDuType } from "@/app/_types/response/feed/feed";
+import { MonthlyWeeklyDDuDuType } from "@/app/_types/response/feed/feed";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { MonthlyGoalsType } from "../../FeedCalender";
+import { GoalsType } from "../../FeedCalender";
 
 import { useSession } from "next-auth/react";
 
@@ -27,7 +27,7 @@ interface MonthlyGoalsFormInfo {
 
 interface FeedCalenderHeaderProps {
   props: CaptionProps;
-  monthlyGoals?: MonthlyGoalsType;
+  monthlyGoals?: GoalsType;
 }
 
 const FeedCalenderHeader = ({ props, monthlyGoals }: FeedCalenderHeaderProps) => {
@@ -63,7 +63,7 @@ const FeedCalenderHeader = ({ props, monthlyGoals }: FeedCalenderHeaderProps) =>
 
   const MonthlyDDuDUs = async (year: number, month: number) => {
     const currentDate = `${year}-${month < 10 ? "0" : ""}${month}`;
-    return await queryClient.fetchQuery<MonthlyDDuDuType[]>({
+    return await queryClient.fetchQuery<MonthlyWeeklyDDuDuType[]>({
       queryKey: ["monthlyDDuDus", year, month],
       queryFn: () =>
         getMonthlyDDuDus({
@@ -76,10 +76,10 @@ const FeedCalenderHeader = ({ props, monthlyGoals }: FeedCalenderHeaderProps) =>
 
   const MonthlyGoals = async (year: number, month: number) => {
     const currentDate = `${year}-${month < 10 ? "0" : ""}${month}-01`;
-    return await queryClient.fetchQuery<MonthlyGoalsType>({
+    return await queryClient.fetchQuery<GoalsType>({
       queryKey: ["monthlyGoals", year, month],
       queryFn: () =>
-        getMonthlyGoals({
+        getGoals({
           accessToken: session?.sessionToken as string,
           type: "MONTH",
           date: currentDate,
