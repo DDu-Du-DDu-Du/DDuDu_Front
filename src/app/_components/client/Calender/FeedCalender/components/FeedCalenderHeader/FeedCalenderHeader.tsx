@@ -8,8 +8,8 @@ import ChevronLeftIcon from "@/app/_components/server/icons/ChevronLeftIcon/Chev
 import ChevronRightIcon from "@/app/_components/server/icons/ChevronRightIcon/ChevronRightIcon";
 import { useClickAway, useToggle } from "@/app/_hooks";
 import {
-  fetchCreateMonthlyGoals,
-  fetchEditMonthlyGoals,
+  fetchCreateGoals,
+  fetchEditGoals,
   getGoals,
   getMonthlyDDuDus,
 } from "@/app/_services/client";
@@ -96,13 +96,13 @@ const FeedCalenderHeader = ({ props, monthlyGoals }: FeedCalenderHeaderProps) =>
 
   const createMonthlyGoalsMutation = useMutation({
     mutationKey: ["create", "monthlyGoals"],
-    mutationFn: fetchCreateMonthlyGoals,
+    mutationFn: fetchCreateGoals,
     onSuccess: onMonthlyGoalsSuccess,
   });
 
   const editMonthlyGoalsMutation = useMutation({
     mutationKey: ["edit", "monthlyGoals"],
-    mutationFn: fetchEditMonthlyGoals,
+    mutationFn: fetchEditGoals,
     onSuccess: onMonthlyGoalsSuccess,
   });
 
