@@ -3,10 +3,10 @@
 import { Fragment, useMemo } from "react";
 
 import { FeedCalender } from "@/app/_components/client/Calender";
-import { MonthlyGoalsType } from "@/app/_components/client/Calender/FeedCalender/FeedCalender";
+import { GoalsType } from "@/app/_components/client/Calender/FeedCalender/FeedCalender";
 import { FEED_KEY } from "@/app/_constants/queryKey/queryKey";
-import { getDailyList, getMonthlyDDuDus, getMonthlyGoals } from "@/app/_services/client";
-import { MainDailyListType, MonthlyDDuDuType } from "@/app/_types/response/feed/feed";
+import { getDailyList, getGoals, getMonthlyDDuDus } from "@/app/_services/client";
+import { MainDailyListType, MonthlyWeeklyDDuDuType } from "@/app/_types/response/feed/feed";
 import { useQuery } from "@tanstack/react-query";
 
 import { MainGoalItem } from "..";
@@ -34,7 +34,7 @@ const MainFeed = ({ selectedDDuDuDate }: MainFeedProps) => {
       }),
   });
 
-  const { data: monthlyDDuDus } = useQuery<MonthlyDDuDuType[]>({
+  const { data: monthlyDDuDus } = useQuery<MonthlyWeeklyDDuDuType[]>({
     queryKey: [FEED_KEY.MONTHLY_DDUDUS],
     queryFn: () =>
       getMonthlyDDuDus({
@@ -44,10 +44,10 @@ const MainFeed = ({ selectedDDuDuDate }: MainFeedProps) => {
       }),
   });
 
-  const { data: monthlyGoals } = useQuery<MonthlyGoalsType>({
+  const { data: monthlyGoals } = useQuery<GoalsType>({
     queryKey: [FEED_KEY.MONTHLY_GOALS],
     queryFn: () =>
-      getMonthlyGoals({
+      getGoals({
         accessToken: session?.sessionToken as string,
         type: "MONTH",
         date: selectedDDuDuDate,
@@ -55,7 +55,7 @@ const MainFeed = ({ selectedDDuDuDate }: MainFeedProps) => {
   });
 
   return (
-    <>
+    <div className="px-[2.4rem]">
       <FeedCalender
         monthlyDDuDus={monthlyDDuDus || []}
         monthlyGoals={monthlyGoals}
@@ -72,7 +72,7 @@ const MainFeed = ({ selectedDDuDuDate }: MainFeedProps) => {
           </Fragment>
         ))}
       </ul>
-    </>
+    </div>
   );
 };
 
