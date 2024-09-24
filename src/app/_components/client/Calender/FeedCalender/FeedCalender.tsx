@@ -4,22 +4,22 @@ import { FeedCalenderStyles } from "../Calender.styles";
 
 import { CaptionProps, DayContentProps, DayPicker } from "react-day-picker";
 
-import { MonthlyDDuDuType } from "@/app/_types/response/feed/feed";
+import { MonthlyWeeklyDDuDuType } from "@/app/_types/response/feed/feed";
 
 import { FeedCalenderDayContent, FeedCalenderHeader } from "./components";
 
 import { ko } from "date-fns/locale/ko";
 import { usePathname, useSearchParams } from "next/navigation";
 
-export interface MonthlyGoalsType {
+export interface GoalsType {
   id: number;
   contents: string;
   type: "WEEK" | "MONTH";
 }
 
 export interface FeedCalenderProps {
-  monthlyGoals?: MonthlyGoalsType;
-  monthlyDDuDus: MonthlyDDuDuType[];
+  monthlyGoals?: GoalsType;
+  monthlyDDuDus: MonthlyWeeklyDDuDuType[];
   selectedDDuDuDate?: string;
 }
 

@@ -15,7 +15,7 @@ export interface MainDailyListType {
   ddudus: MainDDuDusType[];
 }
 
-export interface MonthlyDDuDuType {
+export interface MonthlyWeeklyDDuDuType {
   date: string;
   totalCount: number;
   uncompletedCount: number;
@@ -31,7 +31,7 @@ export type MainTimeTableType = {
   ddudus: MainTimeTableDDuDuType[];
 };
 
-interface MainTimeTableDDuDuType {
+export interface MainTimeTableDDuDuType {
   id: number;
   name: string;
   status: "COMPLETE" | "UNCOMPLETED";
