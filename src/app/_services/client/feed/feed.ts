@@ -31,13 +31,8 @@ export const getDailyList = async ({ accessToken, userId, date }: GetDailyListPr
   return response.json();
 };
 
-interface GetDailyTimeTableProps {
-  accessToken: string;
-  userId: string;
-}
-
-export const getDailyTimeTable = async ({ accessToken, userId }: GetDailyTimeTableProps) => {
-  const response = await fetchApi(`${FEED.DAILY_TIMETABLE}?userId=${userId}`, {
+export const getDailyTimeTable = async ({ accessToken, userId, date }: GetDailyListProps) => {
+  const response = await fetchApi(`${FEED.DAILY_TIMETABLE}?userId=${userId}&date=${date}`, {
     method: "GET",
     headers: {
       accept: "application/json",
@@ -58,7 +53,7 @@ interface PeriodGoalsProps {
   date: string;
 }
 
-export const getMonthlyGoals = async ({ accessToken, type, date }: PeriodGoalsProps) => {
+export const getGoals = async ({ accessToken, type, date }: PeriodGoalsProps) => {
   const selectedDate = `&date=${date}`;
 
   const response = await fetchApi(`${FEED.PERIOD_GOALS}?type=${type}${selectedDate}`, {
@@ -76,15 +71,12 @@ export const getMonthlyGoals = async ({ accessToken, type, date }: PeriodGoalsPr
   return response.json();
 };
 
-interface FetchCreateMonthlyGoalsProps {
+interface FetchCreateGoalsProps {
   accessToken: string;
   periodGoals: RequestPeriodGoals;
 }
 
-export const fetchCreateMonthlyGoals = async ({
-  accessToken,
-  periodGoals,
-}: FetchCreateMonthlyGoalsProps) => {
+export const fetchCreateGoals = async ({ accessToken, periodGoals }: FetchCreateGoalsProps) => {
   const response = await fetchApi(`${FEED.PERIOD_GOALS}`, {
     method: "POST",
     body: JSON.stringify(periodGoals),
@@ -101,22 +93,40 @@ export const fetchCreateMonthlyGoals = async ({
   return response.json();
 };
 
-interface FetchEditMonthlyGoalsProps {
+interface FetchEditGoalsProps {
   accessToken: string;
   contents: string;
   periodGoalsId: number;
 }
 
-export const fetchEditMonthlyGoals = async ({
+export const fetchEditGoals = async ({
   accessToken,
   contents,
   periodGoalsId,
-}: FetchEditMonthlyGoalsProps) => {
+}: FetchEditGoalsProps) => {
   const response = await fetchApi(`${FEED.PERIOD_GOALS}/${periodGoalsId}`, {
     method: "PUT",
     body: JSON.stringify({ contents }),
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`HHTP error! status: ${response.status}`);
+  }
+
+  return response.json();
+};
+
+export const getWeeklyDDuDus = async ({ accessToken, userId, date }: GetDailyListProps) => {
+  const selectedDate = `&date=${date}`;
+
+  const response = await fetchApi(`${FEED.WEEKLY_DDUDUS}?userId=${userId}${selectedDate}`, {
+    method: "GET",
+    headers: {
+      accept: "application/json",
       Authorization: `Bearer ${accessToken}`,
     },
   });
