@@ -18,6 +18,7 @@ export interface DDuDuDetailType {
 }
 
 interface DDuDuMenuProps {
+  type: "ddudu" | "schedule";
   dduduId: number;
   handleEditDDuDu: (id: number) => void;
   onDeleteDDuDu: (id: number) => void;
@@ -29,6 +30,7 @@ interface DDuDuMenuProps {
 }
 
 export const DDuDuMenu = ({
+  type,
   dduduId,
   handleEditDDuDu,
   onDeleteDDuDu,
@@ -53,6 +55,7 @@ export const DDuDuMenu = ({
   return (
     <div className="w-ful flex flex-col items-center gap-[2.5rem] p-[2rem]">
       <DDuDuMainMenu
+        type={type}
         dduduId={dduduId}
         dduduDetail={dduduDetail}
         handleEditDDuDu={handleEditDDuDu}

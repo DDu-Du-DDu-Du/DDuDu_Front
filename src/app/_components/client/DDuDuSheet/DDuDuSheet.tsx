@@ -2,6 +2,7 @@ import { BottomSheet } from "../BottomSheet";
 import { DDuDuMenu } from "./components";
 
 interface DDuDuSheetProps {
+  type?: "ddudu" | "schedule";
   dduduId: number;
   handleEditDDuDu: (id: number) => void;
   onDeleteDDuDu: (id: number) => void;
@@ -13,6 +14,7 @@ interface DDuDuSheetProps {
 }
 
 const DDuDuSheet = ({
+  type = "ddudu",
   dduduId,
   handleEditDDuDu,
   onDeleteDDuDu,
@@ -30,6 +32,7 @@ const DDuDuSheet = ({
       onClose={handleDDuDuSheetToggleOff}
     >
       <DDuDuMenu
+        type={type}
         dduduId={dduduId}
         handleEditDDuDu={handleEditDDuDu}
         onDeleteDDuDu={onDeleteDDuDu}

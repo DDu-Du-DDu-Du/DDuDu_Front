@@ -5,6 +5,7 @@ import { formatDateToYYYYMMDD } from "@/app/_utils";
 import { DDuDuDetailType } from "../../DDuDuMenu";
 
 interface DDuDuMainMenuProps {
+  type: "ddudu" | "schedule";
   dduduId: number;
   dduduDetail: DDuDuDetailType;
   handleEditDDuDu: (id: number) => void;
@@ -14,6 +15,7 @@ interface DDuDuMainMenuProps {
 }
 
 const DDuDuMainMenu = ({
+  type,
   dduduId,
   dduduDetail,
   handleEditDDuDu,
@@ -43,11 +45,13 @@ const DDuDuMainMenu = ({
 
   return (
     <div className="flex w-full max-w-[50rem] gap-4">
-      <SheetButton
-        Icon={<ExampleIcon size={32} />}
-        title="수정하기"
-        onClick={handleCurrentDDuDuEdit}
-      />
+      {type === "ddudu" && (
+        <SheetButton
+          Icon={<ExampleIcon size={32} />}
+          title="수정하기"
+          onClick={handleCurrentDDuDuEdit}
+        />
+      )}
       {(isDDuDuDateNow || status === "COMPLETE") && (
         <SheetButton
           Icon={<ExampleIcon />}
