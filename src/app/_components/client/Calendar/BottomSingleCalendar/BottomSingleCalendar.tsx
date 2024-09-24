@@ -1,6 +1,6 @@
 "use client";
 
-import { BottomSheetCalenderStyles } from "../Calender.styles";
+import { bottomSheetCalendarStyles } from "../calendar.styles";
 
 import { CaptionLabelProps, DayPicker } from "react-day-picker";
 
@@ -12,7 +12,7 @@ import { BottomSheet } from "../../BottomSheet";
 
 import { ko } from "date-fns/locale/ko";
 
-export interface BottomSingleCalenderProps {
+export interface BottomSingleCalendarProps {
   currentDate: string;
   selectedDate: Date | undefined;
   setSelected: (date: Date | undefined) => void;
@@ -20,13 +20,13 @@ export interface BottomSingleCalenderProps {
   handleCalendarSheetToggleOff: () => void;
 }
 
-const BottomSingleCalender = ({
+const BottomSingleCalendar = ({
   currentDate,
   selectedDate,
   setSelected,
   onChangeDDuDuDate,
   handleCalendarSheetToggleOff,
-}: BottomSingleCalenderProps) => {
+}: BottomSingleCalendarProps) => {
   const handleSelectedDate = () => {
     if (!selectedDate || currentDate === formatDateToYYYYMMDD(selectedDate)) {
       handleCalendarSheetToggleOff();
@@ -50,7 +50,7 @@ const BottomSingleCalender = ({
         selected={selectedDate}
         onSelect={setSelected}
         className="w-full pb-[1.5rem] px-[2.4rem]"
-        classNames={BottomSheetCalenderStyles}
+        classNames={bottomSheetCalendarStyles}
         components={{
           CaptionLabel: (date: CaptionLabelProps) => (
             <p>
@@ -85,4 +85,4 @@ const BottomSingleCalender = ({
   );
 };
 
-export default BottomSingleCalender;
+export default BottomSingleCalendar;

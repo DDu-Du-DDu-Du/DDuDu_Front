@@ -3,7 +3,7 @@
 import { Fragment } from "react";
 
 import { AlarmSheet, DDuDuSheet, DDuDuTimeSheet } from "@/app/_components/client";
-import { BottomSingleCalender } from "@/app/_components/client/Calender";
+import { BottomSingleCalendar } from "@/app/_components/client/Calendar";
 import { GoalItem } from "@/app/_components/server";
 import { useToggle } from "@/app/_hooks";
 import { MainDailyListType } from "@/app/_types/response/feed/feed";
@@ -164,7 +164,7 @@ const MainGoalItem = ({ goal, ddudus, selectedDDuDuDate }: MainGoalItemProps) =>
       )}
       {isAlarmSheetToggle && <AlarmSheet handleAlarmSheetToggleOff={handleAlarmSheetToggleOff} />}
       {isCalendarSheetToggle && (
-        <BottomSingleCalender
+        <BottomSingleCalendar
           currentDate={currentDate}
           selectedDate={selectedDate}
           setSelected={handleSelectedDate}

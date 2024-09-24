@@ -1,6 +1,8 @@
 // import { auth } from "@/auth";
 import { signInWithKakao } from "../_api/serverActions/auth";
 
+import Link from "next/link";
+
 // import { QUERY_KEY, QUERY_OPTIONS, getQueryClient } from "../_constants";
 
 const Home = async () => {
@@ -18,6 +20,7 @@ const Home = async () => {
       <form action={signInWithKakao}>
         <button type="submit">로그인 버튼 (테스트용)</button>
       </form>
+      <Link href="/feed?view=ddudu">메인 피드 페이지</Link>
     </main>
   );
 };

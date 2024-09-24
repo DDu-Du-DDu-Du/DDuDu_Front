@@ -12,8 +12,8 @@ import { MonthlyWeeklyDDuDuType } from "@/app/_types/response/feed/feed";
 import { getDayOfWeek } from "@/app/_utils";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { GoalsType } from "../FeedCalender/FeedCalender";
-import DailyDDuDu from "../FeedCalender/components/DailyDDuDu/DailyDDuDu";
+import { GoalsType } from "../FeedCalendar/FeedCalendar";
+import DailyDDuDu from "../FeedCalendar/components/DailyDDuDu/DailyDDuDu";
 
 import { useSession } from "next-auth/react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";

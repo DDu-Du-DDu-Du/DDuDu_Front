@@ -3,8 +3,8 @@
 import { Fragment } from "react";
 
 import { Timeline } from "@/app/_components/client";
-import { GoalsType } from "@/app/_components/client/Calender/FeedCalender/FeedCalender";
-import WeekCalendar from "@/app/_components/client/Calender/WeekCalendar/WeekCalendar";
+import { GoalsType } from "@/app/_components/client/Calendar/FeedCalendar/FeedCalendar";
+import WeekCalendar from "@/app/_components/client/Calendar/WeekCalendar/WeekCalendar";
 import { FEED_KEY } from "@/app/_constants/queryKey/queryKey";
 import { getDailyTimeTable, getGoals, getWeeklyDDuDus } from "@/app/_services/client";
 import { MainDailyTimeTableType, MonthlyWeeklyDDuDuType } from "@/app/_types/response/feed/feed";
