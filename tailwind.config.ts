@@ -99,6 +99,8 @@ const config = {
 
         modal: "500",
 
+        bottom_sheet: "500",
+
         toast: "600",
 
         spinner: "800",
