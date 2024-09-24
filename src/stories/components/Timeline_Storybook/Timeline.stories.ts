@@ -1,156 +1,86 @@
 import { Timeline } from "@/app/_components/server";
-import { TimelineListType } from "@/app/_types/response";
+import { MainDailyTimeTableType } from "@/app/_types/response/feed/feed";
 import type { Meta, StoryObj } from "@storybook/react";
 
-const TEST_VALUE: TimelineListType = {
-  timeline: [
+const TIMETABLE_DDUDU_LIST: MainDailyTimeTableType = {
+  timetable: [
     {
-      time: "12 :00",
+      beginAt: "12:00",
       ddudus: [
         {
-          id: 1,
-          name: "테스트용 할일 목록 1",
-          status: "COMPLETED",
-          beginAt: "13:20:00",
-          endAt: "16:20:00",
-          goalId: 1001,
-        },
-        {
-          id: 2,
-          name: "테스트용 할일 2",
+          id: 283,
+          name: "12시 - 13시 테스트",
           status: "UNCOMPLETED",
-          beginAt: "13:20:00",
-          endAt: "14:20:00",
-          goalId: 1001,
-        },
-        {
-          id: 3,
-          name: "테스트용 할일 목록 3 테스트용 할일 목록 3 테스트용 할일 목록 3 테스트용 할일 목록 3",
-          status: "COMPLETED",
-          beginAt: "13:20:00",
-          endAt: "13:50:00",
-          goalId: 1001,
-        },
-        {
-          id: 4,
-          name: "",
-          status: "COMPLETED",
-          beginAt: "13:20:00",
-          endAt: "13:55:00",
-          goalId: 1001,
+          goalId: 64,
+          beginAt: "12:00",
+          endAt: "13:00",
         },
       ],
     },
     {
-      time: "13 :00",
+      beginAt: "15:00",
       ddudus: [
         {
-          id: 5,
-          name: "전부다 할일을 안했다면? 1",
+          id: 284,
+          name: "15시 - 16시 테스트",
           status: "UNCOMPLETED",
-          beginAt: "13:20:00",
-          endAt: "16:20:00",
-          goalId: 1001,
-        },
-        {
-          id: 6,
-          name: "전부다 할일을 안했다면? 2",
-          status: "UNCOMPLETED",
-          beginAt: "13:20:00",
-          endAt: "14:20:00",
-          goalId: 1001,
-        },
-        {
-          id: 7,
-          name: "전부다 할일을 안했다면? 3",
-          status: "UNCOMPLETED",
-          beginAt: "13:20:00",
-          endAt: "13:50:00",
-          goalId: 1001,
+          goalId: 66,
+          beginAt: "15:00",
+          endAt: "16:00",
         },
       ],
     },
     {
-      time: "14 :00",
+      beginAt: "20:00",
       ddudus: [
         {
-          id: 8,
-          name: "하나의 아이템 - 완료",
-          status: "COMPLETED",
-          beginAt: "13:20:00",
-          endAt: "16:20:00",
-          goalId: 1001,
-        },
-      ],
-    },
-    {
-      time: "15 :00",
-      ddudus: [
-        {
-          id: 9,
-          name: "할일을 전부 완료했다면? 1",
-          status: "COMPLETED",
-          beginAt: "13:20:00",
-          endAt: "16:20:00",
-          goalId: 1001,
-        },
-        {
-          id: 10,
-          name: "할일을 전부 완료했다면? 2 할일을 전부 완료했다면? 2 할일을 전부 완료했다면? 2 할일을 전부 완료했다면? 2 할일을 전부 완료했다면? 2 할일을 전부 완료했다면? 2",
-          status: "COMPLETED",
-          beginAt: "13:20:00",
-          endAt: "14:20:00",
-          goalId: 1001,
-        },
-        {
-          id: 11,
-          name: "할일을 전부 완료했다면? 3",
-          status: "COMPLETED",
-          beginAt: "13:20:00",
-          endAt: "13:50:00",
-          goalId: 1001,
-        },
-      ],
-    },
-    {
-      time: "16 :00",
-      ddudus: [],
-    },
-    {
-      time: "17 :00",
-      ddudus: [
-        {
-          id: 12,
-          name: "하나의 아이템 - 미완료",
+          id: 285,
+          name: "20시 - 22시 테스트",
           status: "UNCOMPLETED",
-          beginAt: "13:20:00",
-          endAt: "16:20:00",
-          goalId: 1001,
+          goalId: 63,
+          beginAt: "20:00",
+          endAt: "22:00",
+        },
+      ],
+    },
+  ],
+  unassignedDdudus: [
+    {
+      goal: {
+        id: 64,
+        name: "반복할 일",
+        color: "EF8062",
+      },
+      ddudus: [],
+    },
+    {
+      goal: {
+        id: 66,
+        name: "새로운 목표",
+        color: "1D1D1B",
+      },
+      ddudus: [],
+    },
+    {
+      goal: {
+        id: 61,
+        name: "뚜두 프로젝트 MVP 완료",
+        color: "009FE3",
+      },
+      ddudus: [
+        {
+          id: 183,
+          name: "MVP 기능 개발하기",
+          status: "UNCOMPLETED",
         },
       ],
     },
     {
-      time: "18:00",
-      ddudus: [],
-    },
-    {
-      time: "19:00",
-      ddudus: [],
-    },
-    {
-      time: "20:00",
-      ddudus: [],
-    },
-    {
-      time: "21:00",
-      ddudus: [],
-    },
-    {
-      time: "22:00",
-      ddudus: [],
-    },
-    {
-      time: "23:00",
+      goal: {
+        id: 63,
+        name: "목표",
+        color: "FFF692",
+      },
       ddudus: [],
     },
   ],
@@ -168,37 +98,21 @@ const TEST_VALUE: TimelineListType = {
  *
  * ```
  * {
- *  timeline: [
+ *  timetable: [
  *    {
- *      time: "15 :00",
+ *      beginAt: "15:00",
  *      ddudus: [
  *        {
- *          id: 9,
- *          name: "할일을 전부 완료했다면? 1",
- *          status: "COMPLETED",
- *          beginAt: "13:20:00",
- *          endAt: "16:20:00",
- *          goalId: 1001,
+ *          id: 284,
+ *          name: "15시 - 16시 테스트",
+ *          status: "UNCOMPLETED",
+ *          goalId: 66,
+ *          beginAt: "15:00",
+ *          endAt: "16:00",
  *        },
- *        {
- *          id: 10,
- *          name: "할일을 전부 완료했다면? 2",
- *          status: "COMPLETED",
- *          beginAt: "13:20:00",
- *          endAt: "14:20:00",
- *          goalId: 1001,
- *        },
- *        {
- *          id: 11,
- *          name: "할일을 전부 완료했다면? 3",
- *          status: "COMPLETED",
- *          beginAt: "13:20:00",
- *          endAt: "13:50:00",
- *          goalId: 1001,
- *        },
- *      ],
- *    },
- *  ]
+ *       ],
+ *     },
+ *   ]
  * }
  * ```
  * */
@@ -212,6 +126,10 @@ const meta = {
   tags: ["autodocs"],
 
   argTypes: {
+    selectedDDuDuDate: {
+      control: "text",
+      description: "선택된 날짜를 전달받습니다.",
+    },
     timeline: {
       control: { disable: true },
       description:
@@ -220,11 +138,17 @@ const meta = {
   },
 
   args: {
-    timeline: TEST_VALUE.timeline,
+    selectedDDuDuDate: "2024-09-24",
+    timeline: TIMETABLE_DDUDU_LIST.timetable,
   },
 } satisfies Meta<typeof Timeline>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  args: {
+    selectedDDuDuDate: "2024-09-24",
+    timeline: TIMETABLE_DDUDU_LIST.timetable,
+  },
+};
