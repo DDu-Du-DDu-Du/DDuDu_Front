@@ -10,7 +10,7 @@ import {
   useDDuDuTimeMutation,
 } from "@/app/(route)/feed/components/MainGoalItem/hooks";
 import { AlarmSheet, DDuDuSheet, DDuDuTimeSheet } from "@/app/_components/client";
-import { BottomSingleCalender } from "@/app/_components/client/Calender";
+import { BottomSingleCalendar } from "@/app/_components/client/Calendar";
 import { useToggle } from "@/app/_hooks";
 import { MainTimeTableDDuDuType } from "@/app/_types/response/feed/feed";
 
@@ -134,7 +134,7 @@ const TimelineItem = ({ baseTime, dduduList, selectedDDuDuDate }: TimelineItemPr
               <AlarmSheet handleAlarmSheetToggleOff={handleAlarmSheetToggleOff} />
             )}
             {isCalendarSheetToggle && (
-              <BottomSingleCalender
+              <BottomSingleCalendar
                 currentDate={currentDate}
                 selectedDate={selectedDate}
                 setSelected={handleSelectedDate}

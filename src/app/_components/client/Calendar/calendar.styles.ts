@@ -1,4 +1,4 @@
-export const BottomSheetCalenderStyles = {
+export const bottomSheetCalendarStyles = {
   caption: "flex justify-between py-2 mb-8 relative w-full select-none",
   caption_label: "text-size15 font-medium text-gray-900",
   nav: "flex items-center",
@@ -18,7 +18,7 @@ export const BottomSheetCalenderStyles = {
   day_hidden: "invisible",
 };
 
-export const FeedCalenderStyles = {
+export const feedCalendarStyles = {
   caption: "flex justify-between py-2 mb-4 relative w-full select-none items-center h-20",
   caption_label: "text-size15 font-medium text-gray-900",
   nav: "flex items-center",

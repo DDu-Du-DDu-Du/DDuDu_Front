@@ -4,26 +4,26 @@ import { DayContentProps } from "react-day-picker";
 
 import { MonthlyWeeklyDDuDuType } from "@/app/_types/response/feed/feed";
 
-import useFeedCalenderDayConetent from "../../hooks/useFeedCalenderDayContent/useFeedCalenderDayConetns";
+import useFeedCalendarDayConetent from "../../hooks/useFeedCalendarDayContent/useFeedCalendarDayContent";
 import DailyDDuDu from "../DailyDDuDu/DailyDDuDu";
 
 import { useRouter } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 
-interface FeedCalenderDayContentProps {
+interface FeedCalendarDayContentProps {
   props: DayContentProps;
   monthlyDDuDus: MonthlyWeeklyDDuDuType[];
   currentURL: string;
   selectedDDuDuDate?: string;
 }
 
-const FeedCalenderDayContent = ({
+const FeedCalendarDayContent = ({
   props,
   monthlyDDuDus,
   currentURL,
   selectedDDuDuDate,
-}: FeedCalenderDayContentProps) => {
-  const { isToday, selectedDate, formattedDate } = useFeedCalenderDayConetent(props);
+}: FeedCalendarDayContentProps) => {
+  const { isToday, selectedDate, formattedDate } = useFeedCalendarDayConetent(props);
 
   const router = useRouter();
 
@@ -54,4 +54,4 @@ const FeedCalenderDayContent = ({
   );
 };
 
-export default FeedCalenderDayContent;
+export default FeedCalendarDayContent;
