@@ -1,7 +1,10 @@
 export const FEED_KEY = {
   DAILY_LIST: "dailyList",
+  DAILY_TIMETABLE: "dailyTimeTable",
+  WEEKLY_DDUDUS: "weeklyDDuDus",
   MONTHLY_DDUDUS: "monthlyDDuDus",
   MONTHLY_GOALS: "monthlyGoals",
+  WEEKLY_GOALS: "weeklyGoals",
   DELETE_DDUDU: "deleteDDuDu",
   CREATE_DDUDU: "createDDuDu",
   EDIT_DDUDU: "editDDuDu",
