@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const MainHeader = () => {
   return (
-    <header className="mb-[2rem]">
+    <header className="mb-[2rem] pt-[2.4rem] px-[2.4rem]">
       <ul className="flex justify-end gap-[0.8rem] mb-[1.5rem]">
         <li>
           <Link
