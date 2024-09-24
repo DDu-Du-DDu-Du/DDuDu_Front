@@ -22,3 +22,5 @@ export { default as MonthlyGoal } from "./MonthlyGoal/MonthlyGoal";
 
 export { default as FollowRequestItem } from "./FollowRequestItem/FollowRequestItem";
 export { default as UserListItem } from "./UserListItem/UserListItem";
+
+export { default as Timeline } from "./Timeline/Timeline";

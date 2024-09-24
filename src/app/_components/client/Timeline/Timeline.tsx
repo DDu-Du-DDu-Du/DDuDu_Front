@@ -5,8 +5,7 @@ import { useMemo } from "react";
 import { MainTimeTableType } from "@/app/_types/response/feed/feed";
 import { getDayOfWeek } from "@/app/_utils";
 
-import { LineBox } from "./components";
-import TimelineItem from "./components/TimelineItem/TimelineItem";
+import { LineBox, TimelineItem } from "./components";
 
 interface TimelineProps {
   timeline: MainTimeTableType[];

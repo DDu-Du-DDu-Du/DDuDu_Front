@@ -29,7 +29,9 @@ const useDDuDuDateMutation = ({
     queryClient.refetchQueries({
       queryKey: [FEED_KEY.DAILY_LIST],
     });
+    queryClient.refetchQueries({ queryKey: [FEED_KEY.DAILY_TIMETABLE] });
     queryClient.refetchQueries({ queryKey: [FEED_KEY.MONTHLY_DDUDUS] });
+    queryClient.refetchQueries({ queryKey: [FEED_KEY.WEEKLY_DDUDUS] });
 
     handleSelectedDate(undefined);
     handleCalendarSheetToggleOff();
