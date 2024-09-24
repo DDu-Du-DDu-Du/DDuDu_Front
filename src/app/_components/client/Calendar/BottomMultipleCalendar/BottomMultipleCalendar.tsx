@@ -1,6 +1,6 @@
 "use client";
 
-import { BottomSheetCalenderStyles } from "../Calender.styles";
+import { bottomSheetCalendarStyles } from "../calendar.styles";
 
 import { CaptionLabelProps, DayPicker } from "react-day-picker";
 
@@ -9,12 +9,12 @@ import ChevronRightIcon from "@/app/_components/server/icons/ChevronRightIcon/Ch
 
 import { ko } from "date-fns/locale/ko";
 
-export interface BottomMultipleCalenderProps {
+export interface BottomMultipleCalendarProps {
   selected: Date[];
   setSelected: (dates: Date[] | undefined) => void;
 }
 
-const BottomMultipleCalender = ({ selected, setSelected }: BottomMultipleCalenderProps) => {
+const BottomMultipleCalendar = ({ selected, setSelected }: BottomMultipleCalendarProps) => {
   return (
     <DayPicker
       locale={ko}
@@ -25,7 +25,7 @@ const BottomMultipleCalender = ({ selected, setSelected }: BottomMultipleCalende
         setSelected(date);
       }}
       className="w-full"
-      classNames={BottomSheetCalenderStyles}
+      classNames={bottomSheetCalendarStyles}
       components={{
         CaptionLabel: (date: CaptionLabelProps) => (
           <section className="flex text-size15 gap-2 w-full">
@@ -51,4 +51,4 @@ const BottomMultipleCalender = ({ selected, setSelected }: BottomMultipleCalende
   );
 };
 
-export default BottomMultipleCalender;
+export default BottomMultipleCalendar;

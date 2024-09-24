@@ -2,7 +2,7 @@ import { DayContentProps } from "react-day-picker";
 
 import { formatDateToYYYYMMDD } from "@/app/_utils";
 
-const useFeedCalenderDayConetent = (selectedDay: DayContentProps) => {
+const useFeedCalendarDayConetent = (selectedDay: DayContentProps) => {
   const formattedDate = formatDateToYYYYMMDD(selectedDay.date);
   const [selectedYear, selectedMonth, selectedDate] = [
     selectedDay.date.getFullYear(),
@@ -22,4 +22,4 @@ const useFeedCalenderDayConetent = (selectedDay: DayContentProps) => {
   return { isToday, selectedDate, formattedDate };
 };
 
-export default useFeedCalenderDayConetent;
+export default useFeedCalendarDayConetent;

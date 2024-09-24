@@ -1,12 +1,12 @@
 "use client";
 
-import { FeedCalenderStyles } from "../Calender.styles";
+import { feedCalendarStyles } from "../calendar.styles";
 
 import { CaptionProps, DayContentProps, DayPicker } from "react-day-picker";
 
 import { MonthlyWeeklyDDuDuType } from "@/app/_types/response/feed/feed";
 
-import { FeedCalenderDayContent, FeedCalenderHeader } from "./components";
+import { FeedCalendarDayContent, FeedCalendarHeader } from "./components";
 
 import { ko } from "date-fns/locale/ko";
 import { usePathname, useSearchParams } from "next/navigation";
@@ -17,13 +17,13 @@ export interface GoalsType {
   type: "WEEK" | "MONTH";
 }
 
-export interface FeedCalenderProps {
+export interface FeedCalendarProps {
   monthlyGoals?: GoalsType;
   monthlyDDuDus: MonthlyWeeklyDDuDuType[];
   selectedDDuDuDate?: string;
 }
 
-const FeedCalender = ({ monthlyGoals, monthlyDDuDus, selectedDDuDuDate }: FeedCalenderProps) => {
+const FeedCalendar = ({ monthlyGoals, monthlyDDuDus, selectedDDuDuDate }: FeedCalendarProps) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   let queryString = searchParams.toString();
@@ -41,14 +41,14 @@ const FeedCalender = ({ monthlyGoals, monthlyDDuDus, selectedDDuDuDate }: FeedCa
       fixedWeeks
       mode={"single"}
       className="w-full"
-      classNames={FeedCalenderStyles}
+      classNames={feedCalendarStyles}
       components={{
-        Caption: (props: CaptionProps) => FeedCalenderHeader({ props, monthlyGoals }),
+        Caption: (props: CaptionProps) => FeedCalendarHeader({ props, monthlyGoals }),
         DayContent: (props: DayContentProps) =>
-          FeedCalenderDayContent({ props, monthlyDDuDus, currentURL, selectedDDuDuDate }),
+          FeedCalendarDayContent({ props, monthlyDDuDus, currentURL, selectedDDuDuDate }),
       }}
     />
   );
 };
 
-export default FeedCalender;
+export default FeedCalendar;

@@ -2,8 +2,8 @@
 
 import { Fragment, useMemo } from "react";
 
-import { FeedCalender } from "@/app/_components/client/Calender";
-import { GoalsType } from "@/app/_components/client/Calender/FeedCalender/FeedCalender";
+import { FeedCalendar } from "@/app/_components/client/Calendar";
+import { GoalsType } from "@/app/_components/client/Calendar/FeedCalendar/FeedCalendar";
 import { FEED_KEY } from "@/app/_constants/queryKey/queryKey";
 import { getDailyList, getGoals, getMonthlyDDuDus } from "@/app/_services/client";
 import { MainDailyListType, MonthlyWeeklyDDuDuType } from "@/app/_types/response/feed/feed";
@@ -56,7 +56,7 @@ const MainFeed = ({ selectedDDuDuDate }: MainFeedProps) => {
 
   return (
     <div className="px-[2.4rem]">
-      <FeedCalender
+      <FeedCalendar
         monthlyDDuDus={monthlyDDuDus || []}
         monthlyGoals={monthlyGoals}
         selectedDDuDuDate={selectedDDuDuDate}

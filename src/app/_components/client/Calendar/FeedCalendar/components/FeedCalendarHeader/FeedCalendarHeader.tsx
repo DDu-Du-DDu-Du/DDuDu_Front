@@ -17,7 +17,7 @@ import { RequestPeriodGoals } from "@/app/_types/request/feed/feed";
 import { MonthlyWeeklyDDuDuType } from "@/app/_types/response/feed/feed";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { GoalsType } from "../../FeedCalender";
+import { GoalsType } from "../../FeedCalendar";
 
 import { useSession } from "next-auth/react";
 
@@ -30,7 +30,7 @@ interface FeedCalenderHeaderProps {
   monthlyGoals?: GoalsType;
 }
 
-const FeedCalenderHeader = ({ props, monthlyGoals }: FeedCalenderHeaderProps) => {
+const FeedCalendarHeader = ({ props, monthlyGoals }: FeedCalenderHeaderProps) => {
   const { goToMonth, nextMonth, previousMonth } = useNavigation();
   const monthlyGoalList = useMemo(
     () => monthlyGoals?.contents?.split("\n"),
@@ -224,4 +224,4 @@ const FeedCalenderHeader = ({ props, monthlyGoals }: FeedCalenderHeaderProps) =>
   );
 };
 
-export default FeedCalenderHeader;
+export default FeedCalendarHeader;
