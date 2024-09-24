@@ -7,6 +7,7 @@ interface UseDDuDuTimeMutationProps {
   sessionToken: string;
   currentDDuDuTime: DDuDuTimeType;
   currentDDuDuId: number;
+  selectedDDuDuDate: string;
   handleUpdateDDuDuTime: (dduduTime: DDuDuTimeType) => void;
   handleDDuDuTimeSheetToggleOff: () => void;
 }
@@ -15,6 +16,7 @@ const useDDuDuTimeMutation = ({
   sessionToken,
   currentDDuDuTime,
   currentDDuDuId,
+  selectedDDuDuDate,
   handleUpdateDDuDuTime,
   handleDDuDuTimeSheetToggleOff,
 }: UseDDuDuTimeMutationProps) => {
@@ -26,6 +28,8 @@ const useDDuDuTimeMutation = ({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [FEED_KEY.DDUDU_DETAIL] });
       queryClient.refetchQueries({ queryKey: [FEED_KEY.DDUDU_DETAIL] });
+      queryClient.refetchQueries({ queryKey: [FEED_KEY.DAILY_TIMETABLE] });
+      queryClient.refetchQueries({ queryKey: [FEED_KEY.DAILY_TIMETABLE, selectedDDuDuDate] });
       handleUpdateDDuDuTime({ beginAt: "", endAt: "" });
       handleDDuDuTimeSheetToggleOff();
     },

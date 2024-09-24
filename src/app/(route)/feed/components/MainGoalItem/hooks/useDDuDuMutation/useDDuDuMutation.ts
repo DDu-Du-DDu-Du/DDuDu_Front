@@ -17,7 +17,9 @@ const useDDuDuMutation = ({
 
   const handleSuccessDDuDu = () => {
     queryClient.refetchQueries({ queryKey: [FEED_KEY.MONTHLY_DDUDUS] });
+    queryClient.refetchQueries({ queryKey: [FEED_KEY.WEEKLY_DDUDUS] });
     queryClient.refetchQueries({ queryKey: [FEED_KEY.DAILY_LIST, selectedDDuDuDate] });
+    queryClient.refetchQueries({ queryKey: [FEED_KEY.DAILY_TIMETABLE, selectedDDuDuDate] });
   };
 
   const deleteDDuDuMutation = useMutation({

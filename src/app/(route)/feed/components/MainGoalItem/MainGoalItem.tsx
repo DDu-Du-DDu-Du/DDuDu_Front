@@ -93,6 +93,7 @@ const MainGoalItem = ({ goal, ddudus, selectedDDuDuDate }: MainGoalItemProps) =>
     sessionToken: session?.sessionToken as string,
     currentDDuDuTime,
     currentDDuDuId,
+    selectedDDuDuDate,
     handleUpdateDDuDuTime,
     handleDDuDuTimeSheetToggleOff,
   });
