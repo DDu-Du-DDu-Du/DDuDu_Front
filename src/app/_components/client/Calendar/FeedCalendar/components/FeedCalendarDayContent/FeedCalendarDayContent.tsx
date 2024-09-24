@@ -1,5 +1,3 @@
-"use client";
-
 import { DayContentProps } from "react-day-picker";
 
 import { MonthlyWeeklyDDuDuType } from "@/app/_types/response/feed/feed";
@@ -38,7 +36,6 @@ const FeedCalendarDayContent = ({
       )}
       onClick={() => router.replace(`${currentURL}&date=${formattedDate}`)}
     >
-      {/* TODO: API 연결 후 데이터 교체 */}
       {dailyDDuDuDate && dailyDDuDuDate.totalCount > 0 ? (
         <DailyDDuDu
           totalCount={dailyDDuDuDate.totalCount}
