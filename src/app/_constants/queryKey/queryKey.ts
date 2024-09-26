@@ -14,3 +14,9 @@ export const FEED_KEY = {
   DDUDU_CHANGE_TIME: "dduduChangeTime",
   DDUDU_DETAIL: "dduduDetail",
 };
+
+export const QUERY_KEY = {
+  CREATE: "create",
+  EDIT: "edit",
+  DELETE: "delete",
+};
