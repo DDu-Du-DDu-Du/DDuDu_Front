@@ -1,5 +1,6 @@
 import { useNavigation } from "react-day-picker";
 
+import { FEED_KEY, QUERY_KEY } from "@/app/_constants/queryKey/queryKey";
 import {
   fetchCreateGoals,
   fetchEditGoals,
@@ -33,7 +34,7 @@ const useGoalsDDuDuMutation = ({
   const MonthlyGoals = async (year: number, month: number) => {
     const currentDate = `${year}-${month < 10 ? "0" : ""}${month}-01`;
     return await queryClient.fetchQuery<GoalsType>({
-      queryKey: ["monthlyGoals", year, month],
+      queryKey: [FEED_KEY.MONTHLY_GOALS, year, month],
       queryFn: () =>
         getGoals({
           accessToken: session?.sessionToken as string,
@@ -44,20 +45,22 @@ const useGoalsDDuDuMutation = ({
   };
 
   const onMonthlyGoalsSuccess = async () => {
-    queryClient.invalidateQueries({ queryKey: ["monthlyGoals", currentYear, currentMonth] });
+    queryClient.invalidateQueries({
+      queryKey: [FEED_KEY.MONTHLY_GOALS, currentYear, currentMonth],
+    });
     const updateMonthlyGoals = await MonthlyGoals(currentYear, currentMonth);
-    queryClient.setQueryData(["monthlyGoals"], () => updateMonthlyGoals);
+    queryClient.setQueryData([FEED_KEY.MONTHLY_GOALS], () => updateMonthlyGoals);
     handleToggleOff();
   };
 
   const createMonthlyGoalsMutation = useMutation({
-    mutationKey: ["create", "monthlyGoals"],
+    mutationKey: [FEED_KEY.MONTHLY_GOALS, QUERY_KEY.CREATE],
     mutationFn: fetchCreateGoals,
     onSuccess: onMonthlyGoalsSuccess,
   });
 
   const editMonthlyGoalsMutation = useMutation({
-    mutationKey: ["edit", "monthlyGoals"],
+    mutationKey: [FEED_KEY.MONTHLY_GOALS, QUERY_KEY.EDIT],
     mutationFn: fetchEditGoals,
     onSuccess: onMonthlyGoalsSuccess,
   });
@@ -65,7 +68,7 @@ const useGoalsDDuDuMutation = ({
   const MonthlyDDuDUs = async (year: number, month: number) => {
     const currentDate = `${year}-${month < 10 ? "0" : ""}${month}`;
     return await queryClient.fetchQuery<MonthlyWeeklyDDuDuType[]>({
-      queryKey: ["monthlyDDuDus", year, month],
+      queryKey: [FEED_KEY.MONTHLY_DDUDUS, year, month],
       queryFn: () =>
         getMonthlyDDuDus({
           accessToken: session?.sessionToken as string,
@@ -79,10 +82,10 @@ const useGoalsDDuDuMutation = ({
 
     nextMonth && goToMonth(nextMonth);
     const newMonthlyDDuDus = await MonthlyDDuDUs(year, month);
-    queryClient.setQueryData(["monthlyDDuDus"], () => newMonthlyDDuDus);
+    queryClient.setQueryData([FEED_KEY.MONTHLY_DDUDUS], () => newMonthlyDDuDus);
 
     const newMonthlyGoals = await MonthlyGoals(year, month);
-    queryClient.setQueryData(["monthlyGoals"], () => newMonthlyGoals);
+    queryClient.setQueryData([FEED_KEY.MONTHLY_GOALS], () => newMonthlyGoals);
   };
 
   const handlePrevToMonth = async () => {
@@ -90,10 +93,10 @@ const useGoalsDDuDuMutation = ({
 
     previousMonth && goToMonth(previousMonth);
     const newMonthlyDDuDus = await MonthlyDDuDUs(year, month);
-    queryClient.setQueryData(["monthlyDDuDus"], () => newMonthlyDDuDus);
+    queryClient.setQueryData([FEED_KEY.MONTHLY_DDUDUS], () => newMonthlyDDuDus);
 
     const newMonthlyGoals = await MonthlyGoals(year, month);
-    queryClient.setQueryData(["monthlyGoals"], () => newMonthlyGoals);
+    queryClient.setQueryData([FEED_KEY.MONTHLY_GOALS], () => newMonthlyGoals);
   };
   return {
     createMonthlyGoalsMutation,
