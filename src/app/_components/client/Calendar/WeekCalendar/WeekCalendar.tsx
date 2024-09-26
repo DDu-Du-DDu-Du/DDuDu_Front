@@ -1,27 +1,15 @@
 "use client";
 
-import React, { useMemo } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-
 import { ChevronLeftIcon, ChevronRightIcon } from "@/app/_components/server";
-import { FEED_KEY } from "@/app/_constants/queryKey/queryKey";
-import { useClickAway, useToggle } from "@/app/_hooks";
-import { fetchCreateGoals, fetchEditGoals } from "@/app/_services/client";
-import { RequestPeriodGoals } from "@/app/_types/request/feed/feed";
 import { MonthlyWeeklyDDuDuType } from "@/app/_types/response/feed/feed";
 import { getDayOfWeek } from "@/app/_utils";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { GoalsType } from "../FeedCalendar/FeedCalendar";
 import DailyDDuDu from "../FeedCalendar/components/DailyDDuDu/DailyDDuDu";
+import { useCalendar, useGoalsForm, useWeeklyDate } from "./hooks";
+import { getDateNumber } from "./utils";
 
-import { useSession } from "next-auth/react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { twJoin } from "tailwind-merge";
-
-interface WeeklyGoalsFormInfo {
-  contents: string;
-}
 
 interface WeeklyCalendarProps {
   selectedDDuDuDate: string;
@@ -30,176 +18,22 @@ interface WeeklyCalendarProps {
 }
 
 const WeekCalendar = ({ weeklyDDuDus, weeklyGoals, selectedDDuDuDate }: WeeklyCalendarProps) => {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const { weeklyGoalList, selectedDate } = useCalendar({ selectedDDuDuDate, weeklyGoals });
 
-  const weeklyGoalList = useMemo(() => weeklyGoals?.contents?.split("\n"), [weeklyGoals?.contents]);
-
-  const [year, month] = selectedDDuDuDate.split("-");
-  const selectedMonth = useMemo(() => {
-    return {
-      year,
-      month,
-    };
-  }, [year, month]);
-
-  const methods = useForm<WeeklyGoalsFormInfo>();
-
-  const { data: session } = useSession();
-  const queryClient = useQueryClient();
-
-  const { isToggle, handleToggleOff, handleToggleOn } = useToggle();
-  const weeklyGoalsRef = useClickAway<HTMLDivElement>(handleToggleOff);
-
-  const getDateNumber = (dateString: string) => {
-    const day = dateString.split("-").at(-1);
-
-    if (!day) {
-      throw new Error("dateString 값이 정상적이지 않습니다.");
-    }
-
-    return Number(day);
-  };
-
-  const padDateNumber = (dateNumber: number) => {
-    if (dateNumber >= 10) {
-      return dateNumber;
-    }
-    return `0${dateNumber}`;
-  };
-
-  const handleDateClick = (seletedDate: string) => {
-    let queryString = searchParams.toString();
-    const deleteParamIndex = searchParams.toString().indexOf("&date=");
-
-    if (deleteParamIndex > -1) {
-      queryString = searchParams.toString().slice(0, deleteParamIndex);
-    }
-
-    const currentURL = `${pathname}?${queryString}`;
-
-    router.replace(`${currentURL}&date=${seletedDate}`);
-  };
-
-  const handleNextWeek = () => {
-    const selectedWeekLastDay = weeklyDDuDus.at(-1)?.date;
-
-    if (!selectedWeekLastDay) {
-      return;
-    }
-
-    const [year, month, day] = selectedWeekLastDay.split("-").map(Number);
-
-    const lastDay = new Date(year, month, 0).getDate();
-
-    let queryString = searchParams.toString();
-    const deleteParamIndex = searchParams.toString().indexOf("&date=");
-
-    if (deleteParamIndex > -1) {
-      queryString = searchParams.toString().slice(0, deleteParamIndex);
-    }
-
-    const currentURL = `${pathname}?${queryString}`;
-
-    if (day + 1 > lastDay) {
-      if (month === 12) {
-        router.replace(`${currentURL}&date=${year + 1}-01-01`);
-      } else {
-        router.replace(`${currentURL}&date=${year}-${padDateNumber(month + 1)}-01`);
-      }
-    } else {
-      router.replace(
-        `${currentURL}&date=${year}-${padDateNumber(month)}-${padDateNumber(day + 1)}`,
-      );
-    }
-  };
-
-  const handlePreviousWeek = () => {
-    const selectedWeekLastDay = weeklyDDuDus[0]?.date;
-
-    if (!selectedWeekLastDay) {
-      return;
-    }
-
-    const [year, month, day] = selectedWeekLastDay.split("-").map(Number);
-
-    let queryString = searchParams.toString();
-    const deleteParamIndex = searchParams.toString().indexOf("&date=");
-
-    if (deleteParamIndex > -1) {
-      queryString = searchParams.toString().slice(0, deleteParamIndex);
-    }
-
-    let prevMonthLastDay = 31;
-    if (month - 1 > 0) {
-      prevMonthLastDay = new Date(year, month - 1, 0).getDate();
-    }
-    const currentURL = `${pathname}?${queryString}`;
-
-    if (day - 1 < 1) {
-      if (month === 1) {
-        router.replace(`${currentURL}&date=${year - 1}-12-${prevMonthLastDay}`);
-      } else {
-        router.replace(
-          `${currentURL}&date=${year}-${padDateNumber(month - 1)}-${prevMonthLastDay}`,
-        );
-      }
-    } else {
-      router.replace(
-        `${currentURL}&date=${year}-${padDateNumber(month)}-${padDateNumber(day - 1)}`,
-      );
-    }
-  };
-
-  const handleWeeklyGoalUpdate = () => {
-    handleToggleOn();
-  };
-
-  const onWeeklyGoalsSuccess = async () => {
-    queryClient.refetchQueries({ queryKey: [FEED_KEY.WEEKLY_GOALS] });
-    handleToggleOff();
-  };
-
-  const createWeeklyGoalsMutation = useMutation({
-    mutationKey: ["create", "weeklyGoals"],
-    mutationFn: fetchCreateGoals,
-    onSuccess: onWeeklyGoalsSuccess,
+  const { isToggle, weeklyGoalsRef, methods, handleWeeklyGoalUpdate, onValid } = useGoalsForm({
+    selectedDDuDuDate,
+    weeklyGoalList,
+    weeklyGoals,
   });
 
-  const editWeeklyGoalsMutation = useMutation({
-    mutationKey: ["edit", "weeklyGoals"],
-    mutationFn: fetchEditGoals,
-    onSuccess: onWeeklyGoalsSuccess,
-  });
-
-  const onValid: SubmitHandler<WeeklyGoalsFormInfo> = ({ contents }) => {
-    if (!weeklyGoalList) {
-      const periodGoals: RequestPeriodGoals = {
-        contents,
-        type: "WEEK",
-        planDate: selectedDDuDuDate,
-      };
-
-      createWeeklyGoalsMutation.mutate({
-        accessToken: session?.sessionToken as string,
-        periodGoals,
-      });
-    } else if (weeklyGoals && weeklyGoals.id) {
-      editWeeklyGoalsMutation.mutate({
-        accessToken: session?.sessionToken as string,
-        contents,
-        periodGoalsId: weeklyGoals.id,
-      });
-    }
-  };
+  const { handleDateClick, handlePreviousWeek, handleNextWeek } = useWeeklyDate({ weeklyDDuDus });
 
   return (
     <section className="bg-white px-[2.4rem] pb-[1.5rem] rounded-b-[2.5rem]">
       <article className="flex flex-col items-center px-4 py-2">
         <div className="flex items-center justify-between w-full mb-3">
           <strong className="text-size13 font-medium">
-            {selectedMonth.year}년 {getDateNumber(selectedMonth.month)}월
+            {selectedDate.year}년 {getDateNumber(selectedDate.month)}월
           </strong>
           <div className="flex items-center">
             <button
