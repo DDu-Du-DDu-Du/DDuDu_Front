@@ -105,6 +105,8 @@ const config = {
         toast: "600",
 
         spinner: "800",
+        background: "900",
+        background_content: "999",
 
         monthly_goal_overlay: "40",
         monthly_goal_textarea: "50",
