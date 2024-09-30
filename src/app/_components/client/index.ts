@@ -28,5 +28,3 @@ export { default as UserListItem } from "./UserListItem/UserListItem";
 export { default as Timeline } from "./Timeline/Timeline";
 
 export { default as SelectUiDiv } from "./SelectUiDiv/SelectUiDiv";
-
-export { default as SelectUiDiv } from "./SelectUiDiv/SelectUiDiv";
