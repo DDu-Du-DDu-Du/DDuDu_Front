@@ -8,3 +8,6 @@ export { default as ChevronLeftIcon } from "./ChevronLeftIcon/ChevronLeftIcon";
 export { default as ChevronRightIcon } from "./ChevronRightIcon/ChevronRightIcon";
 export { default as PlusIcon } from "./PlusIcon/PlusIcon";
 export { default as OptionIcon } from "./OptionIcon/OptionIcon";
+export { default as MainFeedIcon } from "./MainFeedIcon/MainFeedIcon";
+export { default as CreateIcon } from "./CreateIcon/CreateIcon";
+export { default as ListIcon } from "./ListIcon/ListIcon";
