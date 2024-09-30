@@ -3,7 +3,7 @@
 import { Fragment } from "react";
 import { FormProvider } from "react-hook-form";
 
-import { Button, CheckboxInput, InputDate, InputRadio, TextInput } from "@/app/_components/client";
+import { CheckboxInput, InputDate, InputRadio, TextInput } from "@/app/_components/client";
 import InputTime from "@/app/_components/client/InputTime/InputTime";
 import { useGoalFormStore } from "@/app/_store";
 import { DayOfWeek, RepeatDdudusDateType, RepeatDdudusType } from "@/app/_types/response/goal/goal";
@@ -173,21 +173,21 @@ const DDuDuRepeatForm = ({
           </li>
           {repeatId && (
             <li>
-              <Button
+              <button
                 className="w-full h-[4rem] text-size13 font-medium bg-example_gray_100 rounded-radius10"
                 onClick={handleRepeatDDuDuDelete}
               >
                 반복 삭제하기
-              </Button>
+              </button>
             </li>
           )}
         </ul>
-        <Button
+        <button
           className="w-full h-[5.6rem] mb-[3rem] text-size15 font-medium bg-example_gray_700 rounded-radius15"
           type="submit"
         >
           {repeatId ? "반복 수정" : "반복 생성"}
-        </Button>
+        </button>
       </form>
     </FormProvider>
   );

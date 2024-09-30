@@ -47,16 +47,17 @@ const meta = {
         "GoalTodoListItem을 종료할 날짜를 전달받습니다. (ISO 형태의 Date 객체를 API에서 반환받은 string 형태 그대로 전달해 주세요.)",
     },
   },
-
-  args: {
-    title: "제목을 입력해주세요.",
-    repeatDays: "월 화 수 목 금 토",
-    startDate: "2024-05-01",
-    endDate: "2024-05-10",
-  },
 } satisfies Meta<typeof GoalTodoListItemView>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  args: {
+    id: 1,
+    title: "제목을 입력해주세요.",
+    repeatDays: "월 화 수 목 금 토",
+    startDate: "2024-05-01",
+    endDate: "2024-05-10",
+  },
+};

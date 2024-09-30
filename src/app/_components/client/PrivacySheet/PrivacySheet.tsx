@@ -3,7 +3,7 @@
 import { Fragment } from "react";
 import { FormProvider } from "react-hook-form";
 
-import { BottomSheet, Button } from "@/app/_components/client";
+import { BottomSheet } from "@/app/_components/client";
 import { GoalPrivacyType } from "@/app/_types/response/goal/goal";
 
 import { SheetRadioItem } from "./components";
@@ -44,14 +44,12 @@ const PrivacySheet = ({ goalPrivacy, isShow, onClose, onClick }: PrivacySheetPro
               </Fragment>
             ))}
           </ul>
-          <Button
-            className="w-full h-[5.6rem]"
+          <button
+            className="w-full h-[5.6rem] bg-example_gray_700 rounded-radius15"
             type="submit"
-            fontSize="large"
-            backgroundColor="gray"
           >
             확인
-          </Button>
+          </button>
         </form>
       </FormProvider>
     </BottomSheet>

@@ -1,4 +1,3 @@
-import { Button } from "@/app/_components/client";
 import { AlertModalProps } from "@/app/_components/client/AlertModal/AlertModal";
 import { useToggle } from "@/app/_hooks";
 import { Meta, StoryFn } from "@storybook/react";
@@ -83,7 +82,7 @@ const Template: StoryFn<AlertModalProps> = (args) => {
         isToggle={isToggle}
         handleToggleOff={handleToggleOff}
       />
-      <Button onClick={handleToggleOn}>Alert Modal Open</Button>
+      <button onClick={handleToggleOn}>Alert Modal Open</button>
     </>
   );
 };

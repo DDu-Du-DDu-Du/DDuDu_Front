@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { BottomMultipleCalender } from "@/app/_components/client/Calender";
+import { BottomMultipleCalendar } from "@/app/_components/client/Calendar";
 import type { Meta, StoryObj } from "@storybook/react";
 
 /**
@@ -13,8 +13,8 @@ import type { Meta, StoryObj } from "@storybook/react";
  * 캘린더를 사용하고자 하는 영역에서 useState를 통해 state와 setter를 연결해주세요!
  * */
 const meta = {
-  title: "components/Calender/BottomMultipleCalender",
-  component: BottomMultipleCalender,
+  title: "components/Calendar/BottomMultipleCalendar",
+  component: BottomMultipleCalendar,
   parameters: {},
 
   tags: ["autodocs"],
@@ -31,7 +31,7 @@ const meta = {
     },
   },
   args: {},
-} satisfies Meta<typeof BottomMultipleCalender>;
+} satisfies Meta<typeof BottomMultipleCalendar>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

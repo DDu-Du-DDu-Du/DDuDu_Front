@@ -1,4 +1,4 @@
-import { Timeline } from "@/app/_components/server";
+import { Timeline } from "@/app/_components/client";
 import { MainDailyTimeTableType } from "@/app/_types/response/feed/feed";
 import type { Meta, StoryObj } from "@storybook/react";
 
