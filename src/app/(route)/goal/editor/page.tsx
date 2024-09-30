@@ -31,7 +31,7 @@ const GoalEditorPage = async ({ searchParams }: GoalEditorPageProps) => {
   return (
     <HydrationBoundary state={dehydratedState}>
       <section>
-        <Header />
+        <Header headerLabel={id ? "목표수정" : "목표등록"} />
         <GoalEditor goalId={id} />
       </section>
     </HydrationBoundary>
