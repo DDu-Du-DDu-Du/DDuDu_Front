@@ -14,12 +14,6 @@ const MainHeader = () => {
   return (
     <header className="mb-[2rem] pt-[2.4rem] px-[2.4rem]">
       <ul className="flex justify-end gap-[0.8rem] mb-[1.5rem]">
-        {/* <li>
-          <ExampleIcon />
-        </li>
-        <li>
-          <ExampleIcon />
-        </li> */}
         <li
           className="relative ml-[0.8rem]"
           onClick={handleToggleOn}
