@@ -17,7 +17,6 @@ const page = () => {
 
   return (
     <div className="mt-[5.2rem]">
-      ds
       {session?.sessionToken && (
         <form action={signOutWithForm}>
           <button type="submit">로그아웃</button>

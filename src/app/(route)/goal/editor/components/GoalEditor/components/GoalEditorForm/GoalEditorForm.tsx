@@ -2,7 +2,7 @@
 
 import { FormProvider } from "react-hook-form";
 
-import { Button, ColorSheet, PrivacySheet, SelectUiDiv, TextInput } from "@/app/_components/client";
+import { ColorSheet, PrivacySheet, SelectUiDiv, TextInput } from "@/app/_components/client";
 import { ArrowRightIcon } from "@/app/_components/server";
 import useGoalFormStore from "@/app/_store/useGoalFormStore/useGoalFormStore";
 
@@ -168,28 +168,28 @@ const GoalEditorForm = ({
                 </div>
               </li>
               <li className="flex gap-[1rem]">
-                <Button
+                <button
                   className="w-full h-[4rem] text-size13 font-medium bg-example_gray_100 rounded-radius10"
                   onClick={handleGoalStatusChange}
                 >
                   {goalStatus === "IN_PROGRESS" ? "목표 종료하기" : "목표 재개하기"}
-                </Button>
-                <Button
+                </button>
+                <button
                   className="w-full h-[4rem] text-size13 font-medium bg-example_gray_100 rounded-radius10"
                   onClick={handleGoalDelete}
                 >
                   목표 삭제하기
-                </Button>
+                </button>
               </li>
             </>
           )}
         </ul>
-        <Button
+        <button
           className="w-full h-[5.6rem] mb-[3rem] text-size15 font-medium bg-example_gray_700 rounded-radius15"
           type="submit"
         >
           {goalId ? "목표 수정" : "목표 등록"}
-        </Button>
+        </button>
       </form>
     </FormProvider>
   );

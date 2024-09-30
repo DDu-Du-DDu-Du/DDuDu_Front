@@ -104,10 +104,7 @@ const AlarmSheet = ({ handleAlarmSheetToggleOff }: AlarmSheetProps) => {
               <span className="pl-[0.8rem]">분</span>
             </div>
           </div>
-          <button
-            // onClick={onClose}
-            className="w-full h-[5.6rem] bg-example_gray_700 rounded-radius15 mt-[2rem]"
-          >
+          <button className="w-full h-[5.6rem] bg-example_gray_700 rounded-radius15 mt-[2rem]">
             확인
           </button>
         </div>

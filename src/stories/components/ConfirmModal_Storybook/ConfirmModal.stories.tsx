@@ -1,4 +1,3 @@
-import { Button } from "@/app/_components/client";
 import { ConfirmModalProps } from "@/app/_components/client/ConfirmModal/ConfirmModal";
 import { useToggle } from "@/app/_hooks";
 import { Meta, StoryFn } from "@storybook/react";
@@ -95,7 +94,7 @@ const Template: StoryFn<ConfirmModalProps> = (args) => {
         handleToggleOff={handleToggleOff}
         onCompleteCheck={(isComplete) => console.log(isComplete)}
       />
-      <Button onClick={handleToggleOn}>Confirm Modal Open</Button>
+      <button onClick={handleToggleOn}>Confirm Modal Open</button>
     </>
   );
 };
