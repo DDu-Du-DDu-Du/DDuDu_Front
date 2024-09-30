@@ -1,6 +1,6 @@
 import "../_styles/globals.css";
 
-import { Header, ToastProvider } from "@/app/_components/client";
+import { ToastProvider } from "@/app/_components/client";
 
 import { SpoqaHanSansFont } from "../_assets/font";
 import { BottomProvider } from "../_components/client/BottomSheet";
@@ -31,11 +31,7 @@ const RootLayout = ({ children, session }: Readonly<RootLayoutProps>) => {
         <SessionProvider session={session}>
           <SessionChecker>
             <TanstackProvider>
-              <Header />
-              <main
-                id="app"
-                className="pt-[5.2rem]"
-              >
+              <main id="app">
                 <ToastProvider>{children}</ToastProvider>
                 <BottomProvider />
               </main>
