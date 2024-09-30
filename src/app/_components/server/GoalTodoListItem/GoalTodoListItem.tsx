@@ -23,7 +23,7 @@ const GoalTodoListItem = ({
   return (
     <li className="list-none font-regular">
       <Link
-        className="block rounded-radius10 bg-example_gray_100 px-[1.8rem] py-[1.2rem]"
+        className="block rounded-radius10 bg-white_100 px-[1.8rem] py-[1.2rem]"
         href={
           goalId ? `/goal/editor/${goalId}/repeat?id=${id}` : `/goal/editor/create/repeat?id=${id}`
         }
