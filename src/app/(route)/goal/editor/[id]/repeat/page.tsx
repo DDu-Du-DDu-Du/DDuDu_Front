@@ -13,7 +13,7 @@ const GoalEditorDDuDuRepeatPage = ({ params, searchParams }: GoalEditorDDuDuRepe
 
   return (
     <section>
-      <Header />
+      <Header headerLabel={repeatId ? "반복수정" : "반복생성"} />
       <DDuDuRepeatEditor
         goalId={goalId}
         repeatId={repeatId}

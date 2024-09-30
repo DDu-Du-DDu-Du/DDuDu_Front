@@ -2,18 +2,20 @@
 
 import { ArrowLeftIcon } from "../../server";
 import { HeaderButton, HeaderLabel } from "./components";
-import { useHeaderLabel, useHeaderRightButton } from "./hooks";
 
-import { useRouter, useSelectedLayoutSegments } from "next/navigation";
+import { useRouter } from "next/navigation";
 
-const Header = () => {
+interface HeaderProps {
+  headerLabel: string;
+  rightButtonIcon?: React.ReactNode;
+  rightButtonFn?: () => void;
+}
+
+const Header = ({ headerLabel, rightButtonIcon, rightButtonFn }: HeaderProps) => {
   const router = useRouter();
-  const segments = useSelectedLayoutSegments();
-  const { headerLabel } = useHeaderLabel({ segments });
-  const { rightButtonIcon, rightButtonFn } = useHeaderRightButton({ segments });
 
   return (
-    <header className="fixed top-0 flex h-[5.2rem] w-full max-w-[60rem] items-center justify-center z-header pointer-events-none">
+    <header className="fixed top-0 flex h-[5.2rem] w-full max-w-[60rem] items-center justify-center z-header pointer-events-none bg-white_100">
       <HeaderButton
         buttonPosition="LEFT"
         buttonFn={() => router.back()}

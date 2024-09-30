@@ -1,3 +1,4 @@
+import { Header } from "@/app/_components/client";
 import { PlusIcon } from "@/app/_components/server";
 import { GOAL_KEY } from "@/app/_constants/queryKey/queryKey";
 import { getGoalList } from "@/app/_services/client/goal/goal";
@@ -21,9 +22,10 @@ const GoalPage = async () => {
 
   return (
     <HydrationBoundary state={dehydratedState}>
-      <div className="relative pt-[2.6rem] px-[2.4rem]">
+      <Header headerLabel="목표관리" />
+      <div className="relative pt-[8.5rem] px-[2.4rem]">
         <Link
-          className="absolute -top-[3.4rem] right-[2.4rem] z-headerLink"
+          className="absolute top-[1.8rem] right-[2.4rem] z-headerLink"
           href="/goal/editor"
           title="목표 생성하기"
         >

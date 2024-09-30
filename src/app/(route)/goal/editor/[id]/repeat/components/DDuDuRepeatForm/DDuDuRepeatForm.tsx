@@ -75,7 +75,7 @@ const DDuDuRepeatForm = ({
   return (
     <FormProvider {...methods}>
       <form
-        className="flex flex-col h-dvh pt-[6rem] px-[2rem]"
+        className="flex flex-col h-dvh pt-[8.5rem] px-[2rem]"
         onSubmit={methods.handleSubmit(onValid)}
       >
         <ul className="flex flex-col flex-1 gap-[2.4rem]">
