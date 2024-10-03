@@ -11,3 +11,4 @@ export { default as OptionIcon } from "./OptionIcon/OptionIcon";
 export { default as MainFeedIcon } from "./MainFeedIcon/MainFeedIcon";
 export { default as CreateIcon } from "./CreateIcon/CreateIcon";
 export { default as ListIcon } from "./ListIcon/ListIcon";
+export { default as MessageIcon } from "./MessageIcon/MessageIcon";
