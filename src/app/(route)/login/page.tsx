@@ -3,7 +3,7 @@ import { MessageIcon } from "@/app/_components/server";
 
 const LoginPage = async () => {
   return (
-    <article className="flex justify-between flex-col h-[100%] px-[2rem] pt-[8rem] pb-[10rem]">
+    <article className="flex justify-between flex-col h-[100%] px-[2rem] pt-[14rem] pb-[10rem]">
       <div className="text-[3rem] leading-[3rem]">
         <h3>모두를 위한 서비스</h3>
         <h2 className="font-bold mt-[0.5rem]">뚜두뚜두</h2>
