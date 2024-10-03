@@ -32,6 +32,7 @@ const MainFeed = ({ selectedDDuDuDate }: MainFeedProps) => {
         userId: session?.user.userId as number,
         date: selectedDDuDuDate,
       }),
+    enabled: !!session,
   });
 
   const { data: monthlyDDuDus } = useQuery<MonthlyWeeklyDDuDuType[]>({
@@ -42,6 +43,7 @@ const MainFeed = ({ selectedDDuDuDate }: MainFeedProps) => {
         userId: session?.user.userId as number,
         date: convertSelectedDateYYYYMM,
       }),
+    enabled: !!session,
   });
 
   const { data: monthlyGoals } = useQuery<GoalsType>({
@@ -52,6 +54,7 @@ const MainFeed = ({ selectedDDuDuDate }: MainFeedProps) => {
         type: "MONTH",
         date: selectedDDuDuDate,
       }),
+    enabled: !!session,
   });
 
   return (
