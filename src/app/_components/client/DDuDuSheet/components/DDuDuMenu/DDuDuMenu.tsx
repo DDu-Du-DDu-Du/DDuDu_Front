@@ -45,7 +45,7 @@ export const DDuDuMenu = ({
   const { data: dduduDetail } = useQuery<DDuDuDetailType>({
     queryKey: [FEED_KEY.DDUDU_DETAIL, dduduId],
     queryFn: () => getDDuDuDetail({ accessToken: session?.sessionToken as string, id: dduduId }),
-    enabled: !!session?.sessionToken && dduduId > -1,
+    enabled: !!session && !!session?.sessionToken && dduduId > -1,
   });
 
   if (!dduduDetail) {

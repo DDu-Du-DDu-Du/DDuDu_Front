@@ -31,6 +31,7 @@ const MainSchedule = ({ selectedDDuDuDate }: MainScheduleProps) => {
         userId: session?.user.userId as number,
         date: selectedDDuDuDate,
       }),
+    enabled: !!session,
   });
 
   const { data: dailyTimeTable } = useQuery<MainDailyTimeTableType>({
@@ -41,6 +42,7 @@ const MainSchedule = ({ selectedDDuDuDate }: MainScheduleProps) => {
         userId: session?.user.userId as number,
         date: selectedDDuDuDate,
       }),
+    enabled: !!session,
   });
 
   const { data: weeklyGoals } = useQuery<GoalsType>({
@@ -51,6 +53,7 @@ const MainSchedule = ({ selectedDDuDuDate }: MainScheduleProps) => {
         type: "WEEK",
         date: selectedDDuDuDate,
       }),
+    enabled: !!session,
   });
 
   return (

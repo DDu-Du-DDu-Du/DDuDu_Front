@@ -18,6 +18,7 @@ const GoalDragDrop = () => {
   const { data: goal, refetch } = useQuery<GoalType[]>({
     queryKey: [GOAL_KEY.GOAL_LIST],
     queryFn: () => getGoalList(session?.sessionToken as string, String(session?.user.userId)),
+    enabled: !!session,
   });
 
   const { goalList, onDragEnd } = useDragDrop({ goal });
