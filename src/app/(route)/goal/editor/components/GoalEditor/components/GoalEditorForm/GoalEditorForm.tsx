@@ -158,6 +158,7 @@ const GoalEditorForm = ({
                     className="px-[1.4rem] py-[1rem] cursor-pointer"
                     href={`/goal/editor/${goalId}/repeats`}
                     title="반복 뚜두 관리 페이지 이동"
+                    scroll={false}
                   >
                     <ArrowRightIcon
                       size={16}

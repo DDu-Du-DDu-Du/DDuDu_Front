@@ -19,6 +19,7 @@ const NotificationTimeReminder = ({
         className="block rounded-radius15 bg-example_gray_100 px-[1.4rem] py-[1.6rem]"
         href={`/todo/${todoId}`}
         title={`${todoTitle} 바로가기`}
+        scroll={false}
       >
         <strong className="block text-size13 leading-[1.3rem] font-regular">{todoTitle}</strong>
         <span className="text-size11 font-light">{getTimeAgo(todoDate)}</span>

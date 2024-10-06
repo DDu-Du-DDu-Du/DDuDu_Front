@@ -20,6 +20,7 @@ const GoalEditorDDuDuRepeatsPage = ({ params }: GoalEditorDDuDuRepeatsPageProps)
           className="absolute top-[1.8rem] right-[2.4rem] z-headerLink"
           href={`/goal/editor/${goalId}/repeat`}
           title="반복 뚜두 생성하기"
+          scroll={false}
         >
           <PlusIcon />
         </Link>

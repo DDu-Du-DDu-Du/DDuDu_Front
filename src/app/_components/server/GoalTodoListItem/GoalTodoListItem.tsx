@@ -28,6 +28,7 @@ const GoalTodoListItem = ({
           goalId ? `/goal/editor/${goalId}/repeat?id=${id}` : `/goal/editor/create/repeat?id=${id}`
         }
         title="반복 투두리스트 수정하기"
+        scroll={false}
       >
         <strong className="block text-size13 leading-[1.3rem] font-regular">{title}</strong>
         <span className="mr-[0.5rem] text-size11 font-light text-example_gray_900">

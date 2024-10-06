@@ -16,6 +16,7 @@ const GoalStatistics = ({ id, goalName }: GoalStatisticsProps) => {
       <Link
         href={`/statistics/goal/${id}`}
         title="목표 통계 페이지"
+        scroll={false}
       >
         <ChevronRightIcon
           size={16}

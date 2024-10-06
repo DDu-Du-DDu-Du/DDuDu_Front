@@ -28,6 +28,7 @@ const GoalPage = async () => {
           className="absolute top-[1.8rem] right-[2.4rem] z-headerLink"
           href="/goal/editor"
           title="목표 생성하기"
+          scroll={false}
         >
           <PlusIcon />
         </Link>

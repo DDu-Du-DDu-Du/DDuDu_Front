@@ -30,6 +30,7 @@ const MainHeader = () => {
                     className="flex items-center py-[0.3rem]"
                     href="/goal/editor"
                     title="목표 등록 페이지로 이동"
+                    scroll={false}
                   >
                     <CreateIcon fill="darkgray" />
                     <span className="pl-[0.8rem]">목표등록</span>
@@ -40,6 +41,7 @@ const MainHeader = () => {
                     className="flex items-center py-[0.3rem]"
                     href="/goal"
                     title="목표 관리 페이지로 이동"
+                    scroll={false}
                   >
                     <ListIcon fill="darkgray" />
                     <span className="pl-[0.8rem]">목표관리</span>
