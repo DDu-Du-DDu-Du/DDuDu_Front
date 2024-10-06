@@ -3,7 +3,7 @@ import "../_styles/globals.css";
 import { ToastProvider } from "@/app/_components/client";
 
 import { SpoqaHanSansFont } from "../_assets/font";
-import { BottomProvider } from "../_components/client/BottomSheet";
+import { BottomProvider } from "../_components/client/BottomSheet/components";
 import { TanstackProvider } from "./_components";
 import SessionChecker from "./_components/SessionChecker/SessionChecker";
 

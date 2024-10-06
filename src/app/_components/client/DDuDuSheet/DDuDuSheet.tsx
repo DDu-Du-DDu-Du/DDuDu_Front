@@ -1,4 +1,4 @@
-import { BottomSheet } from "../BottomSheet";
+import BottomSheet from "../BottomSheet/BottomSheet";
 import { DDuDuMenu } from "./components";
 
 interface DDuDuSheetProps {

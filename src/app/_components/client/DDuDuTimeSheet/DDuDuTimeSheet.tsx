@@ -4,7 +4,7 @@ import styles from "./DDuDuTimeSheet.module.css";
 
 import { DDuDuTimeRangeType, DDuDuTimeType } from "@/app/(route)/feed/feed.types";
 
-import { BottomSheet } from "../BottomSheet";
+import BottomSheet from "../BottomSheet/BottomSheet";
 import { DDUDU_TIME_SHEET } from "./DDuDuTimeSheet.constants";
 import { useTimeUpdate } from "./hooks";
 

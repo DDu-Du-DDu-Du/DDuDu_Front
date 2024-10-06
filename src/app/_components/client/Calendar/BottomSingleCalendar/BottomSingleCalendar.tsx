@@ -4,11 +4,10 @@ import { bottomSheetCalendarStyles } from "../calendar.styles";
 
 import { CaptionLabelProps, DayPicker } from "react-day-picker";
 
-import ChevronLeftIcon from "@/app/_components/server/icons/ChevronLeftIcon/ChevronLeftIcon";
-import ChevronRightIcon from "@/app/_components/server/icons/ChevronRightIcon/ChevronRightIcon";
+import { ChevronLeftIcon, ChevronRightIcon } from "@/app/_components/server/icons";
 import { formatDateToYYYYMMDD } from "@/app/_utils";
 
-import { BottomSheet } from "../../BottomSheet";
+import BottomSheet from "../../BottomSheet/BottomSheet";
 
 import { ko } from "date-fns/locale/ko";
 

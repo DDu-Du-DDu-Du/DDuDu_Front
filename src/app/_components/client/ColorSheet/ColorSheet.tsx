@@ -1,6 +1,6 @@
 "use client";
 
-import { BottomSheet } from "../BottomSheet";
+import BottomSheet from "../BottomSheet/BottomSheet";
 import { COLOR_LIST } from "./ColorSheet.constants";
 import { ColorPickerInput } from "./components";
 

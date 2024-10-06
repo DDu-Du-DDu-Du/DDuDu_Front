@@ -4,7 +4,7 @@ import styles from "./AlarmSheet.module.css";
 
 import { useState } from "react";
 
-import { BottomSheet } from "../BottomSheet";
+import BottomSheet from "../BottomSheet/BottomSheet";
 
 import { twJoin } from "tailwind-merge";
 
