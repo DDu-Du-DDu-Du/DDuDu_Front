@@ -8,7 +8,7 @@ import { AnimatePresence, motion } from "framer-motion";
 interface BottomSheetProps {
   children: React.ReactNode;
   isShow: boolean;
-  onClose?: () => void;
+  onClose: () => void;
 
   defaultHeight?: string | number;
   maxHeight?: string | number;
@@ -38,7 +38,10 @@ const BottomSheet = ({
   });
 
   return (
-    <BottomPortal isShow={activePortal}>
+    <BottomPortal
+      isShow={activePortal}
+      onClose={onClose}
+    >
       <AnimatePresence
         onExitComplete={() => {
           if (onClose) {

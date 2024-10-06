@@ -74,6 +74,7 @@ export const Default: Story = {
     isShow: false,
     maxHeight: "55rem",
     defaultHeight: "30rem",
+    onClose: () => {},
   },
   // decorators: [
   //   (BottomSheetComponent, { args }) => {
