@@ -15,26 +15,34 @@ const DDuDuRepeatList = ({ goalId }: DDuDuRepeatListProps) => {
   const { repeatDDuDu } = useGoalFormStore();
 
   return (
-    <ul className="flex flex-col max-h-[19rem] gap-[0.8rem]">
-      {repeatDDuDu.map(({ id, name, repeatPattern, startDate, endDate }) => (
-        <Fragment key={id}>
-          <GoalTodoListItem
-            id={id}
-            title={name}
-            repeatDays={
-              (repeatPattern.repeatType === "WEEKLY"
-                ? repeatPattern.repeatDaysOfWeek
-                    ?.map((weekDay) => DAY_OF_WEEK_STRING[weekDay])
-                    .join(" ")
-                : repeatPattern.repeatDaysOfMonth?.join(" ")) || "매일"
-            }
-            startDate={startDate}
-            endDate={endDate}
-            goalId={goalId}
-          />
-        </Fragment>
-      ))}
-    </ul>
+    <>
+      {repeatDDuDu.length > 0 ? (
+        <ul className="flex flex-col max-h-[19rem] gap-[0.8rem]">
+          {repeatDDuDu.map(({ id, name, repeatPattern, startDate, endDate }) => (
+            <Fragment key={id}>
+              <GoalTodoListItem
+                id={id}
+                title={name}
+                repeatDays={
+                  (repeatPattern.repeatType === "WEEKLY"
+                    ? repeatPattern.repeatDaysOfWeek
+                        ?.map((weekDay) => DAY_OF_WEEK_STRING[weekDay])
+                        .join(" ")
+                    : repeatPattern.repeatDaysOfMonth?.join(" ")) || "매일"
+                }
+                startDate={startDate}
+                endDate={endDate}
+                goalId={goalId}
+              />
+            </Fragment>
+          ))}
+        </ul>
+      ) : (
+        <div className="text-center text-size13 text-example_gray_800">
+          반복 설정된 투두 리스트가 존재하지 않습니다.
+        </div>
+      )}
+    </>
   );
 };
 
