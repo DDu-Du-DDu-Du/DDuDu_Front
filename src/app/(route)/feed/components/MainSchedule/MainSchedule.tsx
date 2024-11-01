@@ -19,8 +19,6 @@ interface MainScheduleProps {
 }
 
 const MainSchedule = ({ selectedDDuDuDate }: MainScheduleProps) => {
-  // 임시 DAILY TIME TABLE
-
   const { data: session } = useSession();
 
   const { data: weeklyDDuDus } = useQuery<MonthlyWeeklyDDuDuType[]>({
