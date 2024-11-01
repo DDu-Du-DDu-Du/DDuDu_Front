@@ -1,7 +1,7 @@
 import { SubmitHandler } from "react-hook-form";
 
 import { GoalEditorFormInfo } from "@/app/(route)/goal/editor/goalEditor.types";
-import { GOAL_KEY } from "@/app/_constants/queryKey/queryKey";
+import { FEED_KEY, GOAL_KEY } from "@/app/_constants/queryKey/queryKey";
 import { fetchCreateGoal, fetchEditGoal } from "@/app/_services/client/goalEditor";
 import { RepeatDduduRequestType } from "@/app/_types/request/repeatDdudu/repeatDdudu";
 import { GoalPrivacyType, RepeatDdudusType } from "@/app/_types/response/goal/goal";
@@ -34,6 +34,8 @@ const useUpdateGoalMutation = ({
     mutationFn: fetchCreateGoal,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [GOAL_KEY.GOAL_LIST] });
+      queryClient.invalidateQueries({ queryKey: [FEED_KEY.DAILY_TIMETABLE] });
+      queryClient.invalidateQueries({ queryKey: [FEED_KEY.DAILY_LIST] });
       reset();
       router.replace("/goal");
     },
@@ -45,6 +47,8 @@ const useUpdateGoalMutation = ({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [GOAL_KEY.GOAL_EDITOR, goalId] });
       queryClient.invalidateQueries({ queryKey: [GOAL_KEY.GOAL_LIST] });
+      queryClient.invalidateQueries({ queryKey: [FEED_KEY.DAILY_TIMETABLE] });
+      queryClient.invalidateQueries({ queryKey: [FEED_KEY.DAILY_LIST] });
       reset();
       router.replace("/goal");
     },

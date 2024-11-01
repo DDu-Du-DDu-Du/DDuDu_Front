@@ -1,4 +1,4 @@
-import { GOAL_KEY } from "@/app/_constants/queryKey/queryKey";
+import { FEED_KEY, GOAL_KEY } from "@/app/_constants/queryKey/queryKey";
 import { fetchStatusChangeGoal } from "@/app/_services/client/goalEditor";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
@@ -26,6 +26,8 @@ const useStatusChangeGoalMutation = ({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [GOAL_KEY.GOAL_EDITOR, goalId] });
       queryClient.invalidateQueries({ queryKey: [GOAL_KEY.GOAL_LIST] });
+      queryClient.invalidateQueries({ queryKey: [FEED_KEY.DAILY_TIMETABLE] });
+      queryClient.invalidateQueries({ queryKey: [FEED_KEY.DAILY_LIST] });
       reset();
       router.replace("/goal");
     },
