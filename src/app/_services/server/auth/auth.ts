@@ -17,10 +17,13 @@ export const socialLogin = async (socialToken: string) => {
   return response.json();
 };
 
-export const refreshAccessToken = async (refreshToken: string) => {
+export const refreshAccessToken = async (accessToken: string, refreshToken: string) => {
   const response = await fetchApi(`${AUTH.REFRESH_TOKEN}`, {
     method: "POST",
-    headers: { accept: "application/json", "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
     body: JSON.stringify({
       refreshToken: refreshToken,
     }),

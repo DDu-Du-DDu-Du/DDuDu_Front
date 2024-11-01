@@ -15,7 +15,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: "jwt",
-    maxAge: 60 * 60 * 6, // 뚜두 서버 액세스토큰 만료 시간과 같음 (6시간)
+    maxAge: 7 * 24 * 60 * 60, // 뚜두 서버 액세스토큰 만료 시간과 같음 (6시간)
   },
   callbacks: {
     jwt: async ({ token, account }) => {
@@ -33,7 +33,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             ...token,
             accessToken: tokenResponse.accessToken,
             refreshToken: tokenResponse.refreshToken,
-            expiresAt: Date.now() + 6 * 60 * 60 * 1000,
+            expiresAt: Date.now() + 15 * 60 * 1000,
             errorMessage: null,
             user: meResponse,
           };
@@ -61,14 +61,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         try {
           console.log("액세스 토큰이 만료되었습니다. 갱신을 시도합니다.");
 
-          const tokenResponse = await refreshAccessToken(token.refreshToken);
+          const tokenResponse = await refreshAccessToken(
+            token.accessToken as string,
+            token.refreshToken,
+          );
           const meResponse = await getMe(tokenResponse.accessToken);
-          console.log("성공적으로 갱신되었습니다.", tokenResponse);
+          console.log("성공적으로 갱신되었습니다.");
+
           return {
             ...token,
             accessToken: tokenResponse.accessToken,
             refreshToken: tokenResponse.refreshToken,
-            expiresAt: Date.now() + 6 * 60 * 60 * 1000,
+            expiresAt: Date.now() + 15 * 60 * 1000,
             errorMessage: null,
             user: meResponse,
           };
