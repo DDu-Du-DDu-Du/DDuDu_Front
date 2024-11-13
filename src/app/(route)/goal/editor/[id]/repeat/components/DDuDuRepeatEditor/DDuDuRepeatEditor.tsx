@@ -1,18 +1,19 @@
 "use client";
 
+import { Header } from "@/app/_components/client";
+
 import DDuDuRepeatForm from "../DDuDuRepeatForm/DDuDuRepeatForm";
-import useRepeatEditor from "./hooks/useRepeatEditor/useRepeatEditor";
+import { useRepeatEditor } from "./hooks";
 
 import { useSearchParams } from "next/navigation";
 
 interface DDuDuRepeatEditorProps {
   goalId: string;
-  repeatId: string;
 }
 
-const DDuDuRepeatEditor = ({ goalId, repeatId }: DDuDuRepeatEditorProps) => {
-  console.log("DDuDuRepeatEditor의 repeatId", repeatId);
-  console.log(useSearchParams().get("id"), "값 체크");
+const DDuDuRepeatEditor = ({ goalId }: DDuDuRepeatEditorProps) => {
+  const searchParams = useSearchParams();
+  const repeatId = searchParams.get("id") || "";
 
   const { currentRepeatDDuDu, currentRepeatMonthData } = useRepeatEditor({
     repeatId,
@@ -23,12 +24,15 @@ const DDuDuRepeatEditor = ({ goalId, repeatId }: DDuDuRepeatEditorProps) => {
   }
 
   return (
-    <DDuDuRepeatForm
-      repeatId={repeatId}
-      goalId={goalId}
-      currentRepeatDDuDu={currentRepeatDDuDu}
-      currentRepeatMonthData={currentRepeatMonthData}
-    />
+    <>
+      <Header headerLabel={repeatId ? "반복수정" : "반복생성"} />
+      <DDuDuRepeatForm
+        repeatId={repeatId}
+        goalId={goalId}
+        currentRepeatDDuDu={currentRepeatDDuDu}
+        currentRepeatMonthData={currentRepeatMonthData}
+      />
+    </>
   );
 };
 
