@@ -11,7 +11,8 @@ const GoalEditorDDuDuRepeatPage = ({ params, searchParams }: GoalEditorDDuDuRepe
   const { id: goalId } = params;
   const { id: repeatId } = searchParams;
 
-  console.log("repeatId", repeatId);
+  console.log("params goalId", goalId);
+  console.log("searchParams repeatId", repeatId);
 
   return (
     <section>

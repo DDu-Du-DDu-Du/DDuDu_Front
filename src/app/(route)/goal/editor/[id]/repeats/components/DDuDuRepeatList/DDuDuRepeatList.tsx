@@ -3,7 +3,7 @@
 import { Fragment } from "react";
 
 import { GoalTodoListItem } from "@/app/_components/server";
-import { useGoalFormStore } from "@/app/_store";
+import { useGoalDetail } from "@/app/_hooks";
 
 import { DAY_OF_WEEK_STRING } from "../../../repeat/components/DDuDuRepeatForm/DDuDuRepeatForm.constants";
 
@@ -12,7 +12,13 @@ interface DDuDuRepeatListProps {
 }
 
 const DDuDuRepeatList = ({ goalId }: DDuDuRepeatListProps) => {
-  const { repeatDDuDu } = useGoalFormStore();
+  const { goalDetail } = useGoalDetail({ goalId });
+
+  if (!goalDetail) {
+    return;
+  }
+
+  const { repeatDdudus: repeatDDuDu } = goalDetail;
 
   return (
     <>
