@@ -12,6 +12,8 @@ interface UseRepeatEditorProps {
 const useRepeatEditor = ({ repeatId }: UseRepeatEditorProps) => {
   const { repeatDDuDu } = useGoalFormStore();
 
+  console.log("repeatDDuDu", repeatDDuDu);
+
   const currentRepeatDDuDu: RepeatDdudusType = useMemo(() => {
     return repeatDDuDu.filter((ddudu) => String(ddudu.id) === repeatId)[0];
   }, [repeatDDuDu, repeatId]);

@@ -11,6 +11,8 @@ const GoalEditorDDuDuRepeatPage = ({ params, searchParams }: GoalEditorDDuDuRepe
   const { id: goalId } = params;
   const { id: repeatId } = searchParams;
 
+  console.log("repeatId", repeatId);
+
   return (
     <section>
       <Header headerLabel={repeatId ? "반복수정" : "반복생성"} />
