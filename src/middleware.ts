@@ -27,7 +27,6 @@ export async function middleware(request: NextRequest) {
   }
 
   if (!isPublicRoute && !session) {
-    console.log("??");
     return NextResponse.redirect(new URL(AUTH_ROUTES.LOGIN, request.url));
   }
 
