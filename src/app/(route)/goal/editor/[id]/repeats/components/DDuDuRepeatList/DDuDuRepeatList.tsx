@@ -33,6 +33,7 @@ const DDuDuRepeatList = ({ goalId }: DDuDuRepeatListProps) => {
                 startDate={startDate}
                 endDate={endDate}
                 goalId={goalId}
+                bgColor="#FFFFFF"
               />
             </Fragment>
           ))}

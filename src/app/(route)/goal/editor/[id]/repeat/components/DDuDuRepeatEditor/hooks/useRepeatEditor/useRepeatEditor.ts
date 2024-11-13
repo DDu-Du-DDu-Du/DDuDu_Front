@@ -16,6 +16,8 @@ const useRepeatEditor = ({ repeatId }: UseRepeatEditorProps) => {
     return repeatDDuDu.filter((ddudu) => String(ddudu.id) === repeatId)[0];
   }, [repeatDDuDu, repeatId]);
 
+  console.log("currentRepeatDDuDu", currentRepeatDDuDu);
+
   const currentRepeatMonthData =
     currentRepeatDDuDu && currentRepeatDDuDu.repeatPattern.repeatType === "MONTHLY"
       ? (currentRepeatDDuDu.repeatPattern.repeatDaysOfMonth?.map(String) as DayOfMonthString[])
