@@ -15,7 +15,7 @@ input[type="radio"]:checked + .customRadio::after {
   width: 16px; /* 내부 원 크기 */
   height: 16px; /* 내부 원 크기 */
   border-radius: 50%; /* 내부 원 모양 */
-  background: #d3d3d3; /* 내부 원 색상 */
+  background: #1363de; /* 내부 원 색상 */
   position: absolute;
   top: 50%;
   left: 50%;

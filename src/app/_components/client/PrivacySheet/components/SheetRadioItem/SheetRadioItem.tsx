@@ -6,14 +6,24 @@ import { ExampleIcon } from "@/app/_components/server";
 
 interface SheetRadioItemProps {
   label: string;
+  icon?: React.ReactNode;
   value: string;
   id: string;
   name: string;
   options?: RegisterOptions<FieldValues, string>;
 }
 
-const SheetRadioItem = ({ label, value, id, name, options }: SheetRadioItemProps) => {
-  const { register } = useFormContext();
+const SheetRadioItem = ({
+  label,
+  icon = <ExampleIcon />,
+  value,
+  id,
+  name,
+  options,
+}: SheetRadioItemProps) => {
+  const { register, watch } = useFormContext();
+
+  const selectedRadio = watch(name);
 
   return (
     <li>
@@ -22,7 +32,7 @@ const SheetRadioItem = ({ label, value, id, name, options }: SheetRadioItemProps
         htmlFor={id}
       >
         <div className="flex items-center">
-          <ExampleIcon />
+          {icon}
           <span className="ml-[1rem]">{label}</span>
         </div>
         <input
@@ -32,7 +42,10 @@ const SheetRadioItem = ({ label, value, id, name, options }: SheetRadioItemProps
           value={value}
           {...register(name, options)}
         />
-        <span className={styles.customRadio}></span>
+        <span
+          className={styles.customRadio}
+          style={{ borderColor: selectedRadio === value ? "#1363de" : "#ccc" }}
+        ></span>
       </label>
     </li>
   );
