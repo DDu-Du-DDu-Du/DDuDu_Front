@@ -28,11 +28,9 @@ const TextInput = ({
       placeholder={placeholder}
       disabled={disabled}
       className={twMerge(
-        "w-full h-[5.6rem] bg-example_gray_100 rounded-radius15 px-[1.2rem] text-size15",
-        !formState.errors[name] &&
-          "focus:outline-none focus:border-example_gray_900 focus:border-[0.3rem] focus:border-double",
-        formState.errors[name] &&
-          "focus:outline-none border-double border-example_red_500 border-[0.4rem]",
+        "w-full h-[5.6rem] bg-example_gray_100 rounded-radius15 px-[1.2rem] text-size15 outline-0 outline-none focus:outline-0",
+        !formState.errors[name] && "focus:border-main focus:border-[0.1rem]",
+        formState.errors[name] && "border-example_red_500 border-[0.1rem]",
         disabled && " cursor-default opacity-40",
         className,
       )}
