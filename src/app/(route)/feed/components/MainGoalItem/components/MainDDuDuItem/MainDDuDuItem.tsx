@@ -57,7 +57,7 @@ const MainDDuDuItem = ({
         className="ml-[0.5rem] p-[0.5rem] pr-[0]"
         onClick={handleToggleOn}
       >
-        <OptionIcon />
+        <OptionIcon fill="#ccc" />
       </button>
     </li>
   );
