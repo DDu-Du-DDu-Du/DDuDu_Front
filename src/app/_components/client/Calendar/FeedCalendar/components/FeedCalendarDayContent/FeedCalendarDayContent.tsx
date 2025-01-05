@@ -6,7 +6,7 @@ import useFeedCalendarDayConetent from "../../hooks/useFeedCalendarDayContent/us
 import DailyDDuDu from "../DailyDDuDu/DailyDDuDu";
 
 import { useRouter } from "next/navigation";
-import { twMerge } from "tailwind-merge";
+import { twJoin, twMerge } from "tailwind-merge";
 
 interface FeedCalendarDayContentProps {
   props: DayContentProps;
@@ -30,9 +30,9 @@ const FeedCalendarDayContent = ({
   return (
     <div
       className={twMerge(
-        "flex flex-col items-center justify-center gap-2 w-[4.2rem] h-[5.4rem] text-size11",
+        "flex flex-col items-center justify-center gap-2 w-[4.2rem] h-[5.4rem]",
         (selectedDDuDuDate === formattedDate || (!selectedDDuDuDate && isToday)) &&
-          "font-bold bg-example_gray_300 rounded-radius5",
+          "text-sub_3 font-bold bg-sub_2 rounded-radius5",
       )}
       onClick={() => router.replace(`${currentURL}&date=${formattedDate}`)}
     >
@@ -43,10 +43,16 @@ const FeedCalendarDayContent = ({
           restCount={dailyDDuDuDate.uncompletedCount}
         />
       ) : (
-        <div className="rounded-full shrink-0 w-[2.4rem] h-[2.4rem] bg-example_gray_100 flex justify-center items-center" />
+        <div
+          className={twJoin(
+            "rounded-full shrink-0 w-[2.4rem] h-[2.4rem] bg-sub_1 border flex justify-center items-center",
+            (selectedDDuDuDate === formattedDate || (!selectedDDuDuDate && isToday)) &&
+              "border-sub_3",
+          )}
+        />
       )}
 
-      <p className="text-example_gray_800">{selectedDate}</p>
+      <p>{selectedDate}</p>
     </div>
   );
 };

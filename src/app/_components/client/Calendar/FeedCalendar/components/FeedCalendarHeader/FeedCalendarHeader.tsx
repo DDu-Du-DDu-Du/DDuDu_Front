@@ -48,18 +48,18 @@ const FeedCalendarHeader = ({ props, monthlyGoals }: FeedCalenderHeaderProps) =>
             onClick={handlePrevToMonth}
             className="w-auto py-[0.2rem] px-[0.5rem]"
           >
-            <ChevronLeftIcon className="h-5 w-5 fill-example_gray_1200" />
+            <ChevronLeftIcon className="h-5 w-5 fill-black_500" />
           </button>
           <button
             onClick={handleNextToMonth}
             className="w-auto py-[0.2rem] px-[0.5rem]"
           >
-            <ChevronRightIcon className="h-5 w-5 fill-example_gray_1200" />
+            <ChevronRightIcon className="h-5 w-5 fill-black_500" />
           </button>
         </article>
       </section>
       <section
-        className="bg-example_gray_100 w-full rounded-radius10 text-size11 mb-[1.5rem] cursor-pointer"
+        className="bg-sub_1 w-full rounded-radius10 text-size11 mb-[1.5rem] cursor-pointer shadow"
         ref={monthlyGoalsRef}
       >
         {isToggle === false && (
@@ -72,14 +72,14 @@ const FeedCalendarHeader = ({ props, monthlyGoals }: FeedCalenderHeaderProps) =>
                 {monthlyGoalList.map((goal) => (
                   <li
                     key={goal}
-                    className="w-full text-left text-example_black_500"
+                    className="w-full text-left text-black_500"
                   >
                     {goal}
                   </li>
                 ))}
               </ul>
             ) : (
-              <p className="w-full text-left text-example_gray_700">월 별 목표를 설정해 보세요!</p>
+              <p className="w-full text-left text-example_gray_900">월 별 목표를 설정해 보세요!</p>
             )}
           </article>
         )}
@@ -89,13 +89,13 @@ const FeedCalendarHeader = ({ props, monthlyGoals }: FeedCalenderHeaderProps) =>
             onSubmit={methods.handleSubmit(onValid)}
           >
             <textarea
-              className="w-[100%] bg-transparent outline-none resize-none"
+              className="w-[100%] bg-transparent outline-none resize-none text-black_100"
               defaultValue={monthlyGoals?.contents || ""}
               {...methods.register("contents", { required: true })}
               autoFocus
             />
             <button
-              className="flex justify-end bg-example_gray_800 text-white_100 rounded-radius5 p-[0.5rem]"
+              className="flex justify-end bg-main text-white_100 rounded-radius5 p-[0.5rem]"
               type="submit"
             >
               목표 설정

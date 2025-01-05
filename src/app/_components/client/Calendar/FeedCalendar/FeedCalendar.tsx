@@ -40,6 +40,7 @@ const FeedCalendar = ({ monthlyGoals, monthlyDDuDus, selectedDDuDuDate }: FeedCa
       locale={ko}
       fixedWeeks
       mode={"single"}
+      ISOWeek
       className="w-full"
       classNames={feedCalendarStyles}
       components={{

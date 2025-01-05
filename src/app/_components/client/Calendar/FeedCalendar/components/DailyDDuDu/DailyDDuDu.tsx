@@ -11,14 +11,14 @@ const DailyDDuDu = ({ totalCount, doneCount, restCount }: DailyDDuDuProps) => {
   const isAllDDuDuDone = totalCount === doneCount;
 
   return (
-    <article className="rounded-full shrink-0 w-[2.4rem] h-[2.4rem] bg-example_gray_900 flex justify-center items-center">
+    <article className="rounded-full shrink-0 w-[2.4rem] h-[2.4rem] bg-sub_3 flex justify-center items-center">
       {isAllDDuDuDone ? (
         <CheckIcon
           fill="white"
           size={14}
         />
       ) : (
-        <div className="w-[2.2rem] h-[2.2rem] p-4 bg-example_gray_500 rounded-full flex justify-center items-center text-white text-size11">
+        <div className="w-[2.3rem] h-[2.3rem] p-4 bg-sub_gray_100 rounded-full flex justify-center items-center text-sub_3 text-size10">
           {upperLimitRestCount}
         </div>
       )}
