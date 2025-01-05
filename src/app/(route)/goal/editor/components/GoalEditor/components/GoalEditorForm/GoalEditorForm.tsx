@@ -4,6 +4,7 @@ import { FormProvider } from "react-hook-form";
 
 import { ColorSheet, PrivacySheet, SelectUiDiv, TextInput } from "@/app/_components/client";
 import { ArrowRightIcon } from "@/app/_components/server";
+import { FollowerIcon, PrivacyIcon, PublicIcon } from "@/app/_components/server/icons";
 import useGoalFormStore from "@/app/_store/useGoalFormStore/useGoalFormStore";
 
 import { GoalFormDataType } from "../../../../goalEditor.types";
@@ -27,6 +28,12 @@ interface GoalEditorFormProps {
   goalFormData: GoalFormDataType;
   isLoadTempData: boolean | null;
 }
+
+const PRIVACY_ICON = {
+  PUBLIC: <PublicIcon />,
+  FOLLOWER: <FollowerIcon />,
+  PRIVATE: <PrivacyIcon />,
+};
 
 const GoalEditorForm = ({
   goalId,
@@ -97,11 +104,13 @@ const GoalEditorForm = ({
           <li className="flex justify-between items-center">
             <strong className="pl-[1.8rem] font-medium text-size13">공개설정</strong>
             <SelectUiDiv
-              width="10.5rem"
+              width="13rem"
               backgroundColor="transparent"
               onClick={handleGoalPrivacyToggleOn}
+              className="flex items-center justify-end"
             >
-              {PRIVACY_TYPE[goalPrivacy]}
+              {PRIVACY_ICON[goalPrivacy]}
+              <span className="ml-[0.5rem]">{PRIVACY_TYPE[goalPrivacy]}</span>
             </SelectUiDiv>
             <PrivacySheet
               goalPrivacy={goalPrivacy}
