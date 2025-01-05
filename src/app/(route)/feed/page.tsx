@@ -10,7 +10,7 @@ const FeedPage = async ({ searchParams }: FeedPageProps) => {
   const { view, date = formatDateToYYYYMMDD(new Date()) } = searchParams;
 
   return (
-    <div>
+    <div className="bg-main">
       <MainHeader />
       {view === "ddudu" && <MainFeed selectedDDuDuDate={date} />}
       {view === "schedule" && <MainSchedule selectedDDuDuDate={date} />}
