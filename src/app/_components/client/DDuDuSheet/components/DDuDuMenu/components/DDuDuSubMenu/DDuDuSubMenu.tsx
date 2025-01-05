@@ -1,5 +1,5 @@
 import { SheetButton } from "@/app/_components/client";
-import { ExampleIcon } from "@/app/_components/server";
+import { AlarmIcon, AnotherDayIcon, DailyIcon } from "@/app/_components/server/icons/";
 import { formatDateToYYYYMMDD } from "@/app/_utils";
 
 import { DDuDuDetailType } from "../../DDuDuMenu";
@@ -38,19 +38,19 @@ const DDuDuSubMenu = ({
       {status === "COMPLETE" && (
         <>
           <SheetButton
-            Icon={<ExampleIcon />}
+            Icon={<DailyIcon />}
             title="오늘 또 하기"
             buttonType="sub"
             onClick={handleRepeatDDuDuCurrentDate}
           />
           <SheetButton
-            Icon={<ExampleIcon />}
+            Icon={<AnotherDayIcon fill="#FDB541" />}
             title="다른날 또 하기"
             buttonType="sub"
             onClick={handleRepeatDDuDuDate}
           />
           <SheetButton
-            Icon={<ExampleIcon />}
+            Icon={<AnotherDayIcon />}
             title="날짜 바꾸기"
             buttonType="sub"
             onClick={handleChangeDDuDuDate}
@@ -60,14 +60,14 @@ const DDuDuSubMenu = ({
       {status === "UNCOMPLETED" && isDDuDuDateNow && (
         <>
           <SheetButton
-            Icon={<ExampleIcon />}
+            Icon={<AlarmIcon />}
             title="알림 설정하기"
             buttonType="sub"
             rightPlace={<p>없음</p>}
             onClick={handleAlarmSetting}
           />
           <SheetButton
-            Icon={<ExampleIcon />}
+            Icon={<AnotherDayIcon fill="#FDB541" />}
             title="미루기"
             buttonType="sub"
             onClick={handleChangeDDuDuDate}
@@ -76,7 +76,7 @@ const DDuDuSubMenu = ({
       )}
       {status === "UNCOMPLETED" && !isDDuDuDateNow && (
         <SheetButton
-          Icon={<ExampleIcon />}
+          Icon={<DailyIcon />}
           title="오늘 다시 하기"
           buttonType="sub"
           onClick={handleRepeatDDuDuCurrentDate}
@@ -84,7 +84,7 @@ const DDuDuSubMenu = ({
       )}
       {status === "UNCOMPLETED" && (
         <SheetButton
-          Icon={<ExampleIcon />}
+          Icon={<AnotherDayIcon />}
           title="다른날 반복하기"
           buttonType="sub"
           onClick={handleRepeatDDuDuDate}

@@ -1,5 +1,5 @@
 import { SheetButton } from "@/app/_components/client";
-import { ExampleIcon } from "@/app/_components/server";
+import { ClockIcon, DeleteIcon, EditIcon } from "@/app/_components/server";
 import { formatDateToYYYYMMDD } from "@/app/_utils";
 
 import { DDuDuDetailType } from "../../DDuDuMenu";
@@ -47,20 +47,20 @@ const DDuDuMainMenu = ({
     <div className="flex w-full max-w-[50rem] gap-4">
       {type === "ddudu" && (
         <SheetButton
-          Icon={<ExampleIcon size={32} />}
+          Icon={<EditIcon size={24} />}
           title="수정하기"
           onClick={handleCurrentDDuDuEdit}
         />
       )}
       {(isDDuDuDateNow || status === "COMPLETE") && (
         <SheetButton
-          Icon={<ExampleIcon />}
+          Icon={<ClockIcon />}
           title="뚜두시간"
           onClick={handleDDuDuTimeChange}
         />
       )}
       <SheetButton
-        Icon={<ExampleIcon />}
+        Icon={<DeleteIcon size={24} />}
         title="삭제하기"
         className="flex-grow-[1]"
         onClick={handleCurrentDDuDuDelete}

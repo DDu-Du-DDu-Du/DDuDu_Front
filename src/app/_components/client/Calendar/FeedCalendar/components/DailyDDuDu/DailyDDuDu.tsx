@@ -1,5 +1,7 @@
 import { CheckIcon } from "@/app/_components/server";
 
+import { twMerge } from "tailwind-merge";
+
 interface DailyDDuDuProps {
   totalCount: number;
   doneCount: number;
@@ -11,16 +13,19 @@ const DailyDDuDu = ({ totalCount, doneCount, restCount }: DailyDDuDuProps) => {
   const isAllDDuDuDone = totalCount === doneCount;
 
   return (
-    <article className="rounded-full shrink-0 w-[2.4rem] h-[2.4rem] bg-sub_3 flex justify-center items-center">
+    <article
+      className={twMerge(
+        "rounded-full shrink-0 w-[2.4rem] h-[2.4rem] flex justify-center items-center",
+        isAllDDuDuDone ? "bg-sub_3" : "bg-sub_1 border-solid border-[0.1rem] border-sub_3",
+      )}
+    >
       {isAllDDuDuDone ? (
         <CheckIcon
           fill="white"
           size={14}
         />
       ) : (
-        <div className="w-[2.3rem] h-[2.3rem] p-4 bg-sub_gray_100 rounded-full flex justify-center items-center text-sub_3 text-size10">
-          {upperLimitRestCount}
-        </div>
+        <div className="text-sub_3 text-size10">{upperLimitRestCount}</div>
       )}
     </article>
   );

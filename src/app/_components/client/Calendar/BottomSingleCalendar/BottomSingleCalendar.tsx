@@ -53,28 +53,28 @@ const BottomSingleCalendar = ({
         components={{
           CaptionLabel: (date: CaptionLabelProps) => (
             <p>
-              {date.displayMonth.getFullYear()} {date.displayMonth.getMonth() + 1}월
+              {date.displayMonth.getFullYear()}년 {date.displayMonth.getMonth() + 1}월
             </p>
           ),
           IconLeft: ({ ...props }) => (
             <ChevronLeftIcon
               {...props}
               className="h-5 w-5"
-              fill="#8E8E8E"
+              fill="#000"
             />
           ),
           IconRight: ({ ...props }) => (
             <ChevronRightIcon
               {...props}
               className="h-5 w-5"
-              fill="#8E8E8E"
+              fill="#000"
             />
           ),
         }}
       />
       <div className="px-[2.4rem]">
         <button
-          className="w-[100%] max-w-[50rem] h-[5.6rem] bg-example_gray_700 rounded-radius15 mb-[2rem]"
+          className="w-[100%] max-w-[50rem] h-[5.6rem] bg-main text-white font-medium rounded-radius15 mb-[2rem]"
           onClick={handleSelectedDate}
         >
           확인

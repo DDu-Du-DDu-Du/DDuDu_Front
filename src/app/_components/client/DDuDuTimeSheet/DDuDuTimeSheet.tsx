@@ -131,7 +131,7 @@ const DDuDuTimeSheet = ({
           )}
           <button
             onClick={handleDDuDuTimeChange}
-            className="w-full h-[5.6rem] bg-example_gray_700 rounded-radius15 mt-[2rem]"
+            className="w-full h-[5.6rem] bg-main text-white font-medium rounded-radius15 mt-[2rem]"
           >
             확인
           </button>
