@@ -74,7 +74,7 @@ const GoalDropDownView = () => {
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
-            {items.map(({ id, name }, index) => (
+            {items.map(({ id, name, color }, index) => (
               <Draggable
                 key={String(id)}
                 draggableId={String(id)}
@@ -82,6 +82,7 @@ const GoalDropDownView = () => {
               >
                 {(provided) => (
                   <GoalItem
+                    color={color}
                     innerRef={provided.innerRef}
                     draggableProps={provided.draggableProps}
                     dragHandleProps={provided.dragHandleProps}
