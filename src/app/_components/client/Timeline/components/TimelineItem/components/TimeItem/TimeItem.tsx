@@ -34,13 +34,7 @@ const TimeItem = ({
         {/* middle icon */}
         <div className="absolute top-0 z-timeline_icon flex items-center justify-center h-[5.7rem]">
           <div
-            className="flex h-[2.2rem] w-[2.2rem] items-center justify-center rounded-circle cursor-pointer"
-            style={{
-              backgroundColor:
-                status === "COMPLETE"
-                  ? theme.colors["example_gray_700"]
-                  : theme.colors["example_gray_700"],
-            }}
+            className="flex h-[2.2rem] w-[2.2rem] items-center justify-center rounded-circle cursor-pointer bg-example_gray_700"
             onClick={handleDDuDuCompleteToggle}
           >
             <div className="h-[1.6rem] w-[1.6rem] rounded-circle bg-white flex items-center justify-center">
@@ -94,7 +88,7 @@ const TimeItem = ({
         onClick={() => handleDDuDuSheetOpen(id)}
       >
         <p className="text-size14 font-regular">{name}</p>
-        <p className="text-size11 font-light text-example_gray_700">{`${beginAt} - ${endAt}`}</p>
+        <p className="text-size11 font-light text-example_gray_800">{`${beginAt} - ${endAt}`}</p>
       </motion.button>
     </li>
   );
