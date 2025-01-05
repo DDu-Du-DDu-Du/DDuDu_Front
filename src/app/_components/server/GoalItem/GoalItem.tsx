@@ -8,6 +8,7 @@ import { GoalCreateDDuDu, GoalManagement, GoalStatistics } from "./components";
 export interface GoalItemProps {
   type?: "create" | "management" | "statistic";
   id?: number;
+  color: string;
   goalName: string;
   innerRef?: (element: HTMLElement | null) => void;
   draggableProps?: DraggableProvidedDraggableProps;
@@ -18,6 +19,7 @@ export interface GoalItemProps {
 const GoalItem = ({
   type = "management",
   id,
+  color,
   goalName,
   innerRef,
   draggableProps,
@@ -29,6 +31,7 @@ const GoalItem = ({
       {type === "management" && (
         <GoalManagement
           id={id}
+          color={color}
           goalName={goalName}
           innerRef={innerRef}
           draggableProps={draggableProps}
@@ -38,12 +41,14 @@ const GoalItem = ({
       {type === "statistic" && (
         <GoalStatistics
           id={id}
+          color={color}
           goalName={goalName}
         />
       )}
       {type === "create" && (
         <GoalCreateDDuDu
           goalName={goalName}
+          color={color}
           onOpenDDuDuInput={onOpenDDuDuInput}
         />
       )}

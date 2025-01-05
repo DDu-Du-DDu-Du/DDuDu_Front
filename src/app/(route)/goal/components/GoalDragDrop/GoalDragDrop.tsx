@@ -41,7 +41,7 @@ const GoalDragDrop = () => {
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
-            {goalList.map(({ id, name }, index) => (
+            {goalList.map(({ id, name, color }, index) => (
               <Draggable
                 key={String(id)}
                 draggableId={String(id)}
@@ -54,6 +54,7 @@ const GoalDragDrop = () => {
                     dragHandleProps={provided.dragHandleProps}
                     goalName={name}
                     id={id}
+                    color={color}
                   />
                 )}
               </Draggable>

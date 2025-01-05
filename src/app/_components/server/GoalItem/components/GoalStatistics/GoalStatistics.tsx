@@ -4,13 +4,19 @@ import Link from "next/link";
 
 interface GoalStatisticsProps {
   id?: number;
+  color: string;
   goalName: string;
 }
 
-const GoalStatistics = ({ id, goalName }: GoalStatisticsProps) => {
+const GoalStatistics = ({ id, color, goalName }: GoalStatisticsProps) => {
+  const goalColor = `#${color}`;
+
   return (
     <div className="flex justify-between items-center mb-[2.8rem]">
-      <strong className="inline-block py-[0.9rem] px-[1.9rem] bg-example_gray_100 rounded-radius15 select-none">
+      <strong
+        className="inline-block py-[0.9rem] px-[1.9rem] bg-example_gray_100 rounded-radius15 select-none"
+        style={{ color: goalColor }}
+      >
         {goalName}
       </strong>
       <Link

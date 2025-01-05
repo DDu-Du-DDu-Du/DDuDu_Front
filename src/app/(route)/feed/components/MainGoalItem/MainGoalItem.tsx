@@ -113,6 +113,7 @@ const MainGoalItem = ({ goal, ddudus, selectedDDuDuDate }: MainGoalItemProps) =>
       <GoalItem
         type="create"
         id={goal.id}
+        color={goal.color}
         goalName={goal.name}
         onOpenDDuDuInput={handleOpenDDuDuInput}
       />
