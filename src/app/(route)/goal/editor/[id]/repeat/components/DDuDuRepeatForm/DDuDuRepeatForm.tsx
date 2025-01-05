@@ -183,7 +183,7 @@ const DDuDuRepeatForm = ({
           )}
         </ul>
         <button
-          className="w-full h-[5.6rem] mb-[3rem] text-size15 font-medium bg-example_gray_700 rounded-radius15"
+          className="w-full h-[5.6rem] mb-[3rem] text-size15 font-medium bg-main text-white rounded-radius15"
           type="submit"
         >
           {repeatId ? "반복 수정" : "반복 생성"}
