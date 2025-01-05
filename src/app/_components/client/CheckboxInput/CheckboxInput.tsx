@@ -3,14 +3,11 @@
 import { HTMLAttributes, useId } from "react";
 import { FieldValues, RegisterOptions, useFormContext } from "react-hook-form";
 
-import tailwindConfig from "@/../tailwind.config";
-
 import { CheckIcon } from "../../server";
 import { useCheckToggle } from "./hooks";
 
 import { motion } from "framer-motion";
 import { twMerge } from "tailwind-merge";
-import resolveConfig from "tailwindcss/resolveConfig";
 
 interface CheckboxInputProps extends Omit<HTMLAttributes<HTMLInputElement>, "type"> {
   children?: React.ReactNode;
@@ -43,7 +40,6 @@ const CheckboxInput = ({
   const isCheckedList = watch(name);
 
   const inputId = useId();
-  const { theme } = resolveConfig(tailwindConfig);
 
   const { isChecked } = useCheckToggle({ isCheckedList, value, checked });
 
@@ -81,7 +77,7 @@ const CheckboxInput = ({
         {type === "icon" && (
           <CheckIcon
             size={"100%"}
-            fill={theme.colors["white_100"]}
+            fill="#fff"
             className="p-[0.2rem]"
           />
         )}

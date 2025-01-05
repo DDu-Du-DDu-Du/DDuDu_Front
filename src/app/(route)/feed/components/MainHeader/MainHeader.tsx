@@ -1,19 +1,15 @@
 "use client";
 
-import tailwindConfig from "@/../tailwind.config";
 import { SwitchButton } from "@/app/_components/client";
 import { CreateIcon, ListIcon, MainFeedIcon } from "@/app/_components/server";
 import { useClickAway, useToggle } from "@/app/_hooks";
 
 import Link from "next/link";
-import resolveConfig from "tailwindcss/resolveConfig";
 
 const MainHeader = () => {
   const { isToggle, handleToggleOn, handleToggleOff } = useToggle();
 
   const goalButtonRef = useClickAway<HTMLDivElement>(handleToggleOff);
-
-  const { theme } = resolveConfig(tailwindConfig);
 
   return (
     <header className="mb-[2rem] pt-[2.4rem] px-[2.4rem]">
@@ -26,7 +22,7 @@ const MainHeader = () => {
           >
             <MainFeedIcon
               className="cursor-pointer"
-              fill={theme.colors.white}
+              fill="#fff"
             />
             <div ref={goalButtonRef}>
               {isToggle && (
@@ -38,7 +34,7 @@ const MainHeader = () => {
                       title="목표 등록 페이지로 이동"
                       scroll={false}
                     >
-                      <CreateIcon fill={theme.colors.main} />
+                      <CreateIcon fill="#1363DE" />
                       <span className="pl-[0.8rem]">목표등록</span>
                     </Link>
                   </li>
@@ -49,7 +45,7 @@ const MainHeader = () => {
                       title="목표 관리 페이지로 이동"
                       scroll={false}
                     >
-                      <ListIcon fill={theme.colors.main} />
+                      <ListIcon fill="#1363DE" />
                       <span className="pl-[0.8rem]">목표관리</span>
                     </Link>
                   </li>
