@@ -5,7 +5,10 @@ import {
   ChevronRightIcon,
   CloseIcon,
   DragIcon,
+  FollowerIcon,
   PlusIcon,
+  PrivacyIcon,
+  PublicIcon,
   QuestionIcon,
 } from "@/app/_components/server";
 import type { Meta, StoryObj } from "@storybook/react";
@@ -82,4 +85,16 @@ export const ChevronLeft: Story = {
 
 export const ChevronRight: Story = {
   args: { children: <ChevronRightIcon /> },
+};
+
+export const PublicI: Story = {
+  args: { children: <PublicIcon /> },
+};
+
+export const FollowerI: Story = {
+  args: { children: <FollowerIcon /> },
+};
+
+export const PrivacyI: Story = {
+  args: { children: <PrivacyIcon /> },
 };
