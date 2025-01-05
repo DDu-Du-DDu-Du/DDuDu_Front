@@ -58,7 +58,7 @@ const MainFeed = ({ selectedDDuDuDate }: MainFeedProps) => {
   });
 
   return (
-    <div className="px-[2.4rem]">
+    <div className="pt-[2.4rem] px-[2.4rem] bg-white rounded-t-[2.5rem]">
       <FeedCalendar
         monthlyDDuDus={monthlyDDuDus || []}
         monthlyGoals={monthlyGoals}
