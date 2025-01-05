@@ -55,7 +55,7 @@ const MainSchedule = ({ selectedDDuDuDate }: MainScheduleProps) => {
   });
 
   return (
-    <div className="bg-example_gray_100">
+    <div className="bg-sub_1 rounded-t-[2.5rem]">
       <WeekCalendar
         weeklyDDuDus={weeklyDDuDus || []}
         weeklyGoals={weeklyGoals}
