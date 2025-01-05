@@ -53,13 +53,13 @@ const ConfirmModal = ({
       )}
       <div className="flex gap-[1rem] px-[1rem] pb-[1rem]">
         <button
-          className="mx-auto h-[5.2rem] flex-1 rounded-[1rem] bg-[#D9D9D9] text-size15 font-medium"
+          className="mx-auto h-[5.2rem] flex-1 rounded-[1rem] bg-example_gray_100 text-size15 font-medium"
           onClick={handleClickComplete}
         >
           {completeText}
         </button>
         <button
-          className="mx-auto h-[5.2rem] flex-1 rounded-[1rem] bg-[#D9D9D9] text-size15 font-medium"
+          className="mx-auto h-[5.2rem] flex-1 rounded-[1rem] bg-example_gray_100 text-size15 font-medium"
           onClick={handleClickIncomplete}
         >
           {incompleteText}
