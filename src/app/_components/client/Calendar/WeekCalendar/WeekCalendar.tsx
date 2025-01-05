@@ -29,7 +29,7 @@ const WeekCalendar = ({ weeklyDDuDus, weeklyGoals, selectedDDuDuDate }: WeeklyCa
   const { handleDateClick, handlePreviousWeek, handleNextWeek } = useWeeklyDate({ weeklyDDuDus });
 
   return (
-    <section className="bg-white px-[2.4rem] pb-[1.5rem] rounded-b-[2.5rem]">
+    <section className="bg-white pt-[2.4rem] px-[2.4rem] pb-[1.5rem] rounded-t-[2.5rem] rounded-b-[2.5rem]">
       <article className="flex flex-col items-center px-4 py-2">
         <div className="flex items-center justify-between w-full mb-3">
           <strong className="text-size13 font-medium">
@@ -51,7 +51,7 @@ const WeekCalendar = ({ weeklyDDuDus, weeklyGoals, selectedDDuDuDate }: WeeklyCa
           </div>
         </div>
         <div
-          className="bg-example_gray_100 w-full rounded-radius10 text-size11 mb-[1.5rem] cursor-pointer"
+          className="bg-sub_1 w-full rounded-radius10 text-size11 mb-[1.5rem] cursor-pointer shadow"
           ref={weeklyGoalsRef}
         >
           {isToggle === false && (
@@ -72,7 +72,7 @@ const WeekCalendar = ({ weeklyDDuDus, weeklyGoals, selectedDDuDuDate }: WeeklyCa
                 </ul>
               ) : (
                 // TODO: 추후 디자인, 로직 수정
-                <p className="w-full text-left text-example_gray_700">
+                <p className="w-full text-left text-example_gray_900">
                   주 간 목표를 설정해 보세요!
                 </p>
               )}
@@ -84,13 +84,13 @@ const WeekCalendar = ({ weeklyDDuDus, weeklyGoals, selectedDDuDuDate }: WeeklyCa
               onSubmit={methods.handleSubmit(onValid)}
             >
               <textarea
-                className="w-[100%] bg-transparent outline-none resize-none"
+                className="w-[100%] bg-transparent outline-none resize-none text-black_100"
                 defaultValue={weeklyGoals?.contents || ""}
                 {...methods.register("contents", { required: true })}
                 autoFocus
               />
               <button
-                className="flex justify-end bg-example_gray_800 text-white_100 rounded-radius5 p-[0.5rem]"
+                className="flex justify-end bg-main text-white_100 rounded-radius5 p-[0.5rem]"
                 type="submit"
               >
                 목표 설정
@@ -106,7 +106,7 @@ const WeekCalendar = ({ weeklyDDuDus, weeklyGoals, selectedDDuDuDate }: WeeklyCa
             <div
               className={twJoin(
                 "flex flex-col justify-center items-center w-[4.2rem] h-[5.4rem] rounded-radius5 gap-[0.5rem] m-1 cursor-pointer",
-                date === selectedDDuDuDate ? "bg-example_gray_300" : "",
+                date === selectedDDuDuDate ? "bg-sub_2" : "",
               )}
               onClick={() => handleDateClick(date)}
             >
@@ -117,12 +117,17 @@ const WeekCalendar = ({ weeklyDDuDus, weeklyGoals, selectedDDuDuDate }: WeeklyCa
                   doneCount={totalCount - uncompletedCount}
                 />
               ) : (
-                <div className="rounded-full shrink-0 w-[2.4rem] h-[2.4rem] bg-example_gray_100 flex justify-center items-center" />
+                <div
+                  className={twJoin(
+                    "rounded-full shrink-0 w-[2.4rem] h-[2.4rem] bg-sub_1 flex justify-center items-center border",
+                    date === selectedDDuDuDate && "border-sub_3",
+                  )}
+                />
               )}
               <div
                 className={twJoin(
                   "text-example_gray_800",
-                  date === selectedDDuDuDate ? "font-bold" : "",
+                  date === selectedDDuDuDate ? "font-bold text-sub_3" : "",
                 )}
               >
                 {getDateNumber(date)}
