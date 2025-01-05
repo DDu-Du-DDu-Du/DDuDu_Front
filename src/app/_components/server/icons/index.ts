@@ -12,3 +12,6 @@ export { default as MainFeedIcon } from "./MainFeedIcon/MainFeedIcon";
 export { default as CreateIcon } from "./CreateIcon/CreateIcon";
 export { default as ListIcon } from "./ListIcon/ListIcon";
 export { default as MessageIcon } from "./MessageIcon/MessageIcon";
+export { default as PublicIcon } from "./PublicIcon/PublicIcon";
+export { default as FollowerIcon } from "./FollowerIcon/FollowerIcon";
+export { default as PrivacyIcon } from "./PrivacyIcon/PrivacyIcon";

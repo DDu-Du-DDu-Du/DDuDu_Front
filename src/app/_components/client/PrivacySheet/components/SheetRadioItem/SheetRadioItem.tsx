@@ -28,7 +28,7 @@ const SheetRadioItem = ({
   return (
     <li>
       <label
-        className="flex justify-between cursor-pointer"
+        className="flex justify-between cursor-pointer py-1"
         htmlFor={id}
       >
         <div className="flex items-center">

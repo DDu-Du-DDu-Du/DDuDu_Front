@@ -6,7 +6,7 @@ import { FormProvider } from "react-hook-form";
 import { BottomSheet } from "@/app/_components/client";
 import { GoalPrivacyType } from "@/app/_types/response/goal/goal";
 
-import PublicIcon from "../../server/icons/PublicIcon/PublicIcon";
+import { FollowerIcon, PrivacyIcon, PublicIcon } from "../../server/icons";
 import { SheetRadioItem } from "./components";
 import { usePrivacySheet } from "./hooks";
 import { PrivacyItemType } from "./privacySheet.types";
@@ -28,12 +28,14 @@ export const PRIVACY_LIST: PrivacyItemType[] = [
   },
   {
     id: "follower",
+    icon: <FollowerIcon />,
     label: "팔로워 공개",
     name: "privacyType",
     value: "FOLLOWER",
   },
   {
     id: "private",
+    icon: <PrivacyIcon />,
     label: "나만보기",
     name: "privacyType",
     value: "PRIVATE",
