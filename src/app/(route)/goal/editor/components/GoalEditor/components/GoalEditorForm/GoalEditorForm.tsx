@@ -97,8 +97,9 @@ const GoalEditorForm = ({
           <li className="flex justify-between items-center">
             <strong className="pl-[1.8rem] font-medium text-size13">공개설정</strong>
             <SelectUiDiv
-              onClick={handleGoalPrivacyToggleOn}
               width="10.5rem"
+              backgroundColor="transparent"
+              onClick={handleGoalPrivacyToggleOn}
             >
               {PRIVACY_TYPE[goalPrivacy]}
             </SelectUiDiv>
@@ -176,7 +177,7 @@ const GoalEditorForm = ({
                   {goalStatus === "IN_PROGRESS" ? "목표 종료하기" : "목표 재개하기"}
                 </button>
                 <button
-                  className="w-full h-[4rem] text-size13 font-medium bg-example_gray_100 rounded-radius10"
+                  className="w-full h-[4rem] text-size13 font-medium bg-example_gray_100 rounded-radius10 text-red_500"
                   onClick={handleGoalDelete}
                 >
                   목표 삭제하기
@@ -186,7 +187,7 @@ const GoalEditorForm = ({
           )}
         </ul>
         <button
-          className="w-full h-[5.6rem] mb-[3rem] text-size15 font-medium bg-example_gray_700 rounded-radius15"
+          className="w-full h-[5.6rem] mb-[3rem] text-size15 font-medium text-white_100 bg-main rounded-radius15"
           type="submit"
         >
           {goalId ? "목표 수정" : "목표 등록"}
