@@ -11,7 +11,7 @@ export const bottomSheetCalendarStyles = {
   cell: "rounded-md h-[3rem] w-full text-center text-[1.1rem] p-0 m-0.5 relative",
   day: "h-[3rem] w-[3rem] p-0 font-normal",
   day_range_end: "day-range-end",
-  day_selected: "rounded-full bg-example_gray_1000 text-white focus:bg-example_gray_1000",
+  day_selected: "rounded-full bg-main text-white focus:bg-main",
   day_outside:
     "day-outside text-gray-500 opacity-50 aria-selected:bg-gray-500 aria-selected:text-gray-900 aria-selected:bg-opacity-10",
   day_disabled: "text-gray-500 opacity-50",
