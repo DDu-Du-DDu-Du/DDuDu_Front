@@ -20,7 +20,7 @@ const useRepeatDDuDuEditor = ({
   const methods = useForm<DDuDuRepeatFormDataType>({
     defaultValues: {
       name: currentRepeatDDuDu?.name,
-      repeatType: currentRepeatDDuDu?.repeatPattern.repeatType,
+      repeatType: currentRepeatDDuDu?.repeatPattern.repeatType || "DAILY",
       repeatDaysOfWeek: currentRepeatDDuDu?.repeatPattern.repeatDaysOfWeek || [],
       repeatDaysOfMonth: currentRepeatMonthData,
       lastDay: currentRepeatDDuDu?.repeatPattern.lastDay ? ["lastDay"] : [],
