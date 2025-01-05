@@ -6,9 +6,10 @@ import { FormProvider } from "react-hook-form";
 import { BottomSheet } from "@/app/_components/client";
 import { GoalPrivacyType } from "@/app/_types/response/goal/goal";
 
+import PublicIcon from "../../server/icons/PublicIcon/PublicIcon";
 import { SheetRadioItem } from "./components";
 import { usePrivacySheet } from "./hooks";
-import { PRIVACY_LIST } from "./privacySheet.constants";
+import { PrivacyItemType } from "./privacySheet.types";
 
 interface PrivacySheetProps {
   goalPrivacy: GoalPrivacyType;
@@ -16,6 +17,28 @@ interface PrivacySheetProps {
   onClose: () => void;
   onClick: (goalPrivacy: GoalPrivacyType) => void;
 }
+
+export const PRIVACY_LIST: PrivacyItemType[] = [
+  {
+    id: "public",
+    icon: <PublicIcon />,
+    label: "전체공개",
+    name: "privacyType",
+    value: "PUBLIC",
+  },
+  {
+    id: "follower",
+    label: "팔로워 공개",
+    name: "privacyType",
+    value: "FOLLOWER",
+  },
+  {
+    id: "private",
+    label: "나만보기",
+    name: "privacyType",
+    value: "PRIVATE",
+  },
+];
 
 const PrivacySheet = ({ goalPrivacy, isShow, onClose, onClick }: PrivacySheetProps) => {
   const { methods, handlePrivacySubmit } = usePrivacySheet({ goalPrivacy, onClose, onClick });
@@ -33,10 +56,11 @@ const PrivacySheet = ({ goalPrivacy, isShow, onClose, onClick }: PrivacySheetPro
           onSubmit={handlePrivacySubmit}
         >
           <ul className="flex flex-col px-[0.4rem] gap-[1.6rem] mb-[2.1rem]">
-            {PRIVACY_LIST.map(({ id, name, value, label }, index) => (
+            {PRIVACY_LIST.map(({ id, icon, name, value, label }, index) => (
               <Fragment key={index}>
                 <SheetRadioItem
                   id={id}
+                  icon={icon}
                   name={name}
                   value={value}
                   label={label}
@@ -45,7 +69,7 @@ const PrivacySheet = ({ goalPrivacy, isShow, onClose, onClick }: PrivacySheetPro
             ))}
           </ul>
           <button
-            className="w-full h-[5.6rem] bg-example_gray_700 rounded-radius15"
+            className="w-full h-[5.6rem] bg-main text-white font-medium rounded-radius15"
             type="submit"
           >
             확인
