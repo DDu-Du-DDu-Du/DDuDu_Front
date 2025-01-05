@@ -63,11 +63,13 @@ const CheckboxInput = ({
       <motion.label
         htmlFor={id || inputId}
         className={twMerge(
-          "block bg-example_gray_300 rounded-radius10 select-none",
-          isChecked && "bg-example_gray_900",
+          "block border-solid border-[1px] border-example_gray_100 rounded-radius10 select-none",
+          isChecked && "bg-example_gray_300 font-medium",
           type === "word" &&
             "p-[1.2rem] min-w-[4rem] flex items-center justify-center text-[1.3rem]",
-          disabled ? "opacity-40 cursor-default" : "hover:bg-transparent_50 cursor-pointer",
+          disabled
+            ? "opacity-40 cursor-default"
+            : "hover:bg-example_gray_300 hover:font-medium cursor-pointer",
           className,
         )}
         style={{
