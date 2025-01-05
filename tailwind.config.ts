@@ -39,7 +39,19 @@ const config = {
         example_yellow_400: "#FEE500",
         example_yellow_500: "#FFD400",
         example_red_500: "#ED4044",
+        red_500: "#ED4044",
         example_orange_500: "#FFA500",
+
+        // 메인 컬러
+        main: "#1363DE",
+        sub: "#e7f0fe",
+
+        // 서브 컬러
+        sub_1: "#f8f8f8",
+        sub_2: "#efefef",
+        sub_3: "#1363DE",
+        sub_gray_100: "#FCFCFC",
+        sub_gray_200: "#E1E1E1",
       },
 
       borderRadius: {
@@ -59,6 +71,7 @@ const config = {
         size16: "1.6rem",
         size17: "1.7rem",
         size18: "1.8rem",
+        size20: "2rem",
       },
 
       fontWeight: {
