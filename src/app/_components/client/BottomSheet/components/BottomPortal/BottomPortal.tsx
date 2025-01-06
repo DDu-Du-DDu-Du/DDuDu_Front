@@ -31,7 +31,13 @@ const BottomPortal = ({ isShow, children, onClose }: BottomPortalProps) => {
     return null;
   }
 
-  return createPortal(<div ref={bottomSheetRef}>{children}</div>, BottomElement);
+  return createPortal(
+    <>
+      <div className="fixed top-0 w-screen h-screen max-w-[60rem] bg-transparent" />
+      <div ref={bottomSheetRef}>{children}</div>
+    </>,
+    BottomElement,
+  );
 };
 
 export default BottomPortal;
