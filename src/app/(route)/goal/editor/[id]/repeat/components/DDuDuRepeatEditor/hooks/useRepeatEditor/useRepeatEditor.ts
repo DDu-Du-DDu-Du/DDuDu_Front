@@ -1,20 +1,25 @@
 import { useMemo } from "react";
 
-import { useGoalFormStore } from "@/app/_store";
+import { useGoalDetail } from "@/app/_hooks";
 import { RepeatDdudusType } from "@/app/_types/response/goal/goal";
 
 import { DayOfMonthString } from "../../../DDuDuRepeatForm/DDuDuRepeatForm.types";
 
 interface UseRepeatEditorProps {
   repeatId: string;
+  goalId: string;
 }
 
-const useRepeatEditor = ({ repeatId }: UseRepeatEditorProps) => {
-  const { repeatDDuDu } = useGoalFormStore();
+const useRepeatEditor = ({ repeatId, goalId }: UseRepeatEditorProps) => {
+  const { goalDetail } = useGoalDetail({ goalId });
 
-  const currentRepeatDDuDu: RepeatDdudusType = useMemo(() => {
-    return repeatDDuDu.filter((ddudu) => String(ddudu.id) === repeatId)[0];
-  }, [repeatDDuDu, repeatId]);
+  const currentRepeatDDuDu: RepeatDdudusType | undefined = useMemo(() => {
+    if (!goalDetail) return;
+
+    const { repeatDdudus } = goalDetail;
+
+    return repeatDdudus.filter((ddudu) => String(ddudu.id) === repeatId)[0];
+  }, [goalDetail, repeatId]);
 
   const currentRepeatMonthData =
     currentRepeatDDuDu && currentRepeatDDuDu.repeatPattern.repeatType === "MONTHLY"

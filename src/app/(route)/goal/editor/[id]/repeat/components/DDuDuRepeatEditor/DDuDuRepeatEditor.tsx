@@ -17,6 +17,7 @@ const DDuDuRepeatEditor = ({ goalId }: DDuDuRepeatEditorProps) => {
 
   const { currentRepeatDDuDu, currentRepeatMonthData } = useRepeatEditor({
     repeatId,
+    goalId,
   });
 
   if (repeatId && !currentRepeatDDuDu) {
