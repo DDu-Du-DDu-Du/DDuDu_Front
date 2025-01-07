@@ -60,3 +60,28 @@ export const fetchEditRepeatDDudu = async ({
 
   return response.json();
 };
+
+interface FetchDeleteRepeatDDuduProps {
+  accessToken: string;
+  repeatId: string;
+}
+
+export const fetchDeleteRepeatDDudu = async ({
+  accessToken,
+  repeatId,
+}: FetchDeleteRepeatDDuduProps) => {
+  const response = await fetchApi(`${REPEAT_DDUDU.DELETE}/${repeatId}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  if (response.status === 204) {
+    return;
+  }
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+  return response.json();
+};

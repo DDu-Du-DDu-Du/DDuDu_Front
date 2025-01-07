@@ -175,6 +175,7 @@ const DDuDuRepeatForm = ({
             <li>
               <button
                 className="w-full h-[4rem] text-size13 font-medium bg-example_gray_100 rounded-radius10 text-red_500"
+                type="button"
                 onClick={handleRepeatDDuDuDelete}
               >
                 반복 삭제하기

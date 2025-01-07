@@ -31,4 +31,5 @@ export const GOAL_KEY = {
 
 export const REPEAT_DDUDU_KEY = {
   REPEAT_DDUDU: "repeatDdudu",
+  REPEAT_DELETE: "repeatDelete",
 };
