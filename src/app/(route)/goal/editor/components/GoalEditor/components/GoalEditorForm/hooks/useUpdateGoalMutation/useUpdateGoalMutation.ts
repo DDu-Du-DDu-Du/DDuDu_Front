@@ -29,15 +29,21 @@ const useUpdateGoalMutation = ({
   const router = useRouter();
   const queryClient = useQueryClient();
 
+  const handleGoalMutationSuccess = () => {
+    queryClient.invalidateQueries({ queryKey: [GOAL_KEY.GOAL_LIST] });
+    queryClient.invalidateQueries({ queryKey: [FEED_KEY.DAILY_TIMETABLE] });
+    queryClient.invalidateQueries({ queryKey: [FEED_KEY.DAILY_LIST] });
+    router.back();
+    reset();
+  };
+
   const createGoalMutation = useMutation({
     mutationKey: [GOAL_KEY.GOAL_CREATE],
     mutationFn: fetchCreateGoal,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [GOAL_KEY.GOAL_LIST] });
-      queryClient.invalidateQueries({ queryKey: [FEED_KEY.DAILY_TIMETABLE] });
-      queryClient.invalidateQueries({ queryKey: [FEED_KEY.DAILY_LIST] });
-      reset();
-      router.replace("/goal");
+      queryClient.invalidateQueries({ queryKey: [FEED_KEY.MONTHLY_DDUDUS] });
+      queryClient.invalidateQueries({ queryKey: [FEED_KEY.WEEKLY_DDUDUS] });
+      handleGoalMutationSuccess();
     },
   });
 
@@ -46,11 +52,7 @@ const useUpdateGoalMutation = ({
     mutationFn: fetchEditGoal,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [GOAL_KEY.GOAL_EDITOR, goalId] });
-      queryClient.invalidateQueries({ queryKey: [GOAL_KEY.GOAL_LIST] });
-      queryClient.invalidateQueries({ queryKey: [FEED_KEY.DAILY_TIMETABLE] });
-      queryClient.invalidateQueries({ queryKey: [FEED_KEY.DAILY_LIST] });
-      reset();
-      router.replace("/goal");
+      handleGoalMutationSuccess();
     },
   });
 
@@ -77,6 +79,11 @@ const useUpdateGoalMutation = ({
         } else if (ddudu.repeatPattern.repeatType === "MONTHLY") {
           repeatDDuDu.repeatDaysOfMonth = ddudu.repeatPattern.repeatDaysOfMonth;
           repeatDDuDu.lastDayOfMonth = ddudu.repeatPattern.lastDay;
+        }
+
+        if (ddudu.beginAt && ddudu.endAt) {
+          repeatDDuDu.beginAt = ddudu.beginAt;
+          repeatDDuDu.endAt = ddudu.endAt;
         }
 
         return repeatDDuDu;
