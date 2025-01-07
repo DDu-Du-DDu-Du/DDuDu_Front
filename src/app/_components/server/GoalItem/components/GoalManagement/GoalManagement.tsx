@@ -32,7 +32,7 @@ const GoalManagement = ({
       {...draggableProps}
     >
       <span
-        className="mr-[1rem] py-[0.5rem]"
+        className="mr-[1rem] py-[1rem]"
         {...dragHandleProps}
       >
         <DragIcon />
