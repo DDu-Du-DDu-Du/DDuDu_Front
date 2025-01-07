@@ -1,10 +1,10 @@
 import { SubmitHandler } from "react-hook-form";
 
-import { REPEAT_DDUDU_KEY } from "@/app/_constants/queryKey/queryKey";
+import { FEED_KEY, GOAL_KEY, REPEAT_DDUDU_KEY } from "@/app/_constants/queryKey/queryKey";
 import { fetchCreateRepeatDDudu, fetchEditRepeatDDudu } from "@/app/_services/client/repeatDdudu";
 import { RepeatDduduRequestType } from "@/app/_types/request/repeatDdudu/repeatDdudu";
 import { DayOfMonth, RepeatDdudusPattern, RepeatDdudusType } from "@/app/_types/response/goal/goal";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { DDuDuRepeatFormDataType } from "../../DDuDuRepeatForm";
 
@@ -29,21 +29,27 @@ const useRepeatDDuDuMutation = ({
   const router = useRouter();
 
   const { data: session } = useSession();
+  const queryClient = useQueryClient();
+
+  const handleDDuDuMutationSuccess = () => {
+    queryClient.invalidateQueries({ queryKey: [GOAL_KEY.GOAL_EDITOR, goalId] });
+    queryClient.invalidateQueries({ queryKey: [FEED_KEY.MONTHLY_DDUDUS] });
+    queryClient.invalidateQueries({ queryKey: [FEED_KEY.DAILY_LIST] });
+    queryClient.invalidateQueries({ queryKey: [FEED_KEY.WEEKLY_DDUDUS] });
+    queryClient.invalidateQueries({ queryKey: [FEED_KEY.DAILY_TIMETABLE] });
+    router.back();
+  };
 
   const createRepeatDDuDuMutation = useMutation({
     mutationKey: [REPEAT_DDUDU_KEY.REPEAT_DDUDU],
     mutationFn: fetchCreateRepeatDDudu,
-    onSuccess: () => {
-      router.replace(`/goal/editor/${goalId}/repeats`);
-    },
+    onSuccess: handleDDuDuMutationSuccess,
   });
 
   const editRepeatDDuDuMutation = useMutation({
     mutationKey: [REPEAT_DDUDU_KEY.REPEAT_DDUDU, repeatId],
     mutationFn: fetchEditRepeatDDudu,
-    onSuccess: () => {
-      router.replace(`/goal/editor/${goalId}/repeats`);
-    },
+    onSuccess: handleDDuDuMutationSuccess,
   });
 
   const onValid: SubmitHandler<DDuDuRepeatFormDataType> = ({
