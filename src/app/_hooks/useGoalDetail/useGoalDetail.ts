@@ -15,6 +15,7 @@ const useGoalDetail = ({ goalId }: UseGoalDetailProps) => {
   const { data: goalDetail } = useQuery<GoalDetailType>({
     queryKey: [GOAL_KEY.GOAL_EDITOR, goalId],
     queryFn: () => getGoalEditorData(session?.sessionToken as string, goalId),
+    enabled: !!goalId && !!session,
   });
 
   return {
