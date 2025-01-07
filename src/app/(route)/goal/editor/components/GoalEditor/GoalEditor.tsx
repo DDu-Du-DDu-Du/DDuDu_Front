@@ -1,29 +1,17 @@
 "use client";
 
 import { ConfirmModal } from "@/app/_components/client";
-import { GOAL_KEY } from "@/app/_constants/queryKey/queryKey";
-import { useToggle } from "@/app/_hooks";
-import { getGoalEditorData } from "@/app/_services/client/goalEditor";
-import { GoalDetailType } from "@/app/_types/response/goal/goal";
-import { useQuery } from "@tanstack/react-query";
+import { useGoalDetail, useToggle } from "@/app/_hooks";
 
 import { GoalEditorForm } from "./components";
 import { useTempData } from "./hooks";
-
-import { useSession } from "next-auth/react";
 
 interface GoalEditorProps {
   goalId: string;
 }
 
 const GoalEditor = ({ goalId }: GoalEditorProps) => {
-  const { data: session } = useSession();
-
-  const { data: goalEditorData } = useQuery<GoalDetailType>({
-    queryKey: [GOAL_KEY.GOAL_EDITOR, goalId],
-    queryFn: () => getGoalEditorData(session?.sessionToken as string, goalId),
-    enabled: !!goalId && !!session,
-  });
+  const { goalDetail: goalEditorData } = useGoalDetail({ goalId });
 
   const { isToggle: isModal, handleToggleOn: openModal, handleToggleOff: closeModal } = useToggle();
 
