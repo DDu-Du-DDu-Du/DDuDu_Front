@@ -2,26 +2,25 @@
 
 import { useEffect } from "react";
 
-import { GoalItem } from "@/app/_components/server";
 import { GOAL_KEY } from "@/app/_constants/queryKey/queryKey";
 import { getGoalList } from "@/app/_services/client/goal/goal";
 import { GoalType } from "@/app/_types/response/goal/goal";
-import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import { useQuery } from "@tanstack/react-query";
 
+import DragDrop from "./components/DragDrop/DragDrop";
 import { useAnimationChecker, useDragDrop } from "./hooks";
 
 import { useSession } from "next-auth/react";
 
 const GoalDragDrop = () => {
   const { data: session } = useSession();
-  const { data: goal, refetch } = useQuery<GoalType[]>({
+  const { data: goals, refetch } = useQuery<GoalType[]>({
     queryKey: [GOAL_KEY.GOAL_LIST],
     queryFn: () => getGoalList(session?.sessionToken as string, String(session?.user.userId)),
     enabled: !!session,
   });
 
-  const { goalList, onDragEnd } = useDragDrop({ goal });
+  const { progressGoalList, closedGoalList, onGoalsDragEnd } = useDragDrop({ goals });
   const { checker } = useAnimationChecker();
 
   useEffect(() => {
@@ -29,41 +28,29 @@ const GoalDragDrop = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (!checker || !goalList) {
+  if (!checker || !progressGoalList || !closedGoalList) {
     return null;
   }
 
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId="droppable">
-        {(provided) => (
-          <div
-            ref={provided.innerRef}
-            {...provided.droppableProps}
-          >
-            {goalList.map(({ id, name, color }, index) => (
-              <Draggable
-                key={String(id)}
-                draggableId={String(id)}
-                index={index}
-              >
-                {(provided) => (
-                  <GoalItem
-                    innerRef={provided.innerRef}
-                    draggableProps={provided.draggableProps}
-                    dragHandleProps={provided.dragHandleProps}
-                    goalName={name}
-                    id={id}
-                    color={color}
-                  />
-                )}
-              </Draggable>
-            ))}
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
-    </DragDropContext>
+    <>
+      <article className="pb-8">
+        <h3 className="text-size14 font-medium mb-6 text-gray-500">진행중 목표</h3>
+        <DragDrop
+          status="IN_PROGRESS"
+          goalList={progressGoalList}
+          onGoalsDragEnd={onGoalsDragEnd}
+        />
+      </article>
+      <article>
+        <h3 className="text-size14 font-medium mb-6 text-gray-500">종료된 목표</h3>
+        <DragDrop
+          status="DONE"
+          goalList={closedGoalList}
+          onGoalsDragEnd={onGoalsDragEnd}
+        />
+      </article>
+    </>
   );
 };
 
