@@ -30,6 +30,7 @@
     font-size: 1.4rem;
 
     overflow: hidden;
+    user-select: none;
   }
 
   #app {
