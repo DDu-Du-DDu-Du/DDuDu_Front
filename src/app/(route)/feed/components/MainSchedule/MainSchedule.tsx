@@ -40,6 +40,19 @@ const MainSchedule = ({ selectedDDuDuDate }: MainScheduleProps) => {
         userId: session?.user.userId as number,
         date: selectedDDuDuDate,
       }),
+    select: (data) => {
+      const sortedDdudus = data.unassignedDdudus.sort((a, b) => {
+        if (a.goal.status > b.goal.status) {
+          return -1;
+        } else if (a.goal.status < b.goal.status) {
+          return 1;
+        }
+
+        return 1;
+      });
+
+      return { ...data, unassignedDdudus: sortedDdudus };
+    },
     enabled: !!session,
   });
 
@@ -66,7 +79,7 @@ const MainSchedule = ({ selectedDDuDuDate }: MainScheduleProps) => {
         selectedDDuDuDate={selectedDDuDuDate}
       />
       <ul className="bg-white_100 py-[2.2rem] px-[2.4rem]">
-        {dailyTimeTable?.unassignedDdudus.map(({ goal, ddudus }, index) => (
+        {dailyTimeTable?.unassignedDdudus?.map(({ goal, ddudus }, index) => (
           <Fragment key={index}>
             <MainGoalItem
               goal={goal}

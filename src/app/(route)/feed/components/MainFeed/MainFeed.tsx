@@ -32,6 +32,16 @@ const MainFeed = ({ selectedDDuDuDate }: MainFeedProps) => {
         userId: session?.user.userId as number,
         date: selectedDDuDuDate,
       }),
+    select: (data) =>
+      data.sort((a, b) => {
+        if (a.goal.status > b.goal.status) {
+          return -1;
+        } else if (a.goal.status < b.goal.status) {
+          return 1;
+        }
+
+        return 1;
+      }),
     enabled: !!session,
   });
 

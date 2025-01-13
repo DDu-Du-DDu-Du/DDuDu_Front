@@ -2,6 +2,7 @@ type MainGoalType = {
   id: number;
   name: string;
   color: string;
+  status: "IN_PROGRESS" | "DONE";
 };
 
 export type MainDDuDusType = {
