@@ -35,7 +35,7 @@ const GoalDragDrop = () => {
   return (
     <>
       <article className="pb-8">
-        <h3 className="text-size14 font-medium mb-6 text-gray-500">진행중 목표</h3>
+        <h3 className="text-size14 font-medium mb-6 text-gray-400">진행 중인 목표</h3>
         <DragDrop
           status="IN_PROGRESS"
           goalList={progressGoalList}
@@ -43,7 +43,7 @@ const GoalDragDrop = () => {
         />
       </article>
       <article>
-        <h3 className="text-size14 font-medium mb-6 text-gray-500">종료된 목표</h3>
+        <h3 className="text-size14 font-medium mb-6 text-gray-400">종료된 목표</h3>
         <DragDrop
           status="DONE"
           goalList={closedGoalList}
