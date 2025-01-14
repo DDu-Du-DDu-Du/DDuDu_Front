@@ -39,4 +39,5 @@ export interface MainTimeTableDDuDuType {
   goalId: number;
   beginAt?: string;
   endAt?: string;
+  color: string;
 }

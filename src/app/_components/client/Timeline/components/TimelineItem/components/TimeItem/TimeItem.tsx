@@ -21,7 +21,7 @@ const TimeItem = ({
   onDDuDuCompleteToggle,
   handleDDuDuSheetOpen,
 }: TimeItemProps) => {
-  const { id, name, status, beginAt, endAt } = ddudu;
+  const { id, name, status, beginAt, endAt, color } = ddudu;
   const { theme } = resolveConfig(tailwindConfig);
 
   const handleDDuDuCompleteToggle = () => {
@@ -34,7 +34,8 @@ const TimeItem = ({
         {/* middle icon */}
         <div className="absolute top-0 z-timeline_icon flex items-center justify-center h-[5.7rem]">
           <div
-            className="flex h-[2.2rem] w-[2.2rem] items-center justify-center rounded-circle cursor-pointer bg-example_gray_700"
+            className="flex h-[2.2rem] w-[2.2rem] items-center justify-center rounded-circle cursor-pointer"
+            style={{ backgroundColor: `#${color}` }}
             onClick={handleDDuDuCompleteToggle}
           >
             <div className="h-[1.6rem] w-[1.6rem] rounded-circle bg-white flex items-center justify-center">
@@ -44,7 +45,10 @@ const TimeItem = ({
                 추후 상단에 생성될 전체 목표 목록 스토어에서 일치하는 컬러 매칭하기 
               */}
               {status === "COMPLETE" && (
-                <div className="h-[1.2rem] w-[1.2rem] bg-example_gray_700 rounded-circle" />
+                <div
+                  className="h-[1.2rem] w-[1.2rem] rounded-circle"
+                  style={{ backgroundColor: `#${color}` }}
+                />
               )}
             </div>
           </div>
