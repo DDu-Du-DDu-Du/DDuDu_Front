@@ -50,7 +50,7 @@ const TimelineItem = ({ baseTime, dduduList, selectedDDuDuDate }: TimelineItemPr
     handleToggleOff: handleDDuDuTimeSheetToggleOff,
   } = useToggle();
 
-  const { setIsCreateDDuDu } = useDDuDuCreate();
+  const { setIsCreateDDuDu } = useDDuDuCreate({});
   const { currentDDuDuId, setCurrentDDuDuId, handleUpdateEditDDuDuId } = useDDuDuEdit({
     setIsCreateDDuDu,
   });

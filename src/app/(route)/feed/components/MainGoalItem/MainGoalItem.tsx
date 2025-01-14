@@ -2,7 +2,7 @@
 
 import { Fragment } from "react";
 
-import { AlarmSheet, DDuDuSheet, DDuDuTimeSheet } from "@/app/_components/client";
+import { AlarmSheet, AlertModal, DDuDuSheet, DDuDuTimeSheet } from "@/app/_components/client";
 import { BottomSingleCalendar } from "@/app/_components/client/Calendar";
 import { GoalItem } from "@/app/_components/server";
 import { useToggle } from "@/app/_hooks";
@@ -50,7 +50,16 @@ const MainGoalItem = ({ goal, ddudus, selectedDDuDuDate }: MainGoalItemProps) =>
     handleToggleOff: handleDDuDuTimeSheetToggleOff,
   } = useToggle();
 
-  const { isCreateDDuDu, setIsCreateDDuDu, handleOpenDDuDuInput } = useDDuDuCreate();
+  const {
+    isToggle: isAlertModalToggle,
+    handleToggleOn: handleAlertModalToggleOn,
+    handleToggleOff: handleAlertModalToggleOff,
+  } = useToggle();
+
+  const { isCreateDDuDu, setIsCreateDDuDu, handleOpenDDuDuInput } = useDDuDuCreate({
+    status: goal.status,
+    handleAlertModalToggleOn,
+  });
   const {
     currentDDuDuId,
     editDDuDuId,
@@ -150,6 +159,15 @@ const MainGoalItem = ({ goal, ddudus, selectedDDuDuDate }: MainGoalItemProps) =>
           />
         )}
       </ul>
+
+      {isAlertModalToggle && (
+        <AlertModal
+          isToggle={isAlertModalToggle}
+          handleToggleOff={handleAlertModalToggleOff}
+          title="알림"
+          message="종료된 목표에는 추가할 수 없습니다."
+        />
+      )}
 
       {isDDuDuSheetToggle && (
         <DDuDuSheet

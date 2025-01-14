@@ -38,7 +38,7 @@ const AlertModal = ({
         </figure>
       )}
       <button
-        className="mx-auto mb-[0.9rem] block h-[5.2rem] w-[94%] rounded-[1rem] bg-[#D9D9D9] text-size15 font-medium"
+        className="mx-auto mb-[0.9rem] block h-[5.2rem] w-[94%] rounded-[1rem] bg-main text-white text-size15 font-medium"
         onClick={handleToggleOff}
       >
         {completeText}

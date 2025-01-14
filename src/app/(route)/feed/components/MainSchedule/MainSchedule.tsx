@@ -79,7 +79,7 @@ const MainSchedule = ({ selectedDDuDuDate }: MainScheduleProps) => {
         selectedDDuDuDate={selectedDDuDuDate}
       />
       <ul className="bg-white_100 py-[2.2rem] px-[2.4rem]">
-        {dailyTimeTable?.unassignedDdudus?.map(({ goal, ddudus }, index) => (
+        {dailyTimeTable?.unassignedDdudus.map(({ goal, ddudus }, index) => (
           <Fragment key={index}>
             <MainGoalItem
               goal={goal}
