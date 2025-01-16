@@ -1,4 +1,5 @@
 import { AUTH_ROUTES, BASE_URL, PUBLIC_ROUTES } from "./app/_constants/auth/auth";
+import { bypassPathCheck } from "./app/_utils/";
 import { auth } from "./auth";
 
 import { NextRequest, NextResponse } from "next/server";
@@ -17,9 +18,27 @@ export const config = {
   ],
 };
 
+const bypassPaths = [
+  "/manifest*",
+  "/swe-worker*",
+  "/sw.js*",
+  "/workbox-*",
+  "/assets*",
+  "/fonts*",
+  "/icons*",
+  "/favicon*",
+  "/login",
+];
+
 export async function middleware(request: NextRequest) {
   const session = await auth();
   const { pathname } = request.nextUrl;
+
+  const isBypassPaths = bypassPathCheck(bypassPaths, pathname);
+  if (isBypassPaths) {
+    return;
+  }
+
   const isPublicRoute = PUBLIC_ROUTES.includes(pathname);
 
   if (isPublicRoute && session) {
