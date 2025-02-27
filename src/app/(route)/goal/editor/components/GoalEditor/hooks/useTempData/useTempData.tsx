@@ -32,7 +32,13 @@ const useTempData = ({ goalId, goalEditorData, openModal }: UseTempDataProps) =>
     repeatDDuDu: [...repeatDDuDu],
   });
 
+  const isHydrated = useGoalFormStore.persist.hasHydrated();
+
   useEffect(() => {
+    if (!isHydrated) {
+      return;
+    }
+
     if (isLoad) {
       initialize(tempData);
       setIsLoadTempData(true);
@@ -64,7 +70,7 @@ const useTempData = ({ goalId, goalEditorData, openModal }: UseTempDataProps) =>
     }
 
     /* eslint-disable react-hooks/exhaustive-deps */
-  }, []);
+  }, [isHydrated]);
 
   const handleLoadTempData = (isComplete: boolean) => {
     if (!isComplete) {
